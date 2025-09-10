@@ -85,44 +85,40 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Question Input */}
-      <Card>
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-medium text-foreground">
+      <div className="feynman-card spacing-lg">
+        <div className="mb-6">
+          <h2 className="text-heading text-foreground mb-2">
             用户问题
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Input
-            placeholder="例如：什么是量子力学？"
-            value={formData.question}
-            onChange={(e) => setFormData(prev => ({ ...prev, question: e.target.value }))}
-            className="text-base"
-          />
-        </CardContent>
-      </Card>
+          </h2>
+        </div>
+        <Input
+          placeholder="例如：什么是量子力学？"
+          value={formData.question}
+          onChange={(e) => setFormData(prev => ({ ...prev, question: e.target.value }))}
+          className="feynman-input text-body"
+        />
+      </div>
 
       {/* Feynman Response */}
-      <Card>
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg font-medium text-foreground">
-              费曼式回答
-            </CardTitle>
-            <TemplateSelector onSelectTemplate={onInsertTemplate} />
-          </div>
-        </CardHeader>
-        <CardContent>
+      <div className="feynman-card spacing-lg">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-heading text-foreground">
+            费曼式回答
+          </h2>
+          <TemplateSelector onSelectTemplate={onInsertTemplate} />
+        </div>
+        <div className="space-y-4">
           <Textarea
             ref={responseRef}
             placeholder="费曼会怎么解释这个问题？用简单、直观的方式..."
             value={formData.response}
             onChange={(e) => setFormData(prev => ({ ...prev, response: e.target.value }))}
             rows={8}
-            className="text-base leading-relaxed resize-none"
+            className="feynman-input text-body leading-relaxed resize-none"
           />
-          <div className="mt-3 flex justify-between items-center text-xs text-muted-foreground">
+          <div className="flex justify-between items-center text-caption">
             <span>
               字数: <span className="text-foreground font-medium">{formData.response.length}</span>
             </span>
@@ -130,101 +126,96 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
               按 / 快速插入模板
             </span>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Style Features */}
-      <Card>
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-medium text-foreground">
+      <div className="feynman-card spacing-lg">
+        <div className="mb-6">
+          <h2 className="text-heading text-foreground">
             思维模式标签
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {styleOptions.map((option) => {
-              const Icon = option.icon;
-              return (
-                <div key={option.id} className="border border-border rounded-lg p-4 hover:bg-muted/30 transition-colors">
-                  <div className="flex items-start space-x-3">
-                    <Checkbox
-                      id={option.id}
-                      checked={formData.styleFeatures.includes(option.id)}
-                      onCheckedChange={(checked) => handleStyleFeatureChange(option.id, checked as boolean)}
-                    />
-                    <div className="flex-1">
-                      <Label htmlFor={option.id} className="flex items-center space-x-2 cursor-pointer">
-                        <Icon className="w-4 h-4 text-muted-foreground" />
-                        <span className="font-medium text-foreground">{option.label}</span>
-                      </Label>
-                      <p className="text-sm text-muted-foreground mt-1">{option.description}</p>
-                    </div>
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {styleOptions.map((option) => {
+            const Icon = option.icon;
+            return (
+              <div key={option.id} className="feynman-card spacing-md hover:bg-secondary/30 transition-all duration-200 cursor-pointer">
+                <div className="flex items-start gap-4">
+                  <Checkbox
+                    id={option.id}
+                    checked={formData.styleFeatures.includes(option.id)}
+                    onCheckedChange={(checked) => handleStyleFeatureChange(option.id, checked as boolean)}
+                    className="mt-1"
+                  />
+                  <div className="flex-1">
+                    <Label htmlFor={option.id} className="flex items-center gap-3 cursor-pointer">
+                      <Icon className="w-5 h-5 text-primary" />
+                      <span className="text-label text-foreground">{option.label}</span>
+                    </Label>
+                    <p className="text-caption mt-2">{option.description}</p>
                   </div>
                 </div>
-              );
+              </div>
+            );
+          })}
+        </div>
+        
+        {formData.styleFeatures.length > 0 && (
+          <div className="mt-8 flex flex-wrap gap-3">
+            {formData.styleFeatures.map(featureId => {
+              const feature = styleOptions.find(opt => opt.id === featureId);
+              return feature ? (
+                <Badge key={featureId} variant="secondary" className="text-caption px-3 py-1.5 rounded-lg">
+                  {feature.label}
+                </Badge>
+              ) : null;
             })}
           </div>
-          
-          {formData.styleFeatures.length > 0 && (
-            <div className="mt-6 flex flex-wrap gap-2">
-              {formData.styleFeatures.map(featureId => {
-                const feature = styleOptions.find(opt => opt.id === featureId);
-                return feature ? (
-                  <Badge key={featureId} variant="secondary" className="text-xs">
-                    {feature.label}
-                  </Badge>
-                ) : null;
-              })}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+        )}
+      </div>
 
       {/* Quality & Notes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg font-medium text-foreground">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="feynman-card spacing-lg">
+          <div className="mb-6">
+            <h2 className="text-heading text-foreground">
               回答质量
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Select value={formData.quality} onValueChange={(value) => setFormData(prev => ({ ...prev, quality: value }))}>
-              <SelectTrigger>
-                <SelectValue placeholder="选择质量等级" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="excellent">优秀范例</SelectItem>
-                <SelectItem value="good">良好</SelectItem>
-                <SelectItem value="needs-work">需改进</SelectItem>
-              </SelectContent>
-            </Select>
-          </CardContent>
-        </Card>
+            </h2>
+          </div>
+          <Select value={formData.quality} onValueChange={(value) => setFormData(prev => ({ ...prev, quality: value }))}>
+            <SelectTrigger className="feynman-input">
+              <SelectValue placeholder="选择质量等级" />
+            </SelectTrigger>
+            <SelectContent className="rounded-lg border-border">
+              <SelectItem value="excellent">优秀范例</SelectItem>
+              <SelectItem value="good">良好</SelectItem>
+              <SelectItem value="needs-work">需改进</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-        <Card>
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg font-medium text-foreground">备注</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Textarea
-              placeholder="其他备注信息..."
-              value={formData.notes}
-              onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
-              rows={3}
-              className="resize-none"
-            />
-          </CardContent>
-        </Card>
+        <div className="feynman-card spacing-lg">
+          <div className="mb-6">
+            <h2 className="text-heading text-foreground">备注</h2>
+          </div>
+          <Textarea
+            placeholder="其他备注信息..."
+            value={formData.notes}
+            onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
+            rows={3}
+            className="feynman-input resize-none"
+          />
+        </div>
       </div>
 
       {/* Save Button */}
-      <div className="flex justify-end pt-4">
+      <div className="flex justify-center pt-8">
         <Button
           onClick={handleSave}
-          className="px-6"
+          className="feynman-button px-8 py-4"
         >
-          <Save className="w-4 h-4 mr-2" />
+          <Save className="w-5 h-5 mr-3" />
           保存标注
         </Button>
       </div>
