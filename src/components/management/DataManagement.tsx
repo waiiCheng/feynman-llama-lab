@@ -24,7 +24,7 @@ const DataManagement = () => {
   const { toast } = useToast();
   const [annotations, setAnnotations] = useState<Annotation[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [qualityFilter, setQualityFilter] = useState('');
+  const [qualityFilter, setQualityFilter] = useState('all');
   const [selectedAnnotation, setSelectedAnnotation] = useState<Annotation | null>(null);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const DataManagement = () => {
       annotation.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
       annotation.response.toLowerCase().includes(searchQuery.toLowerCase());
     
-    const matchesQuality = !qualityFilter || annotation.quality === qualityFilter;
+    const matchesQuality = qualityFilter === 'all' || annotation.quality === qualityFilter;
     
     return matchesSearch && matchesQuality;
   });
@@ -137,7 +137,7 @@ const DataManagement = () => {
                 <SelectValue placeholder="筛选质量等级" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">全部质量</SelectItem>
+                <SelectItem value="all">全部质量</SelectItem>
                 <SelectItem value="excellent">优秀范例</SelectItem>
                 <SelectItem value="good">良好</SelectItem>
                 <SelectItem value="needs-work">需改进</SelectItem>
