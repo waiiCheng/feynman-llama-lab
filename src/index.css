@@ -106,10 +106,27 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
     line-height: 1.5;
     letter-spacing: -0.01em;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* 中文字体系统 */
+  body.lang-zh {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'Source Han Sans CN', sans-serif;
+  }
+
+  body.lang-zh .font-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', monospace;
+  }
+
+  /* 英文字体系统 */
+  body.lang-en {
+    font-family: 'Inter', 'SF Pro Display', 'Helvetica Neue', '-apple-system', 'BlinkMacSystemFont', sans-serif;
+  }
+
+  body.lang-en .font-mono {
+    font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Consolas', monospace;
   }
   
   /* Scrollbar Styling */
@@ -133,39 +150,78 @@ All colors MUST be HSL.
 
 /* Feynman Design System Components */
 
-/* Typography Scale */
-.text-display {
+/* Typography Scale with Dynamic Language Support */
+
+/* 中文排版优化 */
+body.lang-zh .text-display {
   font-size: var(--text-3xl);
   line-height: 1.2;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
-.text-heading {
+body.lang-zh .text-heading {
   font-size: var(--text-xl);
-  line-height: 1.3;
+  line-height: 1.35;
   font-weight: 500;
   letter-spacing: -0.01em;
 }
 
-.text-body {
+body.lang-zh .text-body {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+body.lang-zh .text-caption {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  font-weight: 400;
+  color: hsl(var(--muted-foreground));
+}
+
+body.lang-zh .text-label {
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+
+/* 英文排版优化 */
+body.lang-en .text-display {
+  font-size: var(--text-3xl);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+body.lang-en .text-heading {
+  font-size: var(--text-xl);
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+body.lang-en .text-body {
   font-size: var(--text-base);
   line-height: 1.5;
   font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
-.text-caption {
+body.lang-en .text-caption {
   font-size: var(--text-sm);
   line-height: 1.4;
   font-weight: 400;
   color: hsl(var(--muted-foreground));
 }
 
-.text-label {
+body.lang-en .text-label {
   font-size: var(--text-sm);
   line-height: 1.4;
   font-weight: 500;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.01em;
 }
 
 /* Elevated Card System */

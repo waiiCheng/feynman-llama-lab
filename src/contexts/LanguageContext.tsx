@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export type Language = 'zh' | 'en';
 
@@ -111,6 +111,12 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations[typeof language]] || key;
   };
+
+  // 动态切换字体族
+  useEffect(() => {
+    document.body.className = document.body.className.replace(/lang-\w+/g, '');
+    document.body.classList.add(`lang-${language}`);
+  }, [language]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
