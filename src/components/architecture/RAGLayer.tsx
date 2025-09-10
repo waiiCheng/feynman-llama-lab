@@ -254,12 +254,12 @@ const RAGLayer = () => {
         <CardContent className="pt-6">
           <div className="text-center space-y-2">
             <BookOpen className="w-8 h-8 text-green-600 mx-auto" />
-            <h3 className="font-medium text-green-800">需要向量数据库</h3>
+            <h3 className="font-medium text-green-800">本地向量数据库</h3>
             <p className="text-sm text-green-600">
-              RAG 功能需要 Pinecone、Weaviate 或 Supabase Vector 支持
+              RAG 功能可以使用 FAISS、ChromaDB 或 Qdrant 在本地部署
             </p>
             <Button className="bg-green-600 hover:bg-green-700 text-white">
-              配置向量数据库
+              下载 RAG 部署脚本
             </Button>
           </div>
         </CardContent>

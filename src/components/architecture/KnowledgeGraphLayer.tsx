@@ -213,12 +213,12 @@ const KnowledgeGraphLayer = () => {
       <Card className="bg-blue-50 border-blue-200">
         <CardContent className="pt-6">
           <div className="text-center space-y-2">
-            <h3 className="font-medium text-blue-800">需要数据库支持</h3>
+            <h3 className="font-medium text-blue-800">本地图数据库</h3>
             <p className="text-sm text-blue-600">
-              知识图谱需要 Neo4j 或关系数据库来存储概念和关系
+              知识图谱可以使用 NetworkX (Python) 或 Neo4j 在本地构建
             </p>
             <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-              连接 Supabase 数据库
+              下载图谱构建脚本
             </Button>
           </div>
         </CardContent>

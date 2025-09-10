@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Brain, Database, Search, Cpu, ArrowDown, Network, Book, Zap } from 'lucide-react';
+import { Brain, Database, Search, Cpu, ArrowDown, Network, Book, Zap, Download } from 'lucide-react';
 
 const ArchitectureOverview = () => {
   const layers = [
@@ -180,11 +180,11 @@ const ArchitectureOverview = () => {
           size="lg"
           className="bg-gradient-hero hover:opacity-90 text-white px-8 py-3"
         >
-          <Database className="w-5 h-5 mr-2" />
-          开始构建架构
+          <Download className="w-5 h-5 mr-2" />
+          开始本地训练
         </Button>
         <p className="text-sm text-feynman-muted mt-2">
-          需要 Supabase 数据库支持
+          完全本地化，无需外部依赖
         </p>
       </div>
     </div>
