@@ -90,45 +90,41 @@ export const AnnotationWorkspace: React.FC = () => {
   return (
     <div className="min-h-screen bg-background relative">
       {/* Workspace Header */}
-      <div className="border-b border-border bg-card/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-6">
+      <div className="border-b border-border bg-background">
+        <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-6">
-              <div>
-                <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-                  {t('annotation.title')}
-                </h1>
-              </div>
-              <div className="flex items-center space-x-4">
-                <Badge variant="outline" className="font-mono text-xs">
-                  {showPreview ? '双屏模式' : '单屏模式'}
-                </Badge>
-                {showShortcuts && (
-                  <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                    <span className="bg-secondary px-2 py-1 rounded border">{t('shortcuts.save')}</span>
-                    <span className="text-primary">•</span>
-                    <span className="bg-secondary px-2 py-1 rounded border">{t('shortcuts.template')}</span>
-                  </div>
-                )}
-              </div>
+            <div className="flex items-center space-x-4">
+              <h1 className="text-xl font-semibold text-foreground">
+                {t('annotation.title')}
+              </h1>
+              <Badge variant="outline" className="text-xs font-normal">
+                {showPreview ? '双屏模式' : '单屏模式'}
+              </Badge>
             </div>
             
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
+              {showShortcuts && (
+                <div className="flex items-center space-x-2 text-xs text-muted-foreground mr-4">
+                  <kbd className="px-2 py-1 bg-muted rounded text-xs">{t('shortcuts.save')}</kbd>
+                  <kbd className="px-2 py-1 bg-muted rounded text-xs">{t('shortcuts.template')}</kbd>
+                </div>
+              )}
+              
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowShortcuts(!showShortcuts)}
-                className="hover:bg-secondary transition-colors"
+                className="h-8"
               >
-                <Keyboard className="w-4 h-4 mr-2" />
-                快捷键
+                <Keyboard className="w-4 h-4 mr-1" />
+                <span className="text-xs">快捷键</span>
               </Button>
               
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowPreview(!showPreview)}
-                className="hover:bg-secondary transition-colors"
+                className="h-8 w-8 p-0"
               >
                 {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </Button>
@@ -137,10 +133,10 @@ export const AnnotationWorkspace: React.FC = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setLanguage(language === 'zh' ? 'en' : 'zh')}
-                className="hover:bg-secondary transition-colors"
+                className="h-8"
               >
-                <Languages className="w-4 h-4 mr-2" />
-                <span className="font-mono">{language === 'zh' ? 'EN' : '中'}</span>
+                <Languages className="w-4 h-4 mr-1" />
+                <span className="text-xs font-mono">{language === 'zh' ? 'EN' : '中'}</span>
               </Button>
             </div>
           </div>
@@ -148,42 +144,40 @@ export const AnnotationWorkspace: React.FC = () => {
       </div>
 
       {/* Main Workspace */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="animate-fade-in">
-          {showPreview ? (
-            <ResizablePanelGroup direction="horizontal" className="min-h-[calc(100vh-200px)]">
-              <ResizablePanel defaultSize={60} minSize={40}>
-                <div className="pr-4">
-                  <AnnotationForm
-                    formData={formData}
-                    setFormData={setFormData}
-                    onSave={handleSaveAndNext}
-                    onInsertTemplate={insertTemplateText}
-                    responseRef={responseRef}
-                  />
-                </div>
-              </ResizablePanel>
-              
-              <ResizableHandle withHandle className="bg-border hover:bg-primary/20 transition-colors" />
-              
-              <ResizablePanel defaultSize={40} minSize={30}>
-                <div className="pl-4">
-                  <PreviewPanel formData={formData} />
-                </div>
-              </ResizablePanel>
-            </ResizablePanelGroup>
-          ) : (
-            <div className="max-w-5xl mx-auto">
-              <AnnotationForm
-                formData={formData}
-                setFormData={setFormData}
-                onSave={handleSaveAndNext}
-                onInsertTemplate={insertTemplateText}
-                responseRef={responseRef}
-              />
-            </div>
-          )}
-        </div>
+      <div className="container mx-auto px-6 py-8">
+        {showPreview ? (
+          <ResizablePanelGroup direction="horizontal" className="min-h-[calc(100vh-160px)]">
+            <ResizablePanel defaultSize={60} minSize={40}>
+              <div className="pr-6">
+                <AnnotationForm
+                  formData={formData}
+                  setFormData={setFormData}
+                  onSave={handleSaveAndNext}
+                  onInsertTemplate={insertTemplateText}
+                  responseRef={responseRef}
+                />
+              </div>
+            </ResizablePanel>
+            
+            <ResizableHandle withHandle className="bg-border hover:bg-border data-[panel-group-direction=vertical]:cursor-row-resize data-[panel-group-direction=horizontal]:cursor-col-resize data-[panel-group-direction=horizontal]:w-px data-[panel-group-direction=vertical]:h-px" />
+            
+            <ResizablePanel defaultSize={40} minSize={30}>
+              <div className="pl-6">
+                <PreviewPanel formData={formData} />
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        ) : (
+          <div className="max-w-4xl mx-auto">
+            <AnnotationForm
+              formData={formData}
+              setFormData={setFormData}
+              onSave={handleSaveAndNext}
+              onInsertTemplate={insertTemplateText}
+              responseRef={responseRef}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

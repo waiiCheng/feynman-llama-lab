@@ -83,13 +83,12 @@ const AnnotationForm = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-8">
       {/* Question Input */}
-      <Card className="physics-card quantum-hover particle-bg">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-3 text-feynman-text font-physics">
-            <div className="w-8 h-8 rounded-lg bg-gradient-hero text-feynman-cool text-sm flex items-center justify-center font-bold animate-quantum-pulse">1</div>
-            <span className="tracking-wide">用户问题</span>
+      <Card>
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg font-medium text-foreground">
+            用户问题
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -97,17 +96,16 @@ const AnnotationForm = () => {
             placeholder="例如：什么是量子力学？"
             value={formData.question}
             onChange={(e) => setFormData(prev => ({ ...prev, question: e.target.value }))}
-            className="text-lg bg-gradient-subtle border-feynman-blue/30 focus:border-feynman-blue focus:ring-feynman-blue/20"
+            className="text-base"
           />
         </CardContent>
       </Card>
 
       {/* Feynman Response */}
-      <Card className="physics-card quantum-hover particle-bg">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-3 text-feynman-text font-physics">
-            <div className="w-8 h-8 rounded-lg bg-gradient-hero text-feynman-cool text-sm flex items-center justify-center font-bold animate-quantum-pulse">2</div>
-            <span className="tracking-wide">费曼式回答</span>
+      <Card>
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg font-medium text-foreground">
+            费曼式回答
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -116,17 +114,16 @@ const AnnotationForm = () => {
             value={formData.response}
             onChange={(e) => setFormData(prev => ({ ...prev, response: e.target.value }))}
             rows={8}
-            className="text-base leading-relaxed bg-gradient-subtle border-feynman-blue/30 focus:border-feynman-blue focus:ring-feynman-blue/20"
+            className="text-base leading-relaxed resize-none"
           />
         </CardContent>
       </Card>
 
       {/* Style Features */}
-      <Card className="physics-card quantum-hover particle-bg">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-3 text-feynman-text font-physics">
-            <div className="w-8 h-8 rounded-lg bg-gradient-hero text-feynman-cool text-sm flex items-center justify-center font-bold animate-quantum-pulse">3</div>
-            <span className="tracking-wide">思维模式标签</span>
+      <Card>
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg font-medium text-foreground">
+            思维模式标签
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -134,20 +131,19 @@ const AnnotationForm = () => {
             {styleOptions.map((option) => {
               const Icon = option.icon;
               return (
-                <div key={option.id} className="glow-border rounded-xl p-4 hover:bg-gradient-accent transition-all duration-300">
+                <div key={option.id} className="border border-border rounded-lg p-4 hover:bg-muted/30 transition-colors">
                   <div className="flex items-start space-x-3">
                     <Checkbox
                       id={option.id}
                       checked={formData.styleFeatures.includes(option.id)}
                       onCheckedChange={(checked) => handleStyleFeatureChange(option.id, checked as boolean)}
-                      className="border-feynman-blue/50 data-[state=checked]:bg-feynman-blue"
                     />
                     <div className="flex-1">
-                      <Label htmlFor={option.id} className="flex items-center space-x-3 cursor-pointer">
-                        <Icon className="w-5 h-5 text-feynman-blue animate-quantum-pulse" />
-                        <span className="font-medium text-feynman-text">{option.label}</span>
+                      <Label htmlFor={option.id} className="flex items-center space-x-2 cursor-pointer">
+                        <Icon className="w-4 h-4 text-muted-foreground" />
+                        <span className="font-medium text-foreground">{option.label}</span>
                       </Label>
-                      <p className="text-sm text-feynman-muted mt-1 science-text">{option.description}</p>
+                      <p className="text-sm text-muted-foreground mt-1">{option.description}</p>
                     </div>
                   </div>
                 </div>
@@ -156,11 +152,11 @@ const AnnotationForm = () => {
           </div>
           
           {formData.styleFeatures.length > 0 && (
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-2">
               {formData.styleFeatures.map(featureId => {
                 const feature = styleOptions.find(opt => opt.id === featureId);
                 return feature ? (
-                  <Badge key={featureId} className="bg-gradient-hero text-feynman-cool px-3 py-1 animate-energy-wave">
+                  <Badge key={featureId} variant="secondary" className="text-xs">
                     {feature.label}
                   </Badge>
                 ) : null;
@@ -172,30 +168,29 @@ const AnnotationForm = () => {
 
       {/* Quality & Notes */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="physics-card quantum-hover">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-3 text-feynman-text font-physics">
-              <div className="w-8 h-8 rounded-lg bg-gradient-hero text-feynman-cool text-sm flex items-center justify-center font-bold animate-quantum-pulse">4</div>
-              <span className="tracking-wide">回答质量</span>
+        <Card>
+          <CardHeader className="pb-4">
+            <CardTitle className="text-lg font-medium text-foreground">
+              回答质量
             </CardTitle>
           </CardHeader>
           <CardContent>
             <Select value={formData.quality} onValueChange={(value) => setFormData(prev => ({ ...prev, quality: value }))}>
-              <SelectTrigger className="bg-gradient-subtle border-feynman-blue/30 focus:border-feynman-blue">
+              <SelectTrigger>
                 <SelectValue placeholder="选择质量等级" />
               </SelectTrigger>
-              <SelectContent className="bg-card border-feynman-blue/30">
-                <SelectItem value="excellent" className="focus:bg-feynman-blue/20">优秀范例</SelectItem>
-                <SelectItem value="good" className="focus:bg-feynman-blue/20">良好</SelectItem>
-                <SelectItem value="needs-work" className="focus:bg-feynman-blue/20">需改进</SelectItem>
+              <SelectContent>
+                <SelectItem value="excellent">优秀范例</SelectItem>
+                <SelectItem value="good">良好</SelectItem>
+                <SelectItem value="needs-work">需改进</SelectItem>
               </SelectContent>
             </Select>
           </CardContent>
         </Card>
 
-        <Card className="physics-card quantum-hover">
-          <CardHeader>
-            <CardTitle className="text-feynman-text font-physics tracking-wide">备注</CardTitle>
+        <Card>
+          <CardHeader className="pb-4">
+            <CardTitle className="text-lg font-medium text-foreground">备注</CardTitle>
           </CardHeader>
           <CardContent>
             <Textarea
@@ -203,20 +198,19 @@ const AnnotationForm = () => {
               value={formData.notes}
               onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
               rows={3}
-              className="bg-gradient-subtle border-feynman-blue/30 focus:border-feynman-blue focus:ring-feynman-blue/20"
+              className="resize-none"
             />
           </CardContent>
         </Card>
       </div>
 
       {/* Save Button */}
-      <div className="flex justify-center pt-8">
+      <div className="flex justify-end pt-4">
         <Button
           onClick={handleSave}
-          size="lg"
-          className="glow-border bg-gradient-hero hover:shadow-glow text-feynman-cool px-10 py-4 rounded-xl font-physics text-lg tracking-wide transition-all duration-300 hover:scale-105"
+          className="px-6"
         >
-          <Save className="w-6 h-6 mr-3" />
+          <Save className="w-4 h-4 mr-2" />
           保存标注
         </Button>
       </div>
