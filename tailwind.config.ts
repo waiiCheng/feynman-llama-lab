@@ -49,11 +49,13 @@ export default {
         },
         feynman: {
           blue: "hsl(var(--feynman-blue))",
-          orange: "hsl(var(--feynman-orange))",
+          navy: "hsl(var(--feynman-navy))",
+          accent: "hsl(var(--feynman-accent))",
           warm: "hsl(var(--feynman-warm))",
           cool: "hsl(var(--feynman-cool))",
           text: "hsl(var(--feynman-text))",
           muted: "hsl(var(--feynman-muted))",
+          subtle: "hsl(var(--feynman-subtle))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -69,11 +71,21 @@ export default {
       backgroundImage: {
         'gradient-hero': 'var(--gradient-hero)',
         'gradient-card': 'var(--gradient-card)',
+        'gradient-subtle': 'var(--gradient-subtle)',
+        'gradient-accent': 'var(--gradient-accent)',
+        'pattern-grid': 'var(--pattern-grid)',
+        'pattern-dots': 'var(--pattern-dots)',
       },
       boxShadow: {
         'soft': 'var(--shadow-soft)',
         'medium': 'var(--shadow-medium)',
         'strong': 'var(--shadow-strong)',
+        'glow': 'var(--shadow-glow)',
+      },
+      fontFamily: {
+        'mono': ['JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'monospace'],
+        'physics': ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+        'sans': ['Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -101,6 +113,9 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "quantum-pulse": "quantum-pulse 2s ease-in-out infinite",
+        "energy-wave": "energy-wave 4s ease infinite",
+        "particle-float": "particle-float 20s linear infinite",
       },
     },
   },

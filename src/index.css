@@ -8,50 +8,60 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 222 84% 4.9%;
+    /* Deep Academic Theme */
+    --background: 225 25% 8%;
+    --foreground: 210 30% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222 84% 4.9%;
+    --card: 225 20% 12%;
+    --card-foreground: 210 25% 92%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 4.9%;
+    --popover: 225 20% 12%;
+    --popover-foreground: 210 25% 92%;
 
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 212 85% 65%;
+    --primary-foreground: 225 25% 8%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 225 15% 18%;
+    --secondary-foreground: 210 25% 88%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 225 15% 15%;
+    --muted-foreground: 210 15% 65%;
 
-    --accent: 25 95% 53%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 45 80% 68%;
+    --accent-foreground: 225 25% 8%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 58%;
+    --destructive-foreground: 210 30% 95%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
+    --border: 225 15% 20%;
+    --input: 225 15% 20%;
+    --ring: 212 85% 65%;
     
-    /* Feynman-inspired design tokens */
-    --feynman-blue: 221 83% 53%;
-    --feynman-orange: 25 95% 53%;
-    --feynman-warm: 45 93% 88%;
-    --feynman-cool: 210 20% 98%;
-    --feynman-text: 222 84% 4.9%;
-    --feynman-muted: 215 16% 47%;
+    /* Deep Feynman-inspired design tokens */
+    --feynman-blue: 212 85% 65%;
+    --feynman-navy: 225 40% 25%;
+    --feynman-accent: 45 80% 68%;
+    --feynman-warm: 35 60% 15%;
+    --feynman-cool: 225 25% 8%;
+    --feynman-text: 210 30% 95%;
+    --feynman-muted: 210 15% 65%;
+    --feynman-subtle: 210 8% 45%;
     
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--feynman-blue)), hsl(var(--feynman-orange)));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 20% 98%));
+    /* Sophisticated Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--feynman-navy)) 0%, hsl(var(--feynman-blue)) 50%, hsl(var(--feynman-accent)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(225 18% 14%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(225 20% 12%) 0%, hsl(225 15% 10%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--feynman-blue) / 0.1) 0%, hsl(var(--feynman-accent) / 0.1) 100%);
     
-    /* Shadows */
-    --shadow-soft: 0 2px 8px hsl(var(--feynman-blue) / 0.08);
-    --shadow-medium: 0 4px 16px hsl(var(--feynman-blue) / 0.12);
-    --shadow-strong: 0 8px 32px hsl(var(--feynman-blue) / 0.16);
+    /* Refined Shadows */
+    --shadow-soft: 0 2px 12px hsl(225 50% 5% / 0.3);
+    --shadow-medium: 0 8px 24px hsl(225 50% 5% / 0.4);
+    --shadow-strong: 0 16px 48px hsl(225 50% 5% / 0.5);
+    --shadow-glow: 0 0 20px hsl(var(--feynman-blue) / 0.3);
+    
+    /* Physics-inspired patterns */
+    --pattern-grid: radial-gradient(circle at 1px 1px, hsl(var(--feynman-blue) / 0.1) 1px, transparent 0);
+    --pattern-dots: radial-gradient(circle, hsl(var(--feynman-blue) / 0.05) 1px, transparent 1px);
 
     --radius: 0.5rem;
 
@@ -72,49 +82,55 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark {
-    --background: 222 84% 4.9%;
-    --foreground: 210 40% 98%;
+.dark {
+    /* Enhanced Dark Mode - Even Deeper */
+    --background: 225 30% 5%;
+    --foreground: 210 35% 98%;
 
-    --card: 222 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 225 25% 8%;
+    --card-foreground: 210 30% 96%;
 
-    --popover: 222 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 225 25% 8%;
+    --popover-foreground: 210 30% 96%;
 
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 212 90% 70%;
+    --primary-foreground: 225 30% 5%;
 
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 225 20% 12%;
+    --secondary-foreground: 210 30% 92%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 225 20% 10%;
+    --muted-foreground: 210 18% 70%;
 
-    --accent: 25 95% 53%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 45 85% 72%;
+    --accent-foreground: 225 30% 5%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 80% 62%;
+    --destructive-foreground: 210 35% 98%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 221 83% 53%;
+    --border: 225 20% 15%;
+    --input: 225 20% 15%;
+    --ring: 212 90% 70%;
     
-    /* Dark mode Feynman tokens */
-    --feynman-blue: 221 83% 53%;
-    --feynman-orange: 25 95% 53%;
-    --feynman-warm: 45 93% 12%;
-    --feynman-cool: 222 84% 4.9%;
-    --feynman-text: 210 40% 98%;
-    --feynman-muted: 215 20% 65%;
+    /* Ultra-deep Feynman tokens */
+    --feynman-blue: 212 90% 70%;
+    --feynman-navy: 225 45% 20%;
+    --feynman-accent: 45 85% 72%;
+    --feynman-warm: 35 65% 12%;
+    --feynman-cool: 225 30% 5%;
+    --feynman-text: 210 35% 98%;
+    --feynman-muted: 210 18% 70%;
+    --feynman-subtle: 210 10% 50%;
     
-    --gradient-hero: linear-gradient(135deg, hsl(var(--feynman-blue)), hsl(var(--feynman-orange)));
-    --gradient-card: linear-gradient(145deg, hsl(222 84% 4.9%), hsl(217 33% 17%));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--feynman-navy)) 0%, hsl(var(--feynman-blue)) 50%, hsl(var(--feynman-accent)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(225 22% 10%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(225 25% 8%) 0%, hsl(225 20% 6%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--feynman-blue) / 0.15) 0%, hsl(var(--feynman-accent) / 0.15) 100%);
     
-    --shadow-soft: 0 2px 8px hsl(0 0% 0% / 0.2);
-    --shadow-medium: 0 4px 16px hsl(0 0% 0% / 0.3);
-    --shadow-strong: 0 8px 32px hsl(0 0% 0% / 0.4);
+    --shadow-soft: 0 2px 16px hsl(225 60% 3% / 0.4);
+    --shadow-medium: 0 8px 32px hsl(225 60% 3% / 0.5);
+    --shadow-strong: 0 20px 60px hsl(225 60% 3% / 0.6);
+    --shadow-glow: 0 0 30px hsl(var(--feynman-blue) / 0.4);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -133,5 +149,153 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background-image: var(--pattern-grid);
+    background-size: 20px 20px;
+    background-attachment: fixed;
+  }
+  
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--feynman-blue) / 0.5);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--feynman-blue) / 0.7);
+  }
+}
+
+@layer components {
+  /* Enhanced Card Styles */
+  .physics-card {
+    @apply bg-gradient-card backdrop-blur-sm;
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-medium);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .physics-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      hsl(var(--feynman-blue) / 0.5), 
+      transparent
+    );
+  }
+  
+  /* Glowing Borders */
+  .glow-border {
+    position: relative;
+    border: 1px solid hsl(var(--feynman-blue) / 0.3);
+  }
+  
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, 
+      hsl(var(--feynman-blue) / 0.5), 
+      hsl(var(--feynman-accent) / 0.5)
+    );
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: subtract;
+    -webkit-mask-composite: xor;
+  }
+  
+  /* Animated Background Particles */
+  .particle-bg {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .particle-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--pattern-dots);
+    background-size: 50px 50px;
+    opacity: 0.03;
+    animation: particle-float 20s linear infinite;
+  }
+  
+  /* Quantum-inspired hover effects */
+  .quantum-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .quantum-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+  }
+  
+  /* Scientific typography */
+  .science-text {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    letter-spacing: 0.025em;
+  }
+}
+
+@layer utilities {
+  /* Physics-themed animations */
+  @keyframes particle-float {
+    0% { transform: translateX(-50px) translateY(-50px); }
+    100% { transform: translateX(50px) translateY(50px); }
+  }
+  
+  @keyframes quantum-pulse {
+    0%, 100% { 
+      opacity: 0.5; 
+      transform: scale(1); 
+    }
+    50% { 
+      opacity: 1; 
+      transform: scale(1.05); 
+    }
+  }
+  
+  @keyframes energy-wave {
+    0% { 
+      background-position: 0% 50%; 
+    }
+    50% { 
+      background-position: 100% 50%; 
+    }
+    100% { 
+      background-position: 0% 50%; 
+    }
+  }
+  
+  /* Utility classes */
+  .animate-quantum-pulse {
+    animation: quantum-pulse 2s ease-in-out infinite;
+  }
+  
+  .animate-energy-wave {
+    background: linear-gradient(135deg, 
+      hsl(var(--feynman-blue) / 0.1), 
+      hsl(var(--feynman-accent) / 0.1), 
+      hsl(var(--feynman-blue) / 0.1)
+    );
+    background-size: 400% 400%;
+    animation: energy-wave 4s ease infinite;
   }
 }
