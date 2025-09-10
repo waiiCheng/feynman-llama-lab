@@ -19,6 +19,13 @@ const translations = {
     'nav.settings': '设置',
     'nav.statistics': '统计',
     
+    // Architecture tabs
+    'arch.localTraining': '本地训练',
+    'arch.overview': '架构概览',
+    'arch.knowledgeGraph': '知识图谱',
+    'arch.rag': 'RAG 检索',
+    'arch.fineTuning': '模型微调',
+    
     // Annotation Form
     'annotation.title': '费曼学习法标注',
     'annotation.subtitle': '"If you want to learn about nature, to appreciate nature, it is necessary that you understand the language that she speaks in."',
@@ -64,6 +71,13 @@ const translations = {
     'nav.architecture': 'Architecture',
     'nav.settings': 'Settings',
     'nav.statistics': 'Statistics',
+    
+    // Architecture tabs
+    'arch.localTraining': 'Local Training',
+    'arch.overview': 'Architecture',
+    'arch.knowledgeGraph': 'Knowledge Graph',
+    'arch.rag': 'RAG Retrieval',
+    'arch.fineTuning': 'Fine-tuning',
     
     // Annotation Form
     'annotation.title': 'Feynman Learning Annotation',

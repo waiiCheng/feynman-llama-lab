@@ -1,25 +1,24 @@
-import { useState } from 'react';
-import Header from '@/components/layout/Header';
 import ArchitectureOverview from '@/components/architecture/ArchitectureOverview';
 import KnowledgeGraphLayer from '@/components/architecture/KnowledgeGraphLayer';
 import RAGLayer from '@/components/architecture/RAGLayer';
 import FineTuningLayer from '@/components/architecture/FineTuningLayer';
 import LocalTrainingSetup from '@/components/architecture/LocalTrainingSetup';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Architecture = () => {
+  const { t } = useLanguage();
+  
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="local-training" className="w-full">
-          <TabsList className="grid w-full grid-cols-5 mb-8">
-            <TabsTrigger value="local-training">本地训练</TabsTrigger>
-            <TabsTrigger value="overview">架构概览</TabsTrigger>
-            <TabsTrigger value="knowledge-graph">知识图谱</TabsTrigger>
-            <TabsTrigger value="rag">RAG 检索</TabsTrigger>
-            <TabsTrigger value="fine-tuning">模型微调</TabsTrigger>
-          </TabsList>
+    <main className="container mx-auto px-4 py-8">
+      <Tabs defaultValue="local-training" className="w-full">
+        <TabsList className="grid w-full grid-cols-5 mb-8">
+          <TabsTrigger value="local-training">{t('arch.localTraining')}</TabsTrigger>
+          <TabsTrigger value="overview">{t('arch.overview')}</TabsTrigger>
+          <TabsTrigger value="knowledge-graph">{t('arch.knowledgeGraph')}</TabsTrigger>
+          <TabsTrigger value="rag">{t('arch.rag')}</TabsTrigger>
+          <TabsTrigger value="fine-tuning">{t('arch.fineTuning')}</TabsTrigger>
+        </TabsList>
 
           <TabsContent value="local-training">
             <LocalTrainingSetup />
@@ -41,8 +40,7 @@ const Architecture = () => {
             <FineTuningLayer />
           </TabsContent>
         </Tabs>
-      </main>
-    </div>
+    </main>
   );
 };
 
