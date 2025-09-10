@@ -1,7 +1,7 @@
-import Annotation from './Annotation';
+import { AnnotationWorkspace } from '@/components/workspace/AnnotationWorkspace';
 
 const Index = () => {
-  return <Annotation />;
+  return <AnnotationWorkspace />;
 };
 
 export default Index;

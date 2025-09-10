@@ -1,0 +1,128 @@
+import React, { createContext, useContext, useState } from 'react';
+
+export type Language = 'zh' | 'en';
+
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+const translations = {
+  zh: {
+    // Navigation
+    'nav.annotation': '标注',
+    'nav.management': '管理',
+    'nav.architecture': '架构',
+    'nav.settings': '设置',
+    'nav.statistics': '统计',
+    
+    // Annotation Form
+    'annotation.title': '费曼学习法标注',
+    'annotation.subtitle': '"If you want to learn about nature, to appreciate nature, it is necessary that you understand the language that she speaks in."',
+    'annotation.author': '— Richard P. Feynman',
+    'annotation.question': '用户问题',
+    'annotation.response': '费曼式回答',
+    'annotation.styleFeatures': '思维模式标签',
+    'annotation.quality': '回答质量',
+    'annotation.notes': '备注',
+    'annotation.save': '保存标注',
+    'annotation.saveAndNext': '保存并下一条',
+    
+    // Templates
+    'template.analogy': '这就像...',
+    'template.simplify': '简单来说...',
+    'template.story': '想象一下...',
+    'template.firstPrinciple': '从最基础开始...',
+    'template.example': '比如说...',
+    'template.why': '为什么会这样呢？',
+    'template.conclusion': '总结一下...',
+    
+    // Quality levels
+    'quality.excellent': '优秀范例',
+    'quality.good': '良好',
+    'quality.needsWork': '需改进',
+    
+    // Style features
+    'style.analogy': '使用类比',
+    'style.simplify': '简化复杂',
+    'style.story': '讲故事',
+    'style.firstprinciples': '第一性原理',
+    
+    // Shortcuts
+    'shortcuts.save': 'Ctrl+Enter: 保存并下一条',
+    'shortcuts.tab': 'Tab: 切换字段',
+    'shortcuts.template': '/: 插入模板',
+    'shortcuts.clear': 'Escape: 清空',
+  },
+  en: {
+    // Navigation
+    'nav.annotation': 'Annotation',
+    'nav.management': 'Management',
+    'nav.architecture': 'Architecture',
+    'nav.settings': 'Settings',
+    'nav.statistics': 'Statistics',
+    
+    // Annotation Form
+    'annotation.title': 'Feynman Learning Annotation',
+    'annotation.subtitle': '"If you want to learn about nature, to appreciate nature, it is necessary that you understand the language that she speaks in."',
+    'annotation.author': '— Richard P. Feynman',
+    'annotation.question': 'User Question',
+    'annotation.response': 'Feynman-style Response',
+    'annotation.styleFeatures': 'Thinking Pattern Tags',
+    'annotation.quality': 'Response Quality',
+    'annotation.notes': 'Notes',
+    'annotation.save': 'Save Annotation',
+    'annotation.saveAndNext': 'Save & Next',
+    
+    // Templates
+    'template.analogy': 'This is like...',
+    'template.simplify': 'Simply put...',
+    'template.story': 'Imagine...',
+    'template.firstPrinciple': 'Starting from the basics...',
+    'template.example': 'For example...',
+    'template.why': 'Why does this happen?',
+    'template.conclusion': 'To summarize...',
+    
+    // Quality levels
+    'quality.excellent': 'Excellent',
+    'quality.good': 'Good',
+    'quality.needsWork': 'Needs Work',
+    
+    // Style features
+    'style.analogy': 'Use Analogies',
+    'style.simplify': 'Simplify Complex',
+    'style.story': 'Tell Stories',
+    'style.firstprinciples': 'First Principles',
+    
+    // Shortcuts
+    'shortcuts.save': 'Ctrl+Enter: Save & Next',
+    'shortcuts.tab': 'Tab: Switch Fields',
+    'shortcuts.template': '/: Insert Template',
+    'shortcuts.clear': 'Escape: Clear',
+  }
+};
+
+export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [language, setLanguage] = useState<Language>('zh');
+
+  const t = (key: string): string => {
+    return translations[language][key as keyof typeof translations[typeof language]] || key;
+  };
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (context === undefined) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
+};
