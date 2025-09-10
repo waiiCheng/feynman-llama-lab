@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Database } from 'lucide-react';
+import { BookOpen, Database, Network } from 'lucide-react';
 
 const Header = () => {
   const location = useLocation();
@@ -38,6 +38,16 @@ const Header = () => {
               <Link to="/manage">
                 <Database className="w-4 h-4" />
                 <span>管理</span>
+              </Link>
+            </Button>
+            <Button
+              variant={location.pathname === '/architecture' ? 'default' : 'ghost'}
+              asChild
+              className="flex items-center space-x-2"
+            >
+              <Link to="/architecture">
+                <Network className="w-4 h-4" />
+                <span>架构</span>
               </Link>
             </Button>
           </nav>
