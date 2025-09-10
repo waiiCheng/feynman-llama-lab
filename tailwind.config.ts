@@ -48,18 +48,15 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         feynman: {
-          blue: "hsl(var(--feynman-blue))",
           navy: "hsl(var(--feynman-navy))",
-          accent: "hsl(var(--feynman-accent))",
+          terminal: "hsl(var(--feynman-terminal))",
+          quantum: "hsl(var(--feynman-quantum))",
+          classical: "hsl(var(--feynman-classical))",
           warm: "hsl(var(--feynman-warm))",
           cool: "hsl(var(--feynman-cool))",
           text: "hsl(var(--feynman-text))",
           muted: "hsl(var(--feynman-muted))",
           subtle: "hsl(var(--feynman-subtle))",
-        },
-        terminal: {
-          green: "hsl(var(--terminal-green))",
-          glow: "hsl(var(--terminal-glow))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

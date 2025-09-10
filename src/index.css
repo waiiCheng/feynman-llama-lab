@@ -8,60 +8,65 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Deep Academic Theme */
-    --background: 225 25% 8%;
-    --foreground: 210 30% 95%;
+    /* Deep Navy + Terminal Green Theme */
+    --background: 228 35% 6%;
+    --foreground: 210 25% 94%;
 
-    --card: 225 20% 12%;
-    --card-foreground: 210 25% 92%;
+    --card: 228 30% 9%;
+    --card-foreground: 210 20% 91%;
 
-    --popover: 225 20% 12%;
-    --popover-foreground: 210 25% 92%;
+    --popover: 228 30% 9%;
+    --popover-foreground: 210 20% 91%;
 
-    --primary: 212 85% 65%;
-    --primary-foreground: 225 25% 8%;
+    --primary: 145 25% 55%;
+    --primary-foreground: 228 35% 6%;
 
-    --secondary: 225 15% 18%;
-    --secondary-foreground: 210 25% 88%;
+    --secondary: 228 20% 14%;
+    --secondary-foreground: 210 20% 86%;
 
-    --muted: 225 15% 15%;
-    --muted-foreground: 210 15% 65%;
+    --muted: 228 20% 12%;
+    --muted-foreground: 210 12% 62%;
 
-    --accent: 45 80% 68%;
-    --accent-foreground: 225 25% 8%;
+    --accent: 35 30% 58%;
+    --accent-foreground: 228 35% 6%;
 
-    --destructive: 0 75% 58%;
-    --destructive-foreground: 210 30% 95%;
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 210 25% 94%;
 
-    --border: 225 15% 20%;
-    --input: 225 15% 20%;
-    --ring: 212 85% 65%;
+    --border: 228 20% 16%;
+    --input: 228 20% 16%;
+    --ring: 145 25% 55%;
     
-    /* Deep Feynman-inspired design tokens */
-    --feynman-blue: 212 85% 65%;
-    --feynman-navy: 225 40% 25%;
-    --feynman-accent: 45 80% 68%;
-    --feynman-warm: 35 60% 15%;
-    --feynman-cool: 225 25% 8%;
-    --feynman-text: 210 30% 95%;
-    --feynman-muted: 210 15% 65%;
-    --feynman-subtle: 210 8% 45%;
+    /* Refined Feynman Color Palette */
+    --feynman-navy: 228 40% 15%;        /* Deep navy blue - primary */
+    --feynman-terminal: 145 25% 55%;     /* Terminal green - primary */
+    --feynman-quantum: 210 30% 65%;      /* Quantum blue - secondary */
+    --feynman-classical: 35 30% 58%;     /* Classical gold-brown - secondary */
+    --feynman-warm: 25 25% 18%;          /* Warm classical tone */
+    --feynman-cool: 228 35% 6%;          /* Cool deep background */
+    --feynman-text: 210 25% 94%;         /* High contrast text */
+    --feynman-muted: 210 12% 62%;        /* Muted secondary text */
+    --feynman-subtle: 210 8% 45%;        /* Subtle accents */
     
-    /* Sophisticated Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--feynman-navy)) 0%, hsl(var(--feynman-blue)) 50%, hsl(var(--feynman-accent)) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(225 18% 14%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(225 20% 12%) 0%, hsl(225 15% 10%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(var(--feynman-blue) / 0.1) 0%, hsl(var(--feynman-accent) / 0.1) 100%);
+    /* Art + Tech Fusion Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--feynman-navy)) 0%, hsl(var(--feynman-terminal)) 50%, hsl(var(--feynman-classical)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(228 25% 11%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(228 30% 9%) 0%, hsl(228 25% 7%) 100%);
+    --gradient-terminal: linear-gradient(135deg, hsl(var(--feynman-terminal) / 0.1) 0%, hsl(var(--feynman-quantum) / 0.1) 100%);
+    --gradient-classical: linear-gradient(135deg, hsl(var(--feynman-classical) / 0.1) 0%, hsl(var(--feynman-warm) / 0.1) 100%);
     
     /* Refined Shadows */
-    --shadow-soft: 0 2px 12px hsl(225 50% 5% / 0.3);
-    --shadow-medium: 0 8px 24px hsl(225 50% 5% / 0.4);
-    --shadow-strong: 0 16px 48px hsl(225 50% 5% / 0.5);
-    --shadow-glow: 0 0 20px hsl(var(--feynman-blue) / 0.3);
+    --shadow-soft: 0 2px 12px hsl(228 60% 3% / 0.3);
+    --shadow-medium: 0 8px 24px hsl(228 60% 3% / 0.4);
+    --shadow-strong: 0 16px 48px hsl(228 60% 3% / 0.5);
+    --shadow-terminal: 0 0 20px hsl(var(--feynman-terminal) / 0.25);
+    --shadow-classical: 0 0 20px hsl(var(--feynman-classical) / 0.25);
     
     /* Physics-inspired patterns */
-    --pattern-grid: radial-gradient(circle at 1px 1px, hsl(var(--feynman-blue) / 0.1) 1px, transparent 0);
-    --pattern-dots: radial-gradient(circle, hsl(var(--feynman-blue) / 0.05) 1px, transparent 1px);
+    --pattern-grid: radial-gradient(circle at 1px 1px, hsl(var(--feynman-terminal) / 0.08) 1px, transparent 0);
+    --pattern-dots: radial-gradient(circle, hsl(var(--feynman-terminal) / 0.04) 1px, transparent 1px);
+    --pattern-terminal: linear-gradient(90deg, hsl(var(--feynman-terminal) / 0.1) 1px, transparent 1px);
+    --pattern-classical: radial-gradient(circle at center, hsl(var(--feynman-classical) / 0.05), transparent 70%);
 
     --radius: 0.5rem;
 
@@ -83,54 +88,57 @@ All colors MUST be HSL.
   }
 
 .dark {
-    /* Enhanced Dark Mode - Even Deeper */
-    --background: 225 30% 5%;
-    --foreground: 210 35% 98%;
+    /* Ultra-Deep Navy + Terminal Theme */
+    --background: 228 40% 4%;
+    --foreground: 210 30% 96%;
 
-    --card: 225 25% 8%;
-    --card-foreground: 210 30% 96%;
+    --card: 228 35% 7%;
+    --card-foreground: 210 25% 94%;
 
-    --popover: 225 25% 8%;
-    --popover-foreground: 210 30% 96%;
+    --popover: 228 35% 7%;
+    --popover-foreground: 210 25% 94%;
 
-    --primary: 212 90% 70%;
-    --primary-foreground: 225 30% 5%;
+    --primary: 145 30% 58%;
+    --primary-foreground: 228 40% 4%;
 
-    --secondary: 225 20% 12%;
-    --secondary-foreground: 210 30% 92%;
+    --secondary: 228 25% 11%;
+    --secondary-foreground: 210 25% 89%;
 
-    --muted: 225 20% 10%;
-    --muted-foreground: 210 18% 70%;
+    --muted: 228 25% 8%;
+    --muted-foreground: 210 15% 68%;
 
-    --accent: 45 85% 72%;
-    --accent-foreground: 225 30% 5%;
+    --accent: 35 35% 62%;
+    --accent-foreground: 228 40% 4%;
 
-    --destructive: 0 80% 62%;
-    --destructive-foreground: 210 35% 98%;
+    --destructive: 0 70% 58%;
+    --destructive-foreground: 210 30% 96%;
 
-    --border: 225 20% 15%;
-    --input: 225 20% 15%;
-    --ring: 212 90% 70%;
+    --border: 228 25% 13%;
+    --input: 228 25% 13%;
+    --ring: 145 30% 58%;
     
-    /* Ultra-deep Feynman tokens */
-    --feynman-blue: 212 90% 70%;
-    --feynman-navy: 225 45% 20%;
-    --feynman-accent: 45 85% 72%;
-    --feynman-warm: 35 65% 12%;
-    --feynman-cool: 225 30% 5%;
-    --feynman-text: 210 35% 98%;
-    --feynman-muted: 210 18% 70%;
-    --feynman-subtle: 210 10% 50%;
+    /* Enhanced Dark Feynman Palette */
+    --feynman-navy: 228 45% 12%;         /* Deeper navy blue */
+    --feynman-terminal: 145 30% 58%;      /* Brighter terminal green */
+    --feynman-quantum: 210 35% 68%;       /* Enhanced quantum blue */
+    --feynman-classical: 35 35% 62%;      /* Warmer classical gold */
+    --feynman-warm: 25 30% 15%;           /* Deeper warm tones */
+    --feynman-cool: 228 40% 4%;           /* Ultra-deep background */
+    --feynman-text: 210 30% 96%;          /* Enhanced readability */
+    --feynman-muted: 210 15% 68%;         /* Better contrast muted */
+    --feynman-subtle: 210 12% 48%;        /* Refined subtle */
     
-    --gradient-hero: linear-gradient(135deg, hsl(var(--feynman-navy)) 0%, hsl(var(--feynman-blue)) 50%, hsl(var(--feynman-accent)) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(225 22% 10%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(225 25% 8%) 0%, hsl(225 20% 6%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(var(--feynman-blue) / 0.15) 0%, hsl(var(--feynman-accent) / 0.15) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--feynman-navy)) 0%, hsl(var(--feynman-terminal)) 50%, hsl(var(--feynman-classical)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(228 30% 9%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(228 35% 7%) 0%, hsl(228 30% 5%) 100%);
+    --gradient-terminal: linear-gradient(135deg, hsl(var(--feynman-terminal) / 0.15) 0%, hsl(var(--feynman-quantum) / 0.15) 100%);
+    --gradient-classical: linear-gradient(135deg, hsl(var(--feynman-classical) / 0.15) 0%, hsl(var(--feynman-warm) / 0.15) 100%);
     
-    --shadow-soft: 0 2px 16px hsl(225 60% 3% / 0.4);
-    --shadow-medium: 0 8px 32px hsl(225 60% 3% / 0.5);
-    --shadow-strong: 0 20px 60px hsl(225 60% 3% / 0.6);
-    --shadow-glow: 0 0 30px hsl(var(--feynman-blue) / 0.4);
+    --shadow-soft: 0 2px 16px hsl(228 70% 2% / 0.4);
+    --shadow-medium: 0 8px 32px hsl(228 70% 2% / 0.5);
+    --shadow-strong: 0 20px 60px hsl(228 70% 2% / 0.6);
+    --shadow-terminal: 0 0 30px hsl(var(--feynman-terminal) / 0.3);
+    --shadow-classical: 0 0 30px hsl(var(--feynman-classical) / 0.3);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

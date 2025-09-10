@@ -84,7 +84,7 @@ const KnowledgeGraphLayer = () => {
       <Card className="bg-gradient-card shadow-medium">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <Search className="w-5 h-5 text-feynman-blue" />
+            <Search className="w-5 h-5 text-feynman-terminal" />
             <span>图谱搜索</span>
           </CardTitle>
         </CardHeader>
@@ -109,7 +109,7 @@ const KnowledgeGraphLayer = () => {
         <Card className="bg-gradient-card shadow-medium">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <Brain className="w-5 h-5 text-feynman-orange" />
+              <Brain className="w-5 h-5 text-feynman-classical" />
               <span>概念节点</span>
             </CardTitle>
           </CardHeader>
@@ -143,7 +143,7 @@ const KnowledgeGraphLayer = () => {
         <Card className="bg-gradient-card shadow-medium">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <Network className="w-5 h-5 text-feynman-blue" />
+              <Network className="w-5 h-5 text-feynman-quantum" />
               <span>关系网络</span>
             </CardTitle>
           </CardHeader>
@@ -159,9 +159,9 @@ const KnowledgeGraphLayer = () => {
                     <span className="font-medium text-feynman-text">{rel.to}</span>
                   </div>
                   <div className="mt-2">
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-muted rounded-full h-2">
                       <div 
-                        className="bg-feynman-blue h-2 rounded-full" 
+                        className="bg-feynman-terminal h-2 rounded-full" 
                         style={{ width: `${rel.strength * 100}%` }}
                       ></div>
                     </div>
@@ -180,7 +180,7 @@ const KnowledgeGraphLayer = () => {
       <Card className="bg-gradient-card shadow-medium">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <Brain className="w-5 h-5 text-feynman-orange" />
+            <Brain className="w-5 h-5 text-feynman-classical" />
             <span>推理引擎</span>
           </CardTitle>
         </CardHeader>
@@ -210,14 +210,14 @@ const KnowledgeGraphLayer = () => {
       </Card>
 
       {/* 构建提示 */}
-      <Card className="bg-blue-50 border-blue-200">
+      <Card className="bg-gradient-terminal border border-feynman-terminal/20">
         <CardContent className="pt-6">
           <div className="text-center space-y-2">
-            <h3 className="font-medium text-blue-800">本地图数据库</h3>
-            <p className="text-sm text-blue-600">
+            <h3 className="font-medium text-feynman-text">本地图数据库</h3>
+            <p className="text-sm text-feynman-muted">
               知识图谱可以使用 NetworkX (Python) 或 Neo4j 在本地构建
             </p>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+            <Button className="bg-feynman-terminal hover:bg-feynman-terminal/90 text-feynman-cool">
               下载图谱构建脚本
             </Button>
           </div>
