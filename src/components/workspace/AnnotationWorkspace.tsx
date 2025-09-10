@@ -11,6 +11,7 @@ import { AnnotationForm } from './AnnotationForm';
 import { PreviewPanel } from './PreviewPanel';
 import { ClassicalBackground } from '@/components/effects/ClassicalBackground';
 import { TypewriterTitle } from '@/components/effects/TypewriterTitle';
+import { Keyboard, EyeOff, Eye, Languages } from 'lucide-react';
 
 interface AnnotationData {
   question: string;
