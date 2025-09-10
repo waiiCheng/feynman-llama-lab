@@ -128,17 +128,42 @@ All colors MUST be HSL.
     --feynman-muted: 210 15% 68%;         /* Better contrast muted */
     --feynman-subtle: 210 12% 48%;        /* Refined subtle */
     
-    --gradient-hero: linear-gradient(135deg, hsl(var(--feynman-navy)) 0%, hsl(var(--feynman-terminal)) 50%, hsl(var(--feynman-classical)) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(228 30% 9%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(228 35% 7%) 0%, hsl(228 30% 5%) 100%);
-    --gradient-terminal: linear-gradient(135deg, hsl(var(--feynman-terminal) / 0.15) 0%, hsl(var(--feynman-quantum) / 0.15) 100%);
-    --gradient-classical: linear-gradient(135deg, hsl(var(--feynman-classical) / 0.15) 0%, hsl(var(--feynman-warm) / 0.15) 100%);
+    /* Classical Art Enhancement Colors */
+    --classical-gold: 43 74% 66%;
+    --classical-bronze: 30 45% 42%;
+    --royal-purple: 280 50% 45%;
+    --marble-white: 0 0% 98%;
+    --ink-black: 220 20% 8%;
     
-    --shadow-soft: 0 2px 16px hsl(228 70% 2% / 0.4);
-    --shadow-medium: 0 8px 32px hsl(228 70% 2% / 0.5);
-    --shadow-strong: 0 20px 60px hsl(228 70% 2% / 0.6);
-    --shadow-terminal: 0 0 30px hsl(var(--feynman-terminal) / 0.3);
-    --shadow-classical: 0 0 30px hsl(var(--feynman-classical) / 0.3);
+    /* Deep scholarly atmosphere */
+    --sidebar: 220 30% 8%;
+    --sidebar-primary: 220 25% 12%;
+    --sidebar-primary-foreground: 220 15% 95%;
+    --sidebar-accent: 200 80% 65%;
+    --sidebar-accent-foreground: 220 30% 8%;
+    --sidebar-border: 220 20% 20%;
+    --sidebar-ring: 200 80% 65%;
+    
+    /* Enhanced gradients - Classical Art Fusion */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--classical-gold)), hsl(var(--feynman-terminal)), hsl(var(--royal-purple)));
+    --gradient-classical: linear-gradient(180deg, hsl(var(--classical-gold)/0.1), hsl(var(--classical-bronze)/0.05));
+    --gradient-marble: linear-gradient(45deg, hsl(var(--marble-white)), hsl(var(--marble-white)/0.8));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--classical-gold)/0.02), hsl(var(--card)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--feynman-terminal)/0.1), hsl(var(--classical-gold)/0.05));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--classical-gold)/0.02));
+    --gradient-royal: linear-gradient(120deg, hsl(var(--royal-purple)/0.1), hsl(var(--feynman-terminal)/0.1));
+
+    /* Enhanced shadows with classical depth */
+    --shadow-soft: 0 8px 25px hsl(var(--ink-black)/0.15), 0 3px 10px hsl(var(--classical-bronze)/0.1);
+    --shadow-classical: 0 12px 35px hsl(var(--classical-bronze)/0.2), 0 5px 15px hsl(var(--ink-black)/0.1);
+    --shadow-terminal: 0 0 25px hsl(var(--feynman-terminal)/0.3), 0 0 50px hsl(var(--feynman-terminal)/0.1);
+    --shadow-glow: 0 0 40px hsl(var(--classical-gold)/0.4), 0 0 80px hsl(var(--feynman-terminal)/0.2);
+    --shadow-royal: 0 15px 45px hsl(var(--royal-purple)/0.2), 0 8px 20px hsl(var(--ink-black)/0.15);
+    
+    /* Classical art patterns */
+    --pattern-renaissance: radial-gradient(ellipse at 30% 70%, hsl(var(--classical-gold)/0.08) 0%, transparent 60%);
+    --pattern-marble-veins: linear-gradient(60deg, transparent 40%, hsl(var(--classical-bronze)/0.05) 42%, hsl(var(--classical-bronze)/0.05) 44%, transparent 46%);
+    --pattern-classical-grid: repeating-linear-gradient(45deg, transparent, transparent 35px, hsl(var(--classical-gold)/0.02) 35px, hsl(var(--classical-gold)/0.02) 36px);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -181,129 +206,174 @@ All colors MUST be HSL.
   }
 }
 
-@layer components {
-  /* Enhanced Card Styles */
-  .physics-card {
-    @apply bg-gradient-card backdrop-blur-sm;
-    border: 1px solid hsl(var(--border));
-    box-shadow: var(--shadow-medium);
-    position: relative;
-    overflow: hidden;
+/* Classical Art + Tech Fusion Components */
+.physics-card {
+  @apply bg-gradient-card backdrop-blur-sm border border-classical-gold/20 shadow-classical rounded-2xl relative overflow-hidden;
+}
+
+.physics-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--pattern-marble-veins), var(--pattern-renaissance);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.glow-border {
+  @apply border border-classical-gold/40 shadow-royal rounded-xl backdrop-blur-sm relative;
+  background: linear-gradient(145deg, hsl(var(--card)/0.8), hsl(var(--classical-gold)/0.02));
+}
+
+.glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  padding: 2px;
+  background: linear-gradient(45deg, hsl(var(--classical-gold)), hsl(var(--feynman-terminal)), hsl(var(--royal-purple)));
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-border:hover::after {
+  opacity: 0.7;
+}
+
+.classical-bg {
+  background: 
+    var(--pattern-classical-grid),
+    var(--pattern-renaissance),
+    var(--pattern-marble-veins),
+    linear-gradient(135deg, hsl(var(--background)), hsl(var(--classical-gold)/0.03), hsl(var(--background)));
+  background-size: 80px 80px, 120px 120px, 40px 40px, 100% 100%;
+  animation: classical-float 25s ease-in-out infinite;
+}
+
+.quantum-hover {
+  @apply transition-all duration-500 hover:shadow-royal hover:scale-[1.02] hover:border-classical-gold/60;
+  transform-style: preserve-3d;
+}
+
+.quantum-hover:hover {
+  transform: translateY(-4px) rotateX(2deg);
+}
+
+.science-text {
+  @apply font-mono text-feynman-muted leading-relaxed;
+  text-shadow: 0 1px 2px hsl(var(--ink-black)/0.1);
+}
+
+.typewriter-cursor::after {
+  content: '|';
+  animation: cursor-blink 1s infinite;
+  color: hsl(var(--classical-gold));
+}
+
+/* Classical Art + Tech Animations */
+@keyframes classical-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); background-position: 0% 0%, 0% 0%, 0% 0%; }
+  25% { transform: translateY(-15px) rotate(2deg); background-position: 25% 25%, 10% 10%, 50% 0%; }
+  50% { transform: translateY(-25px) rotate(-1deg); background-position: 50% 50%, 20% 20%, 100% 50%; }
+  75% { transform: translateY(-10px) rotate(1deg); background-position: 75% 25%, 30% 10%, 150% 25%; }
+}
+
+@keyframes quantum-pulse {
+  0%, 100% { 
+    opacity: 0.9; 
+    transform: scale(1);
+    box-shadow: 0 0 20px hsl(var(--classical-gold)/0.3);
   }
-  
-  .physics-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, 
-      transparent, 
-      hsl(var(--feynman-blue) / 0.5), 
-      transparent
-    );
-  }
-  
-  /* Glowing Borders */
-  .glow-border {
-    position: relative;
-    border: 1px solid hsl(var(--feynman-blue) / 0.3);
-  }
-  
-  .glow-border::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, 
-      hsl(var(--feynman-blue) / 0.5), 
-      hsl(var(--feynman-accent) / 0.5)
-    );
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: subtract;
-    -webkit-mask-composite: xor;
-  }
-  
-  /* Animated Background Particles */
-  .particle-bg {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .particle-bg::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--pattern-dots);
-    background-size: 50px 50px;
-    opacity: 0.03;
-    animation: particle-float 20s linear infinite;
-  }
-  
-  /* Quantum-inspired hover effects */
-  .quantum-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .quantum-hover:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-glow);
-  }
-  
-  /* Scientific typography */
-  .science-text {
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
-    letter-spacing: 0.025em;
+  50% { 
+    opacity: 1; 
+    transform: scale(1.08);
+    box-shadow: 0 0 35px hsl(var(--classical-gold)/0.5), 0 0 50px hsl(var(--feynman-terminal)/0.3);
   }
 }
 
-@layer utilities {
-  /* Physics-themed animations */
-  @keyframes particle-float {
-    0% { transform: translateX(-50px) translateY(-50px); }
-    100% { transform: translateX(50px) translateY(50px); }
+@keyframes energy-wave {
+  0% { transform: translateX(-100%) skewX(15deg); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(200%) skewX(15deg); opacity: 0; }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes marble-shimmer {
+  0%, 100% { transform: translateX(-100%); opacity: 0; }
+  50% { transform: translateX(0%); opacity: 0.6; }
+}
+
+@keyframes royal-entrance {
+  0% { 
+    opacity: 0; 
+    transform: translateY(30px) rotateX(10deg); 
+    filter: blur(10px); 
   }
-  
-  @keyframes quantum-pulse {
-    0%, 100% { 
-      opacity: 0.5; 
-      transform: scale(1); 
-    }
-    50% { 
-      opacity: 1; 
-      transform: scale(1.05); 
-    }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0px) rotateX(0deg); 
+    filter: blur(0px); 
   }
-  
-  @keyframes energy-wave {
-    0% { 
-      background-position: 0% 50%; 
-    }
-    50% { 
-      background-position: 100% 50%; 
-    }
-    100% { 
-      background-position: 0% 50%; 
-    }
-  }
-  
-  /* Utility classes */
-  .animate-quantum-pulse {
-    animation: quantum-pulse 2s ease-in-out infinite;
-  }
-  
-  .animate-energy-wave {
-    background: linear-gradient(135deg, 
-      hsl(var(--feynman-blue) / 0.1), 
-      hsl(var(--feynman-accent) / 0.1), 
-      hsl(var(--feynman-blue) / 0.1)
-    );
-    background-size: 400% 400%;
-    animation: energy-wave 4s ease infinite;
-  }
+}
+
+/* Animation utilities */
+.animate-classical-float {
+  animation: classical-float 25s ease-in-out infinite;
+}
+
+.animate-quantum-pulse {
+  animation: quantum-pulse 2.5s ease-in-out infinite;
+}
+
+.animate-energy-wave {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-energy-wave::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, hsl(var(--classical-gold)/0.4), hsl(var(--feynman-terminal)/0.3), transparent);
+  animation: energy-wave 4s ease-in-out infinite;
+}
+
+.animate-typewriter {
+  overflow: hidden;
+  border-right: 2px solid hsl(var(--classical-gold));
+  white-space: nowrap;
+  margin: 0 auto;
+  animation: typewriter 3s steps(40, end), cursor-blink 1s infinite step-end;
+}
+
+.animate-marble-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, hsl(var(--marble-white)/0.3), transparent);
+  animation: marble-shimmer 3s ease-in-out infinite;
+}
+
+.animate-royal-entrance {
+  animation: royal-entrance 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }

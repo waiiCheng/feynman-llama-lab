@@ -8,16 +8,26 @@ const Header = () => {
   const { language, setLanguage, t } = useLanguage();
 
   return (
-    <header className="bg-card shadow-soft border-b">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-hero rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">F</span>
+    <header className="bg-gradient-classical shadow-royal border-b border-classical-gold/30 backdrop-blur-xl relative overflow-hidden">
+      {/* Classical ornamental background */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="w-full h-full bg-pattern-renaissance" />
+      </div>
+      
+      <div className="relative container mx-auto px-4 py-6">
+        <div className="flex items-center justify-between animate-royal-entrance">
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 bg-gradient-hero rounded-2xl flex items-center justify-center shadow-glow relative animate-quantum-pulse">
+              <span className="text-marble-white font-bold text-lg font-physics">F</span>
+              <div className="absolute inset-0 rounded-2xl bg-gradient-hero animate-energy-wave opacity-30" />
             </div>
-            <div>
-              <h1 className="font-bold text-xl text-feynman-text">Feynman LLM</h1>
-              <p className="text-sm text-feynman-muted">Learning by Teaching</p>
+            <div className="space-y-1">
+              <h1 className="font-bold text-2xl text-feynman-text font-physics tracking-wide">
+                <span className="bg-gradient-hero bg-clip-text text-transparent">
+                  Feynman LLM
+                </span>
+              </h1>
+              <p className="text-sm text-classical-gold science-text">Learning by Teaching</p>
             </div>
           </div>
           
@@ -25,44 +35,44 @@ const Header = () => {
             <Button
               variant={location.pathname === '/' ? 'default' : 'ghost'}
               asChild
-              className="flex items-center space-x-2"
+              className="glow-border hover:shadow-terminal transition-all duration-300 hover:scale-105"
             >
-              <Link to="/">
-                <BookOpen className="w-4 h-4" />
-                <span>{t('nav.annotation')}</span>
+              <Link to="/" className="flex items-center space-x-2">
+                <BookOpen className="w-4 h-4 text-classical-gold" />
+                <span className="font-physics">{t('nav.annotation')}</span>
               </Link>
             </Button>
             <Button
               variant={location.pathname === '/manage' ? 'default' : 'ghost'}
               asChild
-              className="flex items-center space-x-2"
+              className="glow-border hover:shadow-terminal transition-all duration-300 hover:scale-105"
             >
-              <Link to="/manage">
-                <Database className="w-4 h-4" />
-                <span>{t('nav.management')}</span>
+              <Link to="/manage" className="flex items-center space-x-2">
+                <Database className="w-4 h-4 text-feynman-terminal" />
+                <span className="font-physics">{t('nav.management')}</span>
               </Link>
             </Button>
             <Button
               variant={location.pathname === '/architecture' ? 'default' : 'ghost'}
               asChild
-              className="flex items-center space-x-2"
+              className="glow-border hover:shadow-terminal transition-all duration-300 hover:scale-105"
             >
-              <Link to="/architecture">
-                <Network className="w-4 h-4" />
-                <span>{t('nav.architecture')}</span>
+              <Link to="/architecture" className="flex items-center space-x-2">
+                <Network className="w-4 h-4 text-royal-purple" />
+                <span className="font-physics">{t('nav.architecture')}</span>
               </Link>
             </Button>
             
-            {/* Language Switcher */}
-            <div className="ml-4 pl-4 border-l border-border">
+            {/* Enhanced Language Switcher */}
+            <div className="ml-4 pl-4 border-l border-classical-gold/30">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setLanguage(language === 'zh' ? 'en' : 'zh')}
-                className="flex items-center space-x-1"
+                className="glow-border hover:shadow-glow transition-all duration-300 hover:scale-105 bg-gradient-subtle"
               >
-                <Globe className="w-4 h-4" />
-                <span className="text-xs font-mono">{language.toUpperCase()}</span>
+                <Globe className="w-4 h-4 text-feynman-terminal animate-quantum-pulse" />
+                <span className="ml-2 text-xs font-mono text-classical-gold">{language.toUpperCase()}</span>
               </Button>
             </div>
           </nav>

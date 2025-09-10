@@ -99,7 +99,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
             placeholder="例如：什么是量子力学？"
             value={formData.question}
             onChange={(e) => setFormData(prev => ({ ...prev, question: e.target.value }))}
-            className="text-lg bg-gradient-subtle border-feynman-blue/30 focus:border-feynman-blue focus:ring-feynman-blue/20 font-mono"
+            className="text-lg bg-gradient-subtle border-classical-gold/30 focus:border-classical-gold focus:ring-classical-gold/20 font-mono shadow-soft hover:shadow-classical transition-all duration-300"
           />
         </CardContent>
       </Card>
@@ -122,10 +122,15 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
             value={formData.response}
             onChange={(e) => setFormData(prev => ({ ...prev, response: e.target.value }))}
             rows={8}
-            className="text-base leading-relaxed bg-gradient-subtle border-feynman-blue/30 focus:border-feynman-blue focus:ring-feynman-blue/20 font-mono resize-none"
+            className="text-base leading-relaxed bg-gradient-subtle border-classical-gold/30 focus:border-classical-gold focus:ring-classical-gold/20 font-mono resize-none shadow-soft hover:shadow-royal transition-all duration-300"
           />
-          <div className="mt-2 text-xs text-feynman-muted">
-            字数: {formData.response.length} | 按 / 快速插入模板
+          <div className="mt-3 flex justify-between items-center text-xs">
+            <span className="text-feynman-muted science-text">
+              字数: <span className="text-classical-gold font-bold">{formData.response.length}</span>
+            </span>
+            <span className="text-classical-gold/70 bg-classical-gold/10 px-2 py-1 rounded border border-classical-gold/20 animate-energy-wave">
+              按 / 快速插入模板
+            </span>
           </div>
         </CardContent>
       </Card>
@@ -143,20 +148,20 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
             {styleOptions.map((option) => {
               const Icon = option.icon;
               return (
-                <div key={option.id} className="glow-border rounded-xl p-4 hover:bg-gradient-accent transition-all duration-300">
-                  <div className="flex items-start space-x-3">
+                <div key={option.id} className="glow-border rounded-xl p-4 hover:bg-gradient-royal transition-all duration-500 hover:scale-[1.02] hover:shadow-glow group">
+                  <div className="flex items-start space-x-4">
                     <Checkbox
                       id={option.id}
                       checked={formData.styleFeatures.includes(option.id)}
                       onCheckedChange={(checked) => handleStyleFeatureChange(option.id, checked as boolean)}
-                      className="border-feynman-blue/50 data-[state=checked]:bg-feynman-blue"
+                      className="border-classical-gold/50 data-[state=checked]:bg-classical-gold data-[state=checked]:border-classical-gold shadow-classical"
                     />
                     <div className="flex-1">
-                      <label htmlFor={option.id} className="flex items-center space-x-3 cursor-pointer">
-                        <Icon className="w-5 h-5 text-feynman-blue animate-quantum-pulse" />
-                        <span className="font-medium text-feynman-text">{t(option.key)}</span>
+                      <label htmlFor={option.id} className="flex items-center space-x-3 cursor-pointer group-hover:text-marble-white transition-colors">
+                        <Icon className="w-5 h-5 text-classical-gold animate-quantum-pulse group-hover:text-feynman-terminal transition-colors" />
+                        <span className="font-medium text-feynman-text font-physics">{t(option.key)}</span>
                       </label>
-                      <p className="text-sm text-feynman-muted mt-1 science-text">{option.description}</p>
+                      <p className="text-sm text-feynman-muted mt-2 science-text leading-relaxed group-hover:text-classical-gold/80 transition-colors">{option.description}</p>
                     </div>
                   </div>
                 </div>
@@ -223,11 +228,14 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
         <Button
           onClick={handleSave}
           size="lg"
-          className="glow-border bg-gradient-hero hover:shadow-glow text-feynman-cool px-10 py-4 rounded-xl font-physics text-lg tracking-wide transition-all duration-300 hover:scale-105"
+          className="glow-border bg-gradient-hero hover:shadow-glow text-marble-white px-12 py-5 rounded-2xl font-physics text-lg tracking-wide transition-all duration-500 hover:scale-110 hover:rotate-1 shadow-royal animate-energy-wave relative group overflow-hidden"
         >
-          <Save className="w-6 h-6 mr-3" />
-          {t('annotation.saveAndNext')}
-          <span className="ml-2 text-sm opacity-80">Ctrl+Enter</span>
+          <div className="flex items-center relative z-10">
+            <Save className="w-6 h-6 mr-3 group-hover:rotate-12 transition-transform duration-300" />
+            <span className="group-hover:tracking-wider transition-all duration-300">{t('annotation.saveAndNext')}</span>
+            <span className="ml-3 text-sm opacity-80 bg-marble-white/10 px-2 py-1 rounded border border-marble-white/20">Ctrl+Enter</span>
+          </div>
+          <div className="absolute inset-0 bg-gradient-marble opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
         </Button>
       </div>
     </div>
