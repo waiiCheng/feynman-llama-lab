@@ -3,13 +3,63 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Slider } from '@/components/ui/slider';
 import { Database, FileText, Search, Upload, Zap, BookOpen } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useToast } from '@/hooks/use-toast';
 
 const RAGLayer = () => {
   const { t } = useLanguage();
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<Array<{id: string, content: string, similarity: number}>>([]);
+  const [topK, setTopK] = useState([5]);
+  const [similarityThreshold, setSimilarityThreshold] = useState([0.7]);
+  const [maxTokens, setMaxTokens] = useState([1000]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      // Mock search results
+      const mockResults = [
+        {
+          id: '1',
+          content: '费曼关于光的解释：光是由光子组成的，光子是能量包，当它们撞击电子时会发生散射...',
+          similarity: 0.92
+        },
+        {
+          id: '2', 
+          content: '瑞利散射的机制：当光波长远大于粒子尺寸时，散射强度与波长的四次方成反比...',
+          similarity: 0.85
+        },
+        {
+          id: '3',
+          content: '费曼在《物理学讲义》中提到：要理解天空为什么是蓝色，我们需要从光与原子的相互作用开始...',
+          similarity: 0.78
+        }
+      ];
+      setSearchResults(mockResults);
+      toast({
+        title: t('action.searchCompleted'),
+        description: t('action.searchDesc', { count: mockResults.length }),
+      });
+    }
+  };
+  
+  const handleFileUpload = () => {
+    fileInputRef.current?.click();
+  };
+  
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      toast({
+        title: '文档上传成功',
+        description: `已上传 ${files.length} 个文档，正在处理中...`,
+      });
+    }
+  };
 
   // Mock vector database data
   const vectorCollections = [
@@ -98,12 +148,31 @@ const RAGLayer = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="flex-1"
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             />
-            <Button className="bg-feynman-blue hover:bg-feynman-blue/90">
+            <Button className="bg-feynman-blue hover:bg-feynman-blue/90" onClick={handleSearch}>
               <Zap className="w-4 h-4 mr-2" />
               {t('rag.retrieve')}
             </Button>
           </div>
+          
+          {searchResults.length > 0 && (
+            <div className="mt-6">
+              <h3 className="text-lg font-medium mb-4">{t('rag.results')}</h3>
+              <div className="space-y-4">
+                {searchResults.map((result) => (
+                  <Card key={result.id}>
+                    <CardContent className="p-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <Badge variant="outline">{t('rag.similarity')}: {(result.similarity * 100).toFixed(1)}%</Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{result.content}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Retrieval Results */}
           {searchQuery && (
@@ -223,29 +292,44 @@ const RAGLayer = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">{t('rag.topKRetrieval')}</h4>
-              <p className="text-sm text-feynman-muted mb-3">
-                {t('rag.topKDesc')}
-              </p>
-              <Input placeholder="K = 5" className="text-sm" />
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium">{t('rag.topK')}: {topK[0]}</label>
+              <p className="text-xs text-muted-foreground mb-2">{t('rag.topKDesc')}</p>
+              <Slider 
+                value={topK} 
+                onValueChange={setTopK}
+                max={20} 
+                min={1} 
+                step={1} 
+                className="w-full" 
+              />
             </div>
             
-            <div className="p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">{t('rag.similarityThreshold')}</h4>
-              <p className="text-sm text-feynman-muted mb-3">
-                {t('rag.similarityThresholdDesc')}
-              </p>
-              <Input placeholder="0.7" className="text-sm" />
+            <div>
+              <label className="text-sm font-medium">{t('rag.similarityThreshold')}: {similarityThreshold[0]}</label>
+              <p className="text-xs text-muted-foreground mb-2">{t('rag.similarityThresholdDesc')}</p>
+              <Slider 
+                value={similarityThreshold} 
+                onValueChange={setSimilarityThreshold}
+                max={1} 
+                min={0} 
+                step={0.1} 
+                className="w-full" 
+              />
             </div>
             
-            <div className="p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">{t('rag.maxTokens')}</h4>
-              <p className="text-sm text-feynman-muted mb-3">
-                {t('rag.maxTokensDesc')}
-              </p>
-              <Input placeholder="4096" className="text-sm" />
+            <div>
+              <label className="text-sm font-medium">{t('rag.maxTokens')}: {maxTokens[0]}</label>
+              <p className="text-xs text-muted-foreground mb-2">{t('rag.maxTokensDesc')}</p>
+              <Slider 
+                value={maxTokens} 
+                onValueChange={setMaxTokens}
+                max={4000} 
+                min={100} 
+                step={100} 
+                className="w-full" 
+              />
             </div>
           </div>
         </CardContent>

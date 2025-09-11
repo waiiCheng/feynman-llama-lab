@@ -1,15 +1,69 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Cpu, Play, Pause, Download, Upload, BarChart3, Settings } from 'lucide-react';
-import { useState } from 'react';
+import { Cpu, Play, Pause, Download, Upload, BarChart3, Settings, Server, Globe, Layers } from 'lucide-react';
+import { useState, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useToast } from '@/hooks/use-toast';
 
 const FineTuningLayer = () => {
   const { t } = useLanguage();
+  const { toast } = useToast();
   const [trainingStatus, setTrainingStatus] = useState<'idle' | 'running' | 'paused'>('idle');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  const handleStartTraining = () => {
+    setTrainingStatus('running');
+    toast({
+      title: '训练已开始',
+      description: '模型微调进程已启动',
+    });
+  };
+  
+  const handlePauseTraining = () => {
+    setTrainingStatus(trainingStatus === 'paused' ? 'running' : 'paused');
+    toast({
+      title: trainingStatus === 'paused' ? '训练已恢复' : '训练已暂停',
+      description: trainingStatus === 'paused' ? '训练进程已恢复' : '训练进程已暂停',
+    });
+  };
+  
+  const handleUploadDataset = () => {
+    fileInputRef.current?.click();
+  };
+  
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      toast({
+        title: '数据集上传成功',
+        description: `已上传 ${files.length} 个文件`,
+      });
+    }
+  };
+  
+  const handleDownloadModel = () => {
+    toast({
+      title: '模型下载开始',
+      description: '正在准备下载微调后的模型...',
+    });
+  };
+  
+  const handleCreateApi = () => {
+    toast({
+      title: 'API 创建中',
+      description: '正在部署模型为 REST API 服务...',
+    });
+  };
+  
+  const handleIntegrateDeploy = () => {
+    toast({
+      title: '集成部署开始',
+      description: '正在与 RAG 和知识图谱集成...',
+    });
+  };
 
   // Mock 训练数据
   const trainingStats = {
@@ -95,7 +149,7 @@ const FineTuningLayer = () => {
             
             <div className="flex space-x-3 justify-center">
               <Button 
-                onClick={() => setTrainingStatus('running')}
+                onClick={handleStartTraining}
                 disabled={trainingStatus === 'running'}
                 className="bg-green-600 hover:bg-green-700"
               >
@@ -104,8 +158,8 @@ const FineTuningLayer = () => {
               </Button>
               <Button 
                 variant="outline"
-                onClick={() => setTrainingStatus('paused')}
-                disabled={trainingStatus !== 'running'}
+                onClick={handlePauseTraining}
+                disabled={trainingStatus === 'idle'}
               >
                 <Pause className="w-4 h-4 mr-2" />
                 {t('finetune.pause')}
@@ -204,10 +258,18 @@ const FineTuningLayer = () => {
                 </div>
                 
                 <div className="flex space-x-3">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={handleUploadDataset}>
                     <Upload className="w-4 h-4 mr-2" />
                     {t('finetune.uploadDataset')}
                   </Button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept=".json,.jsonl,.csv"
+                    onChange={handleFileSelect}
+                    style={{ display: 'none' }}
+                  />
                   <Button variant="outline" size="sm">
                     <Download className="w-4 h-4 mr-2" />
                     {t('finetune.exportFormat')}
@@ -262,35 +324,53 @@ const FineTuningLayer = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">{t('finetune.localDeploy')}</h4>
-              <p className="text-sm text-feynman-muted mb-3">
-                {t('finetune.localDeployDesc')}
-              </p>
-              <Button variant="outline" size="sm">
-                {t('finetune.downloadModel')}
-              </Button>
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Download className="h-5 w-5" />
+                  {t('finetune.localDeploy')}
+                </CardTitle>
+                <CardDescription>{t('finetune.localDeployDesc')}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="outline" className="flex-1" onClick={handleDownloadModel}>
+                  <Download className="h-4 w-4 mr-2" />
+                  {t('finetune.downloadModel')}
+                </Button>
+              </CardContent>
+            </Card>
             
-            <div className="text-center p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">{t('finetune.apiDeploy')}</h4>
-              <p className="text-sm text-feynman-muted mb-3">
-                {t('finetune.apiDeployDesc')}
-              </p>
-              <Button variant="outline" size="sm">
-                {t('finetune.createApi')}
-              </Button>
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Server className="h-5 w-5" />
+                  {t('finetune.apiDeploy')}
+                </CardTitle>
+                <CardDescription>{t('finetune.apiDeployDesc')}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="outline" className="flex-1" onClick={handleCreateApi}>
+                  <Globe className="h-4 w-4 mr-2" />
+                  {t('finetune.createApi')}
+                </Button>
+              </CardContent>
+            </Card>
             
-            <div className="text-center p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">{t('finetune.integrationDeploy')}</h4>
-              <p className="text-sm text-feynman-muted mb-3">
-                {t('finetune.integrationDeployDesc')}
-              </p>
-              <Button variant="outline" size="sm">
-                {t('finetune.integrateDeploy')}
-              </Button>
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Layers className="h-5 w-5" />
+                  {t('finetune.integrationDeploy')}
+                </CardTitle>
+                <CardDescription>{t('finetune.integrationDeployDesc')}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button className="flex-1" onClick={handleIntegrateDeploy}>
+                  <Layers className="h-4 w-4 mr-2" />
+                  {t('finetune.integrateDeploy')}
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </CardContent>
       </Card>

@@ -2,62 +2,97 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Network, Plus, Search, Link, Brain, Lightbulb } from 'lucide-react';
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useToast } from '@/hooks/use-toast';
 
 const KnowledgeGraphLayer = () => {
   const { t } = useLanguage();
+  const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState('');
-
-  // Mock knowledge graph data
-  const conceptNodes = [
+  const [newConcept, setNewConcept] = useState('');
+  const [conceptNodes, setConceptNodes] = useState([
     {
       id: 'quantum',
-      name: t('kg.quantumMechanics'),
+      name: '量子力学',
       type: 'physics',
       connections: 5,
       feynmanExplanations: 3
     },
     {
       id: 'compound-interest',
-      name: t('kg.compoundInterest'),
+      name: '复利',
       type: 'finance', 
       connections: 8,
       feynmanExplanations: 5
     },
     {
       id: 'energy',
-      name: t('kg.energy'),
+      name: '能量',
       type: 'physics',
       connections: 12,
       feynmanExplanations: 7
     },
     {
       id: 'probability',
-      name: t('kg.probability'),
+      name: '概率',
       type: 'math',
       connections: 6,
       feynmanExplanations: 4
     }
-  ];
+  ]);
+  
+  const handleAddConcept = () => {
+    if (newConcept.trim()) {
+      const concept = {
+        id: newConcept.toLowerCase().replace(/\s+/g, '-'),
+        name: newConcept,
+        type: 'custom',
+        connections: 0,
+        feynmanExplanations: 0
+      };
+      setConceptNodes([...conceptNodes, concept]);
+      setNewConcept('');
+      toast({
+        title: t('action.conceptAdded'),
+        description: t('action.conceptAddedDesc'),
+      });
+    }
+  };
+  
+  const handlePathAnalysis = () => {
+    toast({
+      title: t('action.pathAnalysis'),
+      description: t('action.pathAnalysisDesc'),
+    });
+  };
+  
+  const handleSimilarityCalculation = () => {
+    toast({
+      title: t('action.similarity'),
+      description: t('action.similarityDesc'),
+    });
+  };
+
 
   const relationships = [
     {
-      from: t('kg.quantumMechanics'),
-      to: t('kg.probability'),
+      from: '量子力学',
+      to: '概率',
       type: 'depends_on',
       strength: 0.9
     },
     {
-      from: t('kg.compoundInterest'),
-      to: t('kg.exponentialGrowth'), 
+      from: '复利',
+      to: '指数增长', 
       type: 'is_type_of',
       strength: 0.95
     },
     {
-      from: t('kg.energy'),
-      to: t('kg.conservationLaw'),
+      from: '能量',
+      to: '守恒定律',
       type: 'follows',
       strength: 0.85
     }
@@ -98,10 +133,32 @@ const KnowledgeGraphLayer = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
               className="flex-1"
             />
-            <Button variant="outline">
-              <Plus className="w-4 h-4 mr-2" />
-              {t('kg.addConcept')}
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline">
+                  <Plus className="w-4 h-4 mr-2" />
+                  {t('kg.addConcept')}
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>{t('kg.addConcept')}</DialogTitle>
+                  <DialogDescription>
+                    添加新的概念节点到知识图谱中
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <Input
+                    placeholder="输入概念名称..."
+                    value={newConcept}
+                    onChange={(e) => setNewConcept(e.target.value)}
+                  />
+                  <Button onClick={handleAddConcept} className="w-full">
+                    添加概念
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </CardContent>
       </Card>
@@ -193,7 +250,7 @@ const KnowledgeGraphLayer = () => {
               <p className="text-sm text-feynman-muted mb-3">
                 发现概念���的隐藏联系
               </p>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={handlePathAnalysis}>
                 运行路径分析
               </Button>
             </div>
@@ -203,7 +260,7 @@ const KnowledgeGraphLayer = () => {
               <p className="text-sm text-feynman-muted mb-3">
                 基于图结构的概念相似度
               </p>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={handleSimilarityCalculation}>
                 计算相似性
               </Button>
             </div>

@@ -5,13 +5,19 @@ import FineTuningLayer from '@/components/architecture/FineTuningLayer';
 import LocalTrainingSetup from '@/components/architecture/LocalTrainingSetup';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useState } from 'react';
 
 const Architecture = () => {
   const { t } = useLanguage();
+  const [activeTab, setActiveTab] = useState("local-training");
+  
+  const handleStartTraining = () => {
+    setActiveTab("local-training");
+  };
   
   return (
     <main className="container mx-auto px-4 py-8">
-      <Tabs defaultValue="local-training" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-5 mb-8">
           <TabsTrigger value="local-training">{t('arch.localTraining')}</TabsTrigger>
           <TabsTrigger value="overview">{t('arch.overview')}</TabsTrigger>
@@ -25,7 +31,7 @@ const Architecture = () => {
           </TabsContent>
 
           <TabsContent value="overview">
-            <ArchitectureOverview />
+            <ArchitectureOverview onStartTraining={handleStartTraining} />
           </TabsContent>
 
           <TabsContent value="knowledge-graph">

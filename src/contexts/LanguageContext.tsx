@@ -297,6 +297,18 @@ const translations = {
     
     // Main Page
     'main.title': '费曼学习法标注',
+    
+    // Button Actions and Feedback
+    'action.conceptAdded': '概念已添加',
+    'action.conceptAddedDesc': '新概念节点已成功添加到知识图谱',
+    'action.pathAnalysis': '路径分析完成',
+    'action.pathAnalysisDesc': '发现了 3 个关联路径',
+    'action.similarity': '相似性计算完成',
+    'action.similarityDesc': '已计算概念间相似度',
+    'action.searchCompleted': '检索完成',
+    'action.searchDesc': '找到 {count} 个相关文档',
+    'action.trainingStarted': '训练已开始',
+    'action.trainingStartedDesc': '本地训练进程已启动',
   },
   en: {
     // Navigation
@@ -387,6 +399,18 @@ const translations = {
     'manage.deletedDesc': 'Annotation successfully deleted',
     'manage.exported': 'Export Complete',
     'manage.exportedDesc': 'Annotations exported as JSON file',
+    
+    // Button Actions and Feedback
+    'action.conceptAdded': 'Concept Added',
+    'action.conceptAddedDesc': 'New concept node successfully added to knowledge graph',
+    'action.pathAnalysis': 'Path Analysis Complete',
+    'action.pathAnalysisDesc': 'Found 3 connection paths',
+    'action.similarity': 'Similarity Calculation Complete',
+    'action.similarityDesc': 'Computed concept similarities',
+    'action.searchCompleted': 'Search Complete',
+    'action.searchDesc': 'Found {count} relevant documents',
+    'action.trainingStarted': 'Training Started',
+    'action.trainingStartedDesc': 'Local training process initiated',
     
     // Training
     'training.title': 'Local Training Setup',
