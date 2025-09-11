@@ -98,7 +98,7 @@ export const AnnotationWorkspace: React.FC = () => {
                 {t('annotation.title')}
               </h1>
               <Badge variant="outline" className="text-caption px-3 py-1 rounded-lg">
-                {showPreview ? '双屏模式' : '单屏模式'}
+                {showPreview ? t('workspace.dualMode') : t('workspace.singleMode')}
               </Badge>
             </div>
             
@@ -117,7 +117,7 @@ export const AnnotationWorkspace: React.FC = () => {
                 className="h-9 px-3 rounded-lg hover:bg-secondary transition-colors"
               >
                 <Keyboard className="w-4 h-4 mr-2" />
-                <span className="text-label">快捷键</span>
+                <span className="text-label">{t('shortcuts.keyboard')}</span>
               </Button>
               
               <Button
@@ -129,15 +129,6 @@ export const AnnotationWorkspace: React.FC = () => {
                 {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </Button>
               
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setLanguage(language === 'zh' ? 'en' : 'zh')}
-                className="h-9 px-3 rounded-lg hover:bg-secondary transition-colors"
-              >
-                <Languages className="w-4 h-4 mr-2" />
-                <span className="text-label font-mono">{language === 'zh' ? 'EN' : '中'}</span>
-              </Button>
             </div>
           </div>
         </div>

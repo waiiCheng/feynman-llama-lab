@@ -60,8 +60,8 @@ export default {
       },
       fontFamily: {
         'mono': ['JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'monospace'],
-        'sans': ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
-        'display': ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+        'sans': ['Poppins', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+        'display': ['Poppins', 'Noto Sans SC', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'xs': ['12px', { lineHeight: '16px' }],

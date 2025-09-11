@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Edit, Trash2, Download, Search, Eye, Calendar } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Annotation {
   id: string;
@@ -22,6 +23,7 @@ interface Annotation {
 
 const DataManagement = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [annotations, setAnnotations] = useState<Annotation[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [qualityFilter, setQualityFilter] = useState('all');
@@ -51,8 +53,8 @@ const DataManagement = () => {
     setAnnotations(updatedAnnotations);
     localStorage.setItem('feynman-annotations', JSON.stringify(updatedAnnotations.reverse()));
     toast({
-      title: "已删除",
-      description: "标注数据已成功删除"
+      title: t('manage.deleted'),
+      description: t('manage.deletedDesc')
     });
   };
 
@@ -68,8 +70,8 @@ const DataManagement = () => {
     document.body.removeChild(link);
     
     toast({
-      title: "导出完成",
-      description: "标注数据已导出为JSON文件"
+      title: t('manage.exported'),
+      description: t('manage.exportedDesc')
     });
   };
 
@@ -84,19 +86,19 @@ const DataManagement = () => {
 
   const getQualityText = (quality: string) => {
     switch (quality) {
-      case 'excellent': return '优秀范例';
-      case 'good': return '良好';
-      case 'needs-work': return '需改进';
+      case 'excellent': return t('quality.excellent');
+      case 'good': return t('quality.good');
+      case 'needs-work': return t('quality.needsWork');
       default: return quality;
     }
   };
 
   const getStyleFeatureText = (feature: string) => {
     const map = {
-      'analogy': '使用类比',
-      'simplify': '简化复杂',
-      'story': '讲故事',
-      'firstprinciples': '第一性原理'
+      'analogy': t('style.analogy'),
+      'simplify': t('style.simplify'),
+      'story': t('style.story'),
+      'firstprinciples': t('style.firstprinciples')
     };
     return map[feature as keyof typeof map] || feature;
   };
@@ -108,14 +110,14 @@ const DataManagement = () => {
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle className="text-2xl text-feynman-text">数据管理</CardTitle>
+              <CardTitle className="text-2xl text-feynman-text">{t('manage.title')}</CardTitle>
               <p className="text-feynman-muted mt-1">
-                共 {annotations.length} 条标注数据，已筛选 {filteredAnnotations.length} 条
+                {t('manage.subtitle', { total: annotations.length, filtered: filteredAnnotations.length })}
               </p>
             </div>
             <Button onClick={exportData} className="bg-feynman-blue hover:bg-feynman-blue/90">
               <Download className="w-4 h-4 mr-2" />
-              导出数据
+              {t('manage.export')}
             </Button>
           </div>
         </CardHeader>
@@ -125,7 +127,7 @@ const DataManagement = () => {
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-feynman-muted" />
                 <Input
-                  placeholder="搜索问题或回答内容..."
+                  placeholder={t('manage.search')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -134,13 +136,13 @@ const DataManagement = () => {
             </div>
             <Select value={qualityFilter} onValueChange={setQualityFilter}>
               <SelectTrigger className="w-48">
-                <SelectValue placeholder="筛选质量等级" />
+                <SelectValue placeholder={t('manage.filterQuality')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">全部质量</SelectItem>
-                <SelectItem value="excellent">优秀范例</SelectItem>
-                <SelectItem value="good">良好</SelectItem>
-                <SelectItem value="needs-work">需改进</SelectItem>
+                <SelectItem value="all">{t('manage.allQuality')}</SelectItem>
+                <SelectItem value="excellent">{t('quality.excellent')}</SelectItem>
+                <SelectItem value="good">{t('quality.good')}</SelectItem>
+                <SelectItem value="needs-work">{t('quality.needsWork')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -152,8 +154,8 @@ const DataManagement = () => {
         {filteredAnnotations.length === 0 ? (
           <Card className="shadow-medium bg-gradient-card">
             <CardContent className="py-12 text-center">
-              <p className="text-feynman-muted text-lg">暂无标注数据</p>
-              <p className="text-feynman-muted/70 mt-2">开始创建第一个标注吧！</p>
+              <p className="text-feynman-muted text-lg">{t('manage.noData')}</p>
+              <p className="text-feynman-muted/70 mt-2">{t('manage.noDataDesc')}</p>
             </CardContent>
           </Card>
         ) : (
@@ -184,24 +186,24 @@ const DataManagement = () => {
                       </DialogTrigger>
                       <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
                         <DialogHeader>
-                          <DialogTitle className="text-feynman-text">查看标注详情</DialogTitle>
+                          <DialogTitle className="text-feynman-text">{t('manage.viewDetail')}</DialogTitle>
                         </DialogHeader>
                         {selectedAnnotation && (
                           <div className="space-y-6">
                             <div>
-                              <h4 className="font-semibold text-feynman-text mb-2">问题</h4>
+                              <h4 className="font-semibold text-feynman-text mb-2">{t('manage.question')}</h4>
                               <p className="text-feynman-text bg-feynman-warm/20 p-4 rounded-lg">
                                 {selectedAnnotation.question}
                               </p>
                             </div>
                             <div>
-                              <h4 className="font-semibold text-feynman-text mb-2">费曼式回答</h4>
+                              <h4 className="font-semibold text-feynman-text mb-2">{t('manage.response')}</h4>
                               <p className="text-feynman-text bg-card p-4 rounded-lg leading-relaxed whitespace-pre-wrap">
                                 {selectedAnnotation.response}
                               </p>
                             </div>
                             <div>
-                              <h4 className="font-semibold text-feynman-text mb-2">思维模式</h4>
+                              <h4 className="font-semibold text-feynman-text mb-2">{t('manage.stylePattern')}</h4>
                               <div className="flex flex-wrap gap-2">
                                 {selectedAnnotation.styleFeatures.map(feature => (
                                   <Badge key={feature} variant="secondary" className="bg-feynman-blue text-white">
@@ -212,7 +214,7 @@ const DataManagement = () => {
                             </div>
                             {selectedAnnotation.notes && (
                               <div>
-                                <h4 className="font-semibold text-feynman-text mb-2">备注</h4>
+                                <h4 className="font-semibold text-feynman-text mb-2">{t('manage.notes')}</h4>
                                 <p className="text-feynman-muted">{selectedAnnotation.notes}</p>
                               </div>
                             )}

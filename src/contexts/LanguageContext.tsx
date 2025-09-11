@@ -5,7 +5,7 @@ export type Language = 'zh' | 'en';
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, variables?: Record<string, string | number>) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -63,6 +63,30 @@ const translations = {
     'shortcuts.tab': 'Tab: 切换字段',
     'shortcuts.template': '/: 插入模板',
     'shortcuts.clear': 'Escape: 清空',
+    'shortcuts.keyboard': '快捷键',
+    
+    // Workspace
+    'workspace.dualMode': '双屏模式',
+    'workspace.singleMode': '单屏模式',
+    
+    // Data Management
+    'manage.title': '数据管理',
+    'manage.subtitle': '共 {total} 条标注数据，已筛选 {filtered} 条',
+    'manage.export': '导出数据',
+    'manage.search': '搜索问题或回答内容...',
+    'manage.filterQuality': '筛选质量等级',
+    'manage.allQuality': '全部质量',
+    'manage.noData': '暂无标注数据',
+    'manage.noDataDesc': '开始创建第一个标注吧！',
+    'manage.viewDetail': '查看标注详情',
+    'manage.question': '问题',
+    'manage.response': '费曼式回答',
+    'manage.stylePattern': '思维模式',
+    'manage.notes': '备注',
+    'manage.deleted': '已删除',
+    'manage.deletedDesc': '标注数据已成功删除',
+    'manage.exported': '导出完成',
+    'manage.exportedDesc': '标注数据已导出为JSON文件',
   },
   en: {
     // Navigation
@@ -116,14 +140,46 @@ const translations = {
     'shortcuts.tab': 'Tab: Switch Fields',
     'shortcuts.template': '/: Insert Template',
     'shortcuts.clear': 'Escape: Clear',
+    'shortcuts.keyboard': 'Shortcuts',
+    
+    // Workspace
+    'workspace.dualMode': 'Dual Mode',
+    'workspace.singleMode': 'Single Mode',
+    
+    // Data Management
+    'manage.title': 'Data Management',
+    'manage.subtitle': '{total} annotations total, {filtered} filtered',
+    'manage.export': 'Export Data',
+    'manage.search': 'Search questions or responses...',
+    'manage.filterQuality': 'Filter by Quality',
+    'manage.allQuality': 'All Quality',
+    'manage.noData': 'No annotations yet',
+    'manage.noDataDesc': 'Start creating your first annotation!',
+    'manage.viewDetail': 'View Annotation Detail',
+    'manage.question': 'Question',
+    'manage.response': 'Feynman-style Response',
+    'manage.stylePattern': 'Thinking Patterns',
+    'manage.notes': 'Notes',
+    'manage.deleted': 'Deleted',
+    'manage.deletedDesc': 'Annotation successfully deleted',
+    'manage.exported': 'Export Complete',
+    'manage.exportedDesc': 'Annotations exported as JSON file',
   }
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('zh');
 
-  const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations[typeof language]] || key;
+  const t = (key: string, variables?: Record<string, string | number>): string => {
+    let translation = translations[language][key as keyof typeof translations[typeof language]] || key;
+    
+    if (variables) {
+      Object.entries(variables).forEach(([variableKey, value]) => {
+        translation = translation.replace(`{${variableKey}}`, String(value));
+      });
+    }
+    
+    return translation;
   };
 
   // 动态切换字体族
