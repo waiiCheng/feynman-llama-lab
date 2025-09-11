@@ -305,7 +305,7 @@ seaborn>=0.12.0
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-feynman-text">训练轮数</label>
+                  <label className="text-sm font-medium text-feynman-text">{t('training.epochs')}</label>
                   <Input 
                     type="number" 
                     value={modelConfig.epochs}
@@ -314,7 +314,7 @@ seaborn>=0.12.0
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-feynman-text">批次大小</label>
+                  <label className="text-sm font-medium text-feynman-text">{t('training.batchSize')}</label>
                   <Input 
                     type="number" 
                     value={modelConfig.batchSize}
@@ -323,7 +323,7 @@ seaborn>=0.12.0
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-feynman-text">学习率</label>
+                  <label className="text-sm font-medium text-feynman-text">{t('training.learningRate')}</label>
                   <Input 
                     value={modelConfig.learningRate}
                     onChange={(e) => setModelConfig(prev => ({...prev, learningRate: e.target.value}))}
@@ -346,26 +346,26 @@ seaborn>=0.12.0
                     <Badge variant="outline">≥ 16GB VRAM</Badge>
                   </div>
                   <div className="flex justify-between items-center p-3 border rounded-lg">
-                    <span className="text-sm font-medium">系统内存</span>
+                    <span className="text-sm font-medium">{t('training.systemMemory')}</span>
                     <Badge variant="outline">≥ 32GB RAM</Badge>
                   </div>
                   <div className="flex justify-between items-center p-3 border rounded-lg">
-                    <span className="text-sm font-medium">存储空间</span>
+                    <span className="text-sm font-medium">{t('training.storage')}</span>
                     <Badge variant="outline">≥ 50GB</Badge>
                   </div>
                   <div className="flex justify-between items-center p-3 border rounded-lg">
-                    <span className="text-sm font-medium">Python 版本</span>
+                    <span className="text-sm font-medium">{t('training.pythonVersion')}</span>
                     <Badge variant="outline">≥ 3.8</Badge>
                   </div>
                 </div>
 
                 <div className="pt-4 border-t">
-                  <h4 className="font-medium text-feynman-text mb-2">推荐配置</h4>
+                  <h4 className="font-medium text-feynman-text mb-2">{t('training.recommendedConfig')}</h4>
                   <ul className="text-sm text-feynman-muted space-y-1">
                     <li>• RTX 4090 / A100 GPU</li>
                     <li>• CUDA 11.8+</li>
                     <li>• Ubuntu 20.04+</li>
-                    <li>• Docker (可选)</li>
+                    <li>• Docker ({t('optional')})</li>
                   </ul>
                 </div>
               </CardContent>
@@ -388,25 +388,25 @@ seaborn>=0.12.0
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center p-3 border rounded-lg">
                       <div className="text-2xl font-bold text-feynman-blue">{getLocalData().length}</div>
-                      <div className="text-sm text-feynman-muted">总标注数</div>
+                      <div className="text-sm text-feynman-muted">{t('training.totalAnnotations')}</div>
                     </div>
                     <div className="text-center p-3 border rounded-lg">
                       <div className="text-2xl font-bold text-feynman-orange">
                         {Math.round(getLocalData().length * 0.8)}
                       </div>
-                      <div className="text-sm text-feynman-muted">训练集</div>
+                      <div className="text-sm text-feynman-muted">{t('training.trainingSet')}</div>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <h4 className="font-medium text-feynman-text">质量分布</h4>
+                    <h4 className="font-medium text-feynman-text">{t('training.qualityDistribution')}</h4>
                     {['excellent', 'good', 'needs-work'].map(quality => {
                       const count = getLocalData().filter(item => item.quality === quality).length;
                       const percentage = getLocalData().length > 0 ? (count / getLocalData().length) * 100 : 0;
                       return (
                         <div key={quality} className="flex items-center space-x-3">
                           <span className="text-sm w-16">
-                            {quality === 'excellent' ? '优秀' : quality === 'good' ? '良好' : '需改进'}
+                            {quality === 'excellent' ? t('training.excellent') : quality === 'good' ? t('training.good') : t('training.needsWork')}
                           </span>
                           <Progress value={percentage} className="flex-1 h-2" />
                           <span className="text-sm text-feynman-muted w-12">{count}</span>
@@ -422,7 +422,7 @@ seaborn>=0.12.0
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Download className="w-5 h-5 text-feynman-orange" />
-                  <span>数据导出</span>
+                  <span>{t('training.dataExport')}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -431,11 +431,11 @@ seaborn>=0.12.0
                   className="w-full bg-feynman-blue hover:bg-feynman-blue/90"
                 >
                   <Download className="w-4 h-4 mr-2" />
-                  导出训练数据 (JSON)
+                  {t('training.exportTrainingData')}
                 </Button>
 
                 <div className="text-sm text-feynman-muted space-y-2">
-                  <h4 className="font-medium text-feynman-text">数据格式说明</h4>
+                  <h4 className="font-medium text-feynman-text">{t('training.dataFormatDescription')}</h4>
                   <pre className="bg-card p-3 rounded text-xs overflow-x-auto">
 {`{
   "question": "什么是能量？",
@@ -467,7 +467,7 @@ seaborn>=0.12.0
                     className="bg-feynman-blue hover:bg-feynman-blue/90"
                   >
                     <Terminal className="w-4 h-4 mr-2" />
-                    生成训练脚本
+                    {t('training.generateTrainingScript')}
                   </Button>
                   
                   <Button 
@@ -475,12 +475,12 @@ seaborn>=0.12.0
                     variant="outline"
                   >
                     <Package className="w-4 h-4 mr-2" />
-                    生成依赖文件
+                    {t('training.generateDependencies')}
                   </Button>
                   
                   <Button variant="outline">
                     <FileText className="w-4 h-4 mr-2" />
-                    生成配置文件
+                    {t('training.generateConfig')}
                   </Button>
                 </div>
               </CardContent>
@@ -488,12 +488,12 @@ seaborn>=0.12.0
 
             <Card className="bg-gradient-card shadow-medium">
               <CardHeader>
-                <CardTitle>训练流程</CardTitle>
+                <CardTitle>{t('training.trainingWorkflow')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {[
-                    { step: 1, title: '环境准备', desc: '安装 Python 依赖和 CUDA' },
+                    { step: 1, title: t('training.envSetup'), desc: t('training.envSetupDesc') },
                     { step: 2, title: '数据导出', desc: '从标注界面导出 JSON 数据' },
                     { step: 3, title: '脚本下载', desc: '下载自动生成的训练脚本' },
                     { step: 4, title: '开始训练', desc: '运行 python train_feynman_model.py' },

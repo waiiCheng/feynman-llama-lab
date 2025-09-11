@@ -5,15 +5,17 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Database, FileText, Search, Upload, Zap, BookOpen } from 'lucide-react';
 import { useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const RAGLayer = () => {
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Mock 向量数据库数据
+  // Mock vector database data
   const vectorCollections = [
     {
       id: 'feynman-lectures',
-      name: '费曼物理学讲义',
+      name: t('rag.feynmanLectures'),
       documents: 1247,
       embeddings: 125600,
       status: 'active',
@@ -21,7 +23,7 @@ const RAGLayer = () => {
     },
     {
       id: 'buffett-letters',
-      name: '巴菲特股东信',
+      name: t('rag.buffettLetters'),
       documents: 687,
       embeddings: 68700,
       status: 'active', 
@@ -29,7 +31,7 @@ const RAGLayer = () => {
     },
     {
       id: 'scientific-papers',
-      name: '科学论文集',
+      name: t('rag.scientificPapers'),
       documents: 2341,
       embeddings: 234100,
       status: 'indexing',
@@ -64,49 +66,49 @@ const RAGLayer = () => {
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      active: { label: '活跃', className: 'bg-green-100 text-green-800' },
-      indexing: { label: '索引中', className: 'bg-yellow-100 text-yellow-800' },
-      error: { label: '错误', className: 'bg-red-100 text-red-800' }
+      active: { label: t('rag.active'), className: 'bg-green-100 text-green-800' },
+      indexing: { label: t('rag.indexing'), className: 'bg-yellow-100 text-yellow-800' },
+      error: { label: t('rag.error'), className: 'bg-red-100 text-red-800' }
     };
     return statusConfig[status as keyof typeof statusConfig];
   };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
-      {/* 概览 */}
+      {/* Overview */}
       <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold text-feynman-text">RAG 检索层</h2>
+        <h2 className="text-3xl font-bold text-feynman-text">{t('rag.title')}</h2>
         <p className="text-feynman-muted max-w-2xl mx-auto">
-          实时检索相关文档，为模型提供准确的背景知识
+          {t('rag.subtitle')}
         </p>
       </div>
 
-      {/* 检索测试 */}
+      {/* Retrieval Test */}
       <Card className="bg-gradient-card shadow-medium">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Search className="w-5 h-5 text-feynman-blue" />
-            <span>语义检索测试</span>
+            <span>{t('rag.semanticRetrieval')}</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex space-x-4">
             <Input
-              placeholder="输入查询问题，例如：什么是能量？"
+              placeholder={t('rag.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="flex-1"
             />
             <Button className="bg-feynman-blue hover:bg-feynman-blue/90">
               <Zap className="w-4 h-4 mr-2" />
-              检索
+              {t('rag.retrieve')}
             </Button>
           </div>
 
-          {/* 检索结果 */}
+          {/* Retrieval Results */}
           {searchQuery && (
             <div className="space-y-3 mt-6">
-              <h4 className="font-medium text-feynman-text">检索结果</h4>
+              <h4 className="font-medium text-feynman-text">{t('rag.retrievalResults')}</h4>
               {retrievalResults.map((result) => (
                 <div key={result.id} className="p-4 border rounded-lg hover:bg-feynman-warm/10 transition-colors">
                   <div className="flex items-center justify-between mb-2">
@@ -114,7 +116,7 @@ const RAGLayer = () => {
                       {result.source}
                     </Badge>
                     <div className="flex items-center space-x-4 text-xs text-feynman-muted">
-                      <span>相似度: {(result.similarity * 100).toFixed(0)}%</span>
+                      <span>{t('rag.similarity')}: {(result.similarity * 100).toFixed(0)}%</span>
                       <span>{result.tokens} tokens</span>
                     </div>
                   </div>
@@ -137,7 +139,7 @@ const RAGLayer = () => {
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <Database className="w-5 h-5 text-feynman-orange" />
-              <span>向量集合</span>
+              <span>{t('rag.vectorCollections')}</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -152,14 +154,14 @@ const RAGLayer = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-4 text-sm text-feynman-muted">
                     <div>
-                      <span className="font-medium">{collection.documents.toLocaleString()}</span> 文档
+                      <span className="font-medium">{collection.documents.toLocaleString()}</span> {t('rag.documents')}
                     </div>
                     <div>
-                      <span className="font-medium">{collection.embeddings.toLocaleString()}</span> 向量
+                      <span className="font-medium">{collection.embeddings.toLocaleString()}</span> {t('rag.vectors')}
                     </div>
                   </div>
                   <div className="text-xs text-feynman-muted mt-2">
-                    最后更新: {collection.lastUpdate}
+                    {t('rag.lastUpdate')}: {collection.lastUpdate}
                   </div>
                 </div>
               ))}
@@ -167,22 +169,22 @@ const RAGLayer = () => {
           </CardContent>
         </Card>
 
-        {/* 文档管理 */}
+        {/* Document Management */}
         <Card className="bg-gradient-card shadow-medium">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <FileText className="w-5 h-5 text-feynman-blue" />
-              <span>文档管理</span>
+              <span>{t('rag.documentManagement')}</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <Button variant="outline" className="w-full">
               <Upload className="w-4 h-4 mr-2" />
-              上传新文档
+              {t('rag.uploadNewDocument')}
             </Button>
             
             <div className="space-y-2">
-              <h4 className="font-medium text-feynman-text text-sm">支持格式</h4>
+              <h4 className="font-medium text-feynman-text text-sm">{t('rag.supportedFormats')}</h4>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <Badge variant="secondary">PDF</Badge>
                 <Badge variant="secondary">TXT</Badge>
@@ -192,19 +194,19 @@ const RAGLayer = () => {
             </div>
 
             <div className="pt-4 border-t">
-              <h4 className="font-medium text-feynman-text text-sm mb-2">处理流程</h4>
+              <h4 className="font-medium text-feynman-text text-sm mb-2">{t('rag.processingWorkflow')}</h4>
               <div className="space-y-2 text-xs text-feynman-muted">
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-feynman-blue rounded-full"></div>
-                  <span>文档分块 (512 tokens)</span>
+                  <span>{t('rag.documentChunking')}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-feynman-orange rounded-full"></div>
-                  <span>向量化编码</span>
+                  <span>{t('rag.vectorEncoding')}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span>索引构建</span>
+                  <span>{t('rag.indexBuilding')}</span>
                 </div>
               </div>
             </div>
@@ -212,36 +214,36 @@ const RAGLayer = () => {
         </Card>
       </div>
 
-      {/* 检索配置 */}
+      {/* Retrieval Configuration */}
       <Card className="bg-gradient-card shadow-medium">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Zap className="w-5 h-5 text-feynman-orange" />
-            <span>检索配置</span>
+            <span>{t('rag.retrievalConfig')}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">Top-K 检索</h4>
+              <h4 className="font-medium text-feynman-text mb-2">{t('rag.topKRetrieval')}</h4>
               <p className="text-sm text-feynman-muted mb-3">
-                返回前 K 个最相似的文档片段
+                {t('rag.topKDesc')}
               </p>
               <Input placeholder="K = 5" className="text-sm" />
             </div>
             
             <div className="p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">相似度阈值</h4>
+              <h4 className="font-medium text-feynman-text mb-2">{t('rag.similarityThreshold')}</h4>
               <p className="text-sm text-feynman-muted mb-3">
-                过滤低相似度的结果
+                {t('rag.similarityThresholdDesc')}
               </p>
               <Input placeholder="0.7" className="text-sm" />
             </div>
             
             <div className="p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">最大 Tokens</h4>
+              <h4 className="font-medium text-feynman-text mb-2">{t('rag.maxTokens')}</h4>
               <p className="text-sm text-feynman-muted mb-3">
-                限制上下文长度
+                {t('rag.maxTokensDesc')}
               </p>
               <Input placeholder="4096" className="text-sm" />
             </div>
@@ -249,17 +251,17 @@ const RAGLayer = () => {
         </CardContent>
       </Card>
 
-      {/* 集成提示 */}
+      {/* Integration Hint */}
       <Card className="bg-green-50 border-green-200">
         <CardContent className="pt-6">
           <div className="text-center space-y-2">
             <BookOpen className="w-8 h-8 text-green-600 mx-auto" />
-            <h3 className="font-medium text-green-800">本地向量数据库</h3>
+            <h3 className="font-medium text-green-800">{t('rag.localVectorDatabase')}</h3>
             <p className="text-sm text-green-600">
-              RAG 功能可以使用 FAISS、ChromaDB 或 Qdrant 在本地部署
+              {t('rag.vectorDatabaseDesc')}
             </p>
             <Button className="bg-green-600 hover:bg-green-700 text-white">
-              下载 RAG 部署脚本
+              {t('rag.downloadRAGScript')}
             </Button>
           </div>
         </CardContent>
