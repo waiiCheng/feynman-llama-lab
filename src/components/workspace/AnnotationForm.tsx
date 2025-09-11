@@ -28,10 +28,10 @@ interface AnnotationFormProps {
 }
 
 const styleOptions = [
-  { id: 'analogy', key: 'style.analogy', label: '使用类比', icon: Lightbulb, description: '用简单例子解释复杂概念' },
-  { id: 'simplify', key: 'style.simplify', label: '简化复杂', icon: Target, description: '化繁为简的表达方式' },
-  { id: 'story', key: 'style.story', label: '讲故事', icon: BookOpen, description: '用故事情节增强理解' },
-  { id: 'firstprinciples', key: 'style.firstprinciples', label: '第一性原理', icon: Zap, description: '从基本原理出发思考' },
+  { id: 'analogy', key: 'style.analogy', labelKey: 'style.analogy', icon: Lightbulb, descKey: 'style.analogy.desc' },
+  { id: 'simplify', key: 'style.simplify', labelKey: 'style.simplify', icon: Target, descKey: 'style.simplify.desc' },
+  { id: 'story', key: 'style.story', labelKey: 'style.story', icon: BookOpen, descKey: 'style.story.desc' },
+  { id: 'firstprinciples', key: 'style.firstprinciples', labelKey: 'style.firstprinciples', icon: Zap, descKey: 'style.firstprinciples.desc' },
 ];
 
 export const AnnotationForm: React.FC<AnnotationFormProps> = ({
@@ -56,8 +56,8 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
   const handleSave = () => {
     if (!formData.question.trim() || !formData.response.trim()) {
       toast({
-        title: "请填写必要字段",
-        description: "问题和回答都是必填项",
+        title: t('annotation.validation.title'),
+        description: t('annotation.validation.desc'),
         variant: "destructive"
       });
       return;
@@ -77,8 +77,8 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
     localStorage.setItem('feynman-annotations', JSON.stringify(existingData));
 
     toast({
-      title: "标注已保存",
-      description: "数据已成功保存，可继续下一条标注"
+      title: t('annotation.saved.title'),
+      description: t('annotation.saved.desc2')
     });
 
     onSave();
@@ -90,11 +90,11 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
       <div className="feynman-card spacing-lg">
         <div className="mb-6">
           <h2 className="text-heading text-foreground mb-2">
-            用户问题
+            {t('annotation.question')}
           </h2>
         </div>
         <Input
-          placeholder="例如：什么是量子力学？"
+          placeholder={t('annotation.question.placeholder')}
           value={formData.question}
           onChange={(e) => setFormData(prev => ({ ...prev, question: e.target.value }))}
           className="feynman-input text-body"
@@ -105,14 +105,14 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
       <div className="feynman-card spacing-lg">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-heading text-foreground">
-            费曼式回答
+            {t('annotation.response')}
           </h2>
           <TemplateSelector onSelectTemplate={onInsertTemplate} />
         </div>
         <div className="space-y-4">
           <Textarea
             ref={responseRef}
-            placeholder="费曼会怎么解释这个问题？用简单、直观的方式..."
+            placeholder={t('annotation.response.placeholder')}
             value={formData.response}
             onChange={(e) => setFormData(prev => ({ ...prev, response: e.target.value }))}
             rows={8}
@@ -120,10 +120,10 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
           />
           <div className="flex justify-between items-center text-caption">
             <span>
-              字数: <span className="text-foreground font-medium">{formData.response.length}</span>
+              {t('preview.wordCount')}: <span className="text-foreground font-medium">{formData.response.length}</span>
             </span>
             <span className="text-muted-foreground">
-              按 / 快速插入模板
+              {t('annotation.templateHint')}
             </span>
           </div>
         </div>
@@ -133,7 +133,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
       <div className="feynman-card spacing-lg">
         <div className="mb-6">
           <h2 className="text-heading text-foreground">
-            思维模式标签
+            {t('annotation.styleFeatures')}
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -151,9 +151,9 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
                   <div className="flex-1">
                     <Label htmlFor={option.id} className="flex items-center gap-3 cursor-pointer">
                       <Icon className="w-5 h-5 text-primary" />
-                      <span className="text-label text-foreground">{option.label}</span>
+                      <span className="text-label text-foreground">{t(option.labelKey)}</span>
                     </Label>
-                    <p className="text-caption mt-2">{option.description}</p>
+                    <p className="text-caption mt-2">{t(option.descKey)}</p>
                   </div>
                 </div>
               </div>
@@ -167,7 +167,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
               const feature = styleOptions.find(opt => opt.id === featureId);
               return feature ? (
                 <Badge key={featureId} variant="secondary" className="text-caption px-3 py-1.5 rounded-lg">
-                  {feature.label}
+                  {t(feature.labelKey)}
                 </Badge>
               ) : null;
             })}
@@ -180,27 +180,27 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
         <div className="feynman-card spacing-lg">
           <div className="mb-6">
             <h2 className="text-heading text-foreground">
-              回答质量
+              {t('annotation.quality')}
             </h2>
           </div>
           <Select value={formData.quality} onValueChange={(value) => setFormData(prev => ({ ...prev, quality: value }))}>
             <SelectTrigger className="feynman-input">
-              <SelectValue placeholder="选择质量等级" />
+              <SelectValue placeholder={t('annotation.quality.placeholder')} />
             </SelectTrigger>
             <SelectContent className="rounded-lg border-border">
-              <SelectItem value="excellent">优秀范例</SelectItem>
-              <SelectItem value="good">良好</SelectItem>
-              <SelectItem value="needs-work">需改进</SelectItem>
+              <SelectItem value="excellent">{t('quality.excellent')}</SelectItem>
+              <SelectItem value="good">{t('quality.good')}</SelectItem>
+              <SelectItem value="needs-work">{t('quality.needsWork')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="feynman-card spacing-lg">
           <div className="mb-6">
-            <h2 className="text-heading text-foreground">备注</h2>
+            <h2 className="text-heading text-foreground">{t('annotation.notes')}</h2>
           </div>
           <Textarea
-            placeholder="其他备注信息..."
+            placeholder={t('annotation.notes.placeholder')}
             value={formData.notes}
             onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
             rows={3}
@@ -216,7 +216,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
           className="feynman-button px-8 py-4"
         >
           <Save className="w-5 h-5 mr-3" />
-          保存标注
+          {t('annotation.save')}
         </Button>
       </div>
     </div>

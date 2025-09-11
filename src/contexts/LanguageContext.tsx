@@ -44,7 +44,8 @@ const translations = {
     'annotation.validation.title': '请填写必要字段',
     'annotation.validation.desc': '问题和回答都是必填项',
     'annotation.saved.title': '标注已保存',
-    'annotation.saved.desc': '数据已成功保存到本地存储',
+    'annotation.saved.desc2': '数据已成功保存，可继续下一条标注',
+    'annotation.templateHint': '按 / 快速插入模板',
     
     // Templates
     'template.analogy': '这就像...',
@@ -187,7 +188,8 @@ const translations = {
     'annotation.validation.title': 'Please fill required fields',
     'annotation.validation.desc': 'Question and response are required',
     'annotation.saved.title': 'Annotation Saved',
-    'annotation.saved.desc': 'Data successfully saved to local storage',
+    'annotation.saved.desc2': 'Data successfully saved, continue to next annotation',
+    'annotation.templateHint': 'Press / to quickly insert templates',
     
     // Templates
     'template.analogy': 'This is like...',
