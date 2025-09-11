@@ -5,8 +5,10 @@ import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Cpu, Play, Pause, Download, Upload, BarChart3, Settings } from 'lucide-react';
 import { useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const FineTuningLayer = () => {
+  const { t } = useLanguage();
   const [trainingStatus, setTrainingStatus] = useState<'idle' | 'running' | 'paused'>('idle');
 
   // Mock 训练数据
@@ -21,19 +23,19 @@ const FineTuningLayer = () => {
 
   // Mock 模型性能
   const modelMetrics = [
-    { name: '训练损失', value: 0.342, change: -0.023, trend: 'down' },
-    { name: '验证损失', value: 0.398, change: -0.015, trend: 'down' },
-    { name: 'BLEU 分数', value: 0.756, change: +0.034, trend: 'up' },
-    { name: '费曼风格相似度', value: 0.823, change: +0.067, trend: 'up' }
+    { name: t('finetune.trainLoss'), value: 0.342, change: -0.023, trend: 'down' },
+    { name: t('finetune.valLoss'), value: 0.398, change: -0.015, trend: 'down' },
+    { name: t('finetune.bleuScore'), value: 0.756, change: +0.034, trend: 'up' },
+    { name: t('finetune.feynmanSimilarity'), value: 0.823, change: +0.067, trend: 'up' }
   ];
 
   // Mock 费曼风格特征
   const feynmanFeatures = [
-    { feature: '使用类比', weight: 0.85, examples: 147 },
-    { feature: '简化复杂概念', weight: 0.92, examples: 234 },
-    { feature: '讲故事', weight: 0.73, examples: 89 },
-    { feature: '第一性原理', weight: 0.88, examples: 156 },
-    { feature: '互动提问', weight: 0.79, examples: 112 }
+    { feature: t('finetune.featureName.analogy'), weight: 0.85, examples: 147 },
+    { feature: t('finetune.featureName.simplify'), weight: 0.92, examples: 234 },
+    { feature: t('finetune.featureName.story'), weight: 0.73, examples: 89 },
+    { feature: t('finetune.featureName.firstprinciples'), weight: 0.88, examples: 156 },
+    { feature: t('finetune.featureName.interactive'), weight: 0.79, examples: 112 }
   ];
 
   const getTrendIcon = (trend: string) => {
@@ -48,9 +50,9 @@ const FineTuningLayer = () => {
     <div className="max-w-6xl mx-auto space-y-6">
       {/* 概览 */}
       <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold text-feynman-text">基础模型层</h2>
+        <h2 className="text-3xl font-bold text-feynman-text">{t('finetune.title')}</h2>
         <p className="text-feynman-muted max-w-2xl mx-auto">
-          微调 Mistral 模型，注入费曼式解释风格和价值观对齐
+          {t('finetune.subtitle')}
         </p>
       </div>
 
@@ -60,11 +62,11 @@ const FineTuningLayer = () => {
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center space-x-2">
               <Cpu className="w-5 h-5 text-feynman-blue" />
-              <span>训练控制台</span>
+              <span>{t('finetune.console')}</span>
             </CardTitle>
             <Badge variant={trainingStatus === 'running' ? 'default' : 'secondary'}>
-              {trainingStatus === 'running' ? '训练中' : 
-               trainingStatus === 'paused' ? '已暂停' : '空闲'}
+              {trainingStatus === 'running' ? t('finetune.status.training') : 
+               trainingStatus === 'paused' ? t('finetune.status.paused') : t('finetune.status.idle')}
             </Badge>
           </div>
         </CardHeader>
@@ -72,19 +74,19 @@ const FineTuningLayer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div className="text-center p-3 border rounded-lg">
               <div className="text-2xl font-bold text-feynman-blue">{trainingStats.totalSamples}</div>
-              <div className="text-sm text-feynman-muted">总样本数</div>
+              <div className="text-sm text-feynman-muted">{t('finetune.totalSamples')}</div>
             </div>
             <div className="text-center p-3 border rounded-lg">
               <div className="text-2xl font-bold text-feynman-orange">{trainingStats.epochs}</div>
-              <div className="text-sm text-feynman-muted">训练轮数</div>
+              <div className="text-sm text-feynman-muted">{t('finetune.epochs')}</div>
             </div>
             <div className="text-center p-3 border rounded-lg">
               <div className="text-2xl font-bold text-accent">{trainingStats.currentEpoch}</div>
-              <div className="text-sm text-feynman-muted">当前轮次</div>
+              <div className="text-sm text-feynman-muted">{t('finetune.currentEpoch')}</div>
             </div>
             <div className="text-center p-3 border rounded-lg">
               <div className="text-2xl font-bold text-feynman-blue">{trainingStats.progress}%</div>
-              <div className="text-sm text-feynman-muted">完成度</div>
+              <div className="text-sm text-feynman-muted">{t('finetune.progress')}</div>
             </div>
           </div>
 
@@ -98,7 +100,7 @@ const FineTuningLayer = () => {
                 className="bg-green-600 hover:bg-green-700"
               >
                 <Play className="w-4 h-4 mr-2" />
-                开始训练
+                {t('finetune.start')}
               </Button>
               <Button 
                 variant="outline"
@@ -106,11 +108,11 @@ const FineTuningLayer = () => {
                 disabled={trainingStatus !== 'running'}
               >
                 <Pause className="w-4 h-4 mr-2" />
-                暂停
+                {t('finetune.pause')}
               </Button>
               <Button variant="outline">
                 <Settings className="w-4 h-4 mr-2" />
-                配置
+                {t('finetune.config')}
               </Button>
             </div>
           </div>
@@ -119,9 +121,9 @@ const FineTuningLayer = () => {
 
       <Tabs defaultValue="metrics" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="metrics">性能指标</TabsTrigger>
-          <TabsTrigger value="features">费曼特征</TabsTrigger>
-          <TabsTrigger value="data">训练数据</TabsTrigger>
+          <TabsTrigger value="metrics">{t('finetune.metrics')}</TabsTrigger>
+          <TabsTrigger value="features">{t('finetune.features')}</TabsTrigger>
+          <TabsTrigger value="data">{t('finetune.data')}</TabsTrigger>
         </TabsList>
 
         {/* 性能指标 */}
@@ -162,7 +164,7 @@ const FineTuningLayer = () => {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <BarChart3 className="w-5 h-5 text-feynman-orange" />
-                <span>费曼风格特征权重</span>
+                <span>{t('finetune.features')}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -172,8 +174,8 @@ const FineTuningLayer = () => {
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-feynman-text">{feature.feature}</span>
                       <div className="flex items-center space-x-4 text-sm text-feynman-muted">
-                        <span>权重: {feature.weight}</span>
-                        <Badge variant="outline">{feature.examples} 样本</Badge>
+                        <span>{t('finetune.weight')}: {feature.weight}</span>
+                        <Badge variant="outline">{feature.examples} {t('finetune.samples')}</Badge>
                       </div>
                     </div>
                     <Progress value={feature.weight * 100} className="h-2" />
@@ -189,26 +191,26 @@ const FineTuningLayer = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card className="bg-gradient-card shadow-medium">
               <CardHeader>
-                <CardTitle>数据集管理</CardTitle>
+                <CardTitle>{t('finetune.dataManagement')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="p-4 border rounded-lg">
                   <h4 className="font-medium text-feynman-text mb-2">feynman_dataset.jsonl</h4>
                   <div className="text-sm text-feynman-muted space-y-1">
-                    <div>大小: 24.7 MB</div>
-                    <div>样本: {trainingStats.totalSamples} 条</div>
-                    <div>最后更新: 2024-01-20</div>
+                    <div>{t('finetune.fileSize')}: 24.7 MB</div>
+                    <div>{t('finetune.samples')}: {trainingStats.totalSamples} 条</div>
+                    <div>{t('finetune.lastUpdate')}: 2024-01-20</div>
                   </div>
                 </div>
                 
                 <div className="flex space-x-3">
                   <Button variant="outline" size="sm">
                     <Upload className="w-4 h-4 mr-2" />
-                    上传数据集
+                    {t('finetune.uploadDataset')}
                   </Button>
                   <Button variant="outline" size="sm">
                     <Download className="w-4 h-4 mr-2" />
-                    导出格式
+                    {t('finetune.exportFormat')}
                   </Button>
                 </div>
               </CardContent>
@@ -216,30 +218,30 @@ const FineTuningLayer = () => {
 
             <Card className="bg-gradient-card shadow-medium">
               <CardHeader>
-                <CardTitle>数据预处理</CardTitle>
+                <CardTitle>{t('finetune.preprocessing')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div className="p-3 border rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium">数据清洗</span>
-                      <Badge variant="secondary">完成</Badge>
+                      <span className="text-sm font-medium">{t('finetune.dataCleaning')}</span>
+                      <Badge variant="secondary">{t('finetune.completed')}</Badge>
                     </div>
                     <Progress value={100} className="h-1" />
                   </div>
                   
                   <div className="p-3 border rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium">格式转换</span>
-                      <Badge variant="secondary">完成</Badge>
+                      <span className="text-sm font-medium">{t('finetune.formatConversion')}</span>
+                      <Badge variant="secondary">{t('finetune.completed')}</Badge>
                     </div>
                     <Progress value={100} className="h-1" />
                   </div>
                   
                   <div className="p-3 border rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium">训练验证分割</span>
-                      <Badge variant="secondary">完成</Badge>
+                      <span className="text-sm font-medium">{t('finetune.trainValSplit')}</span>
+                      <Badge variant="secondary">{t('finetune.completed')}</Badge>
                     </div>
                     <Progress value={100} className="h-1" />
                   </div>
@@ -255,38 +257,38 @@ const FineTuningLayer = () => {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Download className="w-5 h-5 text-feynman-blue" />
-            <span>模型部署</span>
+            <span>{t('finetune.deployment')}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">本地部署</h4>
+              <h4 className="font-medium text-feynman-text mb-2">{t('finetune.localDeploy')}</h4>
               <p className="text-sm text-feynman-muted mb-3">
-                下载模型到本地运行
+                {t('finetune.localDeployDesc')}
               </p>
               <Button variant="outline" size="sm">
-                下载模型
+                {t('finetune.downloadModel')}
               </Button>
             </div>
             
             <div className="text-center p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">API 部署</h4>
+              <h4 className="font-medium text-feynman-text mb-2">{t('finetune.apiDeploy')}</h4>
               <p className="text-sm text-feynman-muted mb-3">
-                部署为 REST API 服务
+                {t('finetune.apiDeployDesc')}
               </p>
               <Button variant="outline" size="sm">
-                创建 API
+                {t('finetune.createApi')}
               </Button>
             </div>
             
             <div className="text-center p-4 border rounded-lg">
-              <h4 className="font-medium text-feynman-text mb-2">集成部署</h4>
+              <h4 className="font-medium text-feynman-text mb-2">{t('finetune.integrationDeploy')}</h4>
               <p className="text-sm text-feynman-muted mb-3">
-                与 RAG 和知识图谱集成
+                {t('finetune.integrationDeployDesc')}
               </p>
               <Button variant="outline" size="sm">
-                集成部署
+                {t('finetune.integrateDeploy')}
               </Button>
             </div>
           </div>
