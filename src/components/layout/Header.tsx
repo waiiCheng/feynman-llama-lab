@@ -13,13 +13,13 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <span className="text-primary-foreground font-semibold text-lg">F</span>
+              <span className="text-primary-foreground font-semibold text-lg">∂</span>
             </div>
             <div>
               <h1 className="text-heading text-foreground font-display">
-                Feynman LLM
+                FeynmanOS
               </h1>
-              <p className="text-caption">Learning by Teaching</p>
+              <p className="text-caption">Deconstructing Reality from First Principles</p>
             </div>
           </div>
           

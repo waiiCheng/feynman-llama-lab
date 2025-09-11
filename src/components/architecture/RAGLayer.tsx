@@ -22,10 +22,10 @@ const RAGLayer = () => {
       lastUpdate: '2024-01-15'
     },
     {
-      id: 'buffett-letters',
-      name: t('rag.buffettLetters'),
-      documents: 687,
-      embeddings: 68700,
+      id: 'feynman-interviews',
+      name: t('rag.feynmanInterviews'),
+      documents: 423,
+      embeddings: 42300,
       status: 'active', 
       lastUpdate: '2024-01-10'
     },
@@ -50,10 +50,10 @@ const RAGLayer = () => {
     },
     {
       id: 2, 
-      source: '巴菲特1987年股东信',
-      content: '复利是世界第八大奇迹。理解它的人，可以从中获益；不理解它的人，将会付出代价...',
-      similarity: 0.87,
-      tokens: 134
+      source: '费曼访谈录：量子电动力学',
+      content: '光是一种奇怪的东西。它既不是波，也不是粒子，而是一种我们没有直接经验的东西。想象一下...',
+      similarity: 0.89,
+      tokens: 142
     },
     {
       id: 3,

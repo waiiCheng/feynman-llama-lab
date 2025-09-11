@@ -156,7 +156,7 @@ const translations = {
     'template.tip': '提示：在文本框中按 "/" 快速调用模板',
     
     // Architecture Overview
-    'arch.overview.title': '三层架构系统',
+    'arch.overview.title': '系统架构蓝图',
     'arch.overview.subtitle': '结合微调、RAG 和知识图谱的费曼学习法 LLM 系统架构',
     'arch.ui.title': '用户界面层 (Web)',
     'arch.ui.desc': '费曼标注界面、管理系统',
@@ -173,11 +173,11 @@ const translations = {
     'arch.status.active': '已实现',
     'arch.status.ready': '可开始',
     'arch.status.planned': '计划中',
-    'arch.dataflow.title': '数据流示例',
-    'arch.dataflow.question': '用户问："什么是复利？"',
-    'arch.dataflow.step1': '1. 知识图谱找到：复利 → [指数增长, 时间价值, 巴菲特核心概念]',
-    'arch.dataflow.step2': '2. RAG 检索到：巴菲特1985年股东信第3段关于复利的解释...',
-    'arch.dataflow.step3': '3. 微调模型生成：用费曼的语气，结合图谱关系和原文，生成回答',
+    'arch.dataflow.title': '⚡️ 作战流程推演',
+    'arch.dataflow.question': '用户提问："费曼先生，请用你的思维模式，解释一下为什么天空是蓝色的？"',
+    'arch.dataflow.step1': '1. 【知识图谱】事实框架构建：系统识别核心概念「天空是蓝色的」→ [瑞利散射, 光的波长, 大气分子]',
+    'arch.dataflow.step2': '2. 【RAG检索】原始情报获取：检索引擎取回解释"瑞利散射"的权威物理学原始文本',
+    'arch.dataflow.step3': '3. 【费曼内核】生成洞察：FeynmanOS启动"类比思维"模式，将复杂物理原文重构为"弹珠台比喻"',
     'arch.roadmap.title': '实施路线图',
     'arch.phase1.title': '第一阶段：微调训练',
     'arch.phase1.desc': '使用标注数据训练费曼风格模型',
@@ -291,6 +291,9 @@ const translations = {
     'rag.localVectorDb': '本地向量数据库',
     'rag.localVectorDbDesc': 'RAG 功能可以使用 FAISS、ChromaDB 或 Qdrant 在本地部署',
     'rag.downloadRagScript': '下载 RAG 部署脚本',
+    'rag.feynmanLectures': '费曼物理学讲义',
+    'rag.feynmanInterviews': '费曼访谈录',
+    'rag.scientificPapers': '科学论文集',
     
     // Main Page
     'main.title': '费曼学习法标注',
@@ -508,7 +511,7 @@ const translations = {
     'rag.vectorDatabaseDesc': 'RAG functionality can be deployed locally using FAISS, ChromaDB, or Qdrant',
     'rag.downloadRAGScript': 'Download RAG Deployment Script',
     'rag.feynmanLectures': 'Feynman Lectures on Physics',
-    'rag.buffettLetters': 'Buffett Shareholder Letters',
+    'rag.feynmanInterviews': 'Feynman Interview Archives',
     'rag.scientificPapers': 'Scientific Papers Collection',
 
     // Common
@@ -535,7 +538,7 @@ const translations = {
     'template.tip': 'Tip: Press "/" in text box to quickly invoke templates',
     
     // Architecture Overview
-    'arch.overview.title': 'Three-Layer Architecture System',
+    'arch.overview.title': 'System Architecture Blueprint',
     'arch.overview.subtitle': 'Feynman-style LLM system architecture combining fine-tuning, RAG, and knowledge graphs',
     'arch.ui.title': 'User Interface Layer (Web)',
     'arch.ui.desc': 'Feynman annotation interface, management system',
@@ -552,11 +555,11 @@ const translations = {
     'arch.status.active': 'Implemented',
     'arch.status.ready': 'Ready to Start',
     'arch.status.planned': 'Planned',
-    'arch.dataflow.title': 'Data Flow Example',
-    'arch.dataflow.question': 'User asks: "What is compound interest?"',
-    'arch.dataflow.step1': '1. Knowledge graph finds: compound interest → [exponential growth, time value, Buffett core concepts]',
-    'arch.dataflow.step2': '2. RAG retrieves: Buffett\'s 1985 shareholder letter paragraph 3 about compound interest...',
-    'arch.dataflow.step3': '3. Fine-tuned model generates: Using Feynman\'s tone, combining graph relationships and original text, generate answer',
+    'arch.dataflow.title': '⚡️ Combat Procedure Walkthrough',
+    'arch.dataflow.question': 'User asks: "Mr. Feynman, using your thinking approach, explain why the sky is blue?"',
+    'arch.dataflow.step1': '1. 【Knowledge Graph】Fact Framework Construction: System identifies core concept "why sky is blue" → [Rayleigh scattering, light wavelength, atmospheric molecules]',
+    'arch.dataflow.step2': '2. 【RAG Retrieval】Raw Intelligence Acquisition: Retrieval engine fetches authoritative physics texts explaining "Rayleigh scattering"',
+    'arch.dataflow.step3': '3. 【Feynman Core】Insight Generation: FeynmanOS activates "analogical thinking" mode, reconstructing complex physics into "pinball machine metaphor"',
     'arch.roadmap.title': 'Implementation Roadmap',
     'arch.phase1.title': 'Phase 1: Fine-tuning Training',
     'arch.phase1.desc': 'Train Feynman-style model using annotation data',
