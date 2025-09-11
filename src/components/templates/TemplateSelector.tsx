@@ -56,13 +56,12 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
       </PopoverTrigger>
       <PopoverContent className="w-80 p-0" align="start">
         <div className="p-4 space-y-4">
-          <div className="text-sm font-medium text-feynman-text">费曼模板</div>
+          <div className="text-sm font-medium text-feynman-text">{t('template.title')}</div>
           
           {Object.entries(categories).map(([category, categoryTemplates]) => (
             <div key={category} className="space-y-2">
               <div className="text-xs text-feynman-muted uppercase tracking-wide">
-                {category === 'explanation' ? '解释说明' : 
-                 category === 'reasoning' ? '推理思考' : '故事叙述'}
+                {t(`template.category.${category}`)}
               </div>
               <div className="grid grid-cols-1 gap-1">
                 {categoryTemplates.map((template) => {
@@ -85,7 +84,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
           ))}
           
           <div className="text-xs text-feynman-muted pt-2 border-t">
-            提示：在文本框中按 "/" 快速调用模板
+            {t('template.tip')}
           </div>
         </div>
       </PopoverContent>

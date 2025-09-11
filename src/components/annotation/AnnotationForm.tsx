@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Save, Lightbulb, BookOpen, Zap, Target } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface AnnotationData {
   question: string;
@@ -19,14 +20,15 @@ interface AnnotationData {
 }
 
 const styleOptions = [
-  { id: 'analogy', label: '使用类比', icon: Lightbulb, description: '用简单例子解释复杂概念' },
-  { id: 'simplify', label: '简化复杂', icon: Target, description: '化繁为简的表达方式' },
-  { id: 'story', label: '讲故事', icon: BookOpen, description: '用故事情节增强理解' },
-  { id: 'firstprinciples', label: '第一性原理', icon: Zap, description: '从基本原理出发思考' },
+  { id: 'analogy', labelKey: 'style.analogy', icon: Lightbulb, descKey: 'style.analogy.desc' },
+  { id: 'simplify', labelKey: 'style.simplify', icon: Target, descKey: 'style.simplify.desc' },
+  { id: 'story', labelKey: 'style.story', icon: BookOpen, descKey: 'style.story.desc' },
+  { id: 'firstprinciples', labelKey: 'style.firstprinciples', icon: Zap, descKey: 'style.firstprinciples.desc' },
 ];
 
 const AnnotationForm = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<AnnotationData>({
     question: '',
     response: '',
@@ -47,8 +49,8 @@ const AnnotationForm = () => {
   const handleSave = () => {
     if (!formData.question.trim() || !formData.response.trim()) {
       toast({
-        title: "请填写必要字段",
-        description: "问题和回答都是必填项",
+        title: t('annotation.validation.title'),
+        description: t('annotation.validation.desc'),
         variant: "destructive"
       });
       return;
@@ -68,8 +70,8 @@ const AnnotationForm = () => {
     localStorage.setItem('feynman-annotations', JSON.stringify(existingData));
 
     toast({
-      title: "标注已保存",
-      description: "数据已成功保存到本地存储"
+      title: t('annotation.saved.title'),
+      description: t('annotation.saved.desc')
     });
 
     // Reset form
@@ -88,12 +90,12 @@ const AnnotationForm = () => {
       <Card>
         <CardHeader className="pb-4">
           <CardTitle className="text-lg font-medium text-foreground">
-            用户问题
+            {t('annotation.question')}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Input
-            placeholder="例如：什么是量子力学？"
+            placeholder={t('annotation.question.placeholder')}
             value={formData.question}
             onChange={(e) => setFormData(prev => ({ ...prev, question: e.target.value }))}
             className="text-base"
@@ -105,12 +107,12 @@ const AnnotationForm = () => {
       <Card>
         <CardHeader className="pb-4">
           <CardTitle className="text-lg font-medium text-foreground">
-            费曼式回答
+            {t('annotation.response')}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Textarea
-            placeholder="费曼会怎么解释这个问题？用简单、直观的方式..."
+            placeholder={t('annotation.response.placeholder')}
             value={formData.response}
             onChange={(e) => setFormData(prev => ({ ...prev, response: e.target.value }))}
             rows={8}
@@ -123,7 +125,7 @@ const AnnotationForm = () => {
       <Card>
         <CardHeader className="pb-4">
           <CardTitle className="text-lg font-medium text-foreground">
-            思维模式标签
+            {t('annotation.styleFeatures')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -141,9 +143,9 @@ const AnnotationForm = () => {
                     <div className="flex-1">
                       <Label htmlFor={option.id} className="flex items-center space-x-2 cursor-pointer">
                         <Icon className="w-4 h-4 text-muted-foreground" />
-                        <span className="font-medium text-foreground">{option.label}</span>
+                        <span className="font-medium text-foreground">{t(option.labelKey)}</span>
                       </Label>
-                      <p className="text-sm text-muted-foreground mt-1">{option.description}</p>
+                      <p className="text-sm text-muted-foreground mt-1">{t(option.descKey)}</p>
                     </div>
                   </div>
                 </div>
@@ -157,7 +159,7 @@ const AnnotationForm = () => {
                 const feature = styleOptions.find(opt => opt.id === featureId);
                 return feature ? (
                   <Badge key={featureId} variant="secondary" className="text-xs">
-                    {feature.label}
+                    {t(feature.labelKey)}
                   </Badge>
                 ) : null;
               })}
@@ -171,18 +173,18 @@ const AnnotationForm = () => {
         <Card>
           <CardHeader className="pb-4">
             <CardTitle className="text-lg font-medium text-foreground">
-              回答质量
+              {t('annotation.quality')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <Select value={formData.quality} onValueChange={(value) => setFormData(prev => ({ ...prev, quality: value }))}>
               <SelectTrigger>
-                <SelectValue placeholder="选择质量等级" />
+                <SelectValue placeholder={t('annotation.quality.placeholder')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="excellent">优秀范例</SelectItem>
-                <SelectItem value="good">良好</SelectItem>
-                <SelectItem value="needs-work">需改进</SelectItem>
+                <SelectItem value="excellent">{t('quality.excellent')}</SelectItem>
+                <SelectItem value="good">{t('quality.good')}</SelectItem>
+                <SelectItem value="needs-work">{t('quality.needsWork')}</SelectItem>
               </SelectContent>
             </Select>
           </CardContent>
@@ -190,11 +192,11 @@ const AnnotationForm = () => {
 
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="text-lg font-medium text-foreground">备注</CardTitle>
+            <CardTitle className="text-lg font-medium text-foreground">{t('annotation.notes')}</CardTitle>
           </CardHeader>
           <CardContent>
             <Textarea
-              placeholder="其他备注信息..."
+              placeholder={t('annotation.notes.placeholder')}
               value={formData.notes}
               onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
               rows={3}
@@ -211,7 +213,7 @@ const AnnotationForm = () => {
           className="px-6"
         >
           <Save className="w-4 h-4 mr-2" />
-          保存标注
+          {t('annotation.save')}
         </Button>
       </div>
     </div>

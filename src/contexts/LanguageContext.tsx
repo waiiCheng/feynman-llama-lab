@@ -37,6 +37,14 @@ const translations = {
     'annotation.notes': '备注',
     'annotation.save': '保存标注',
     'annotation.saveAndNext': '保存并下一条',
+    'annotation.question.placeholder': '例如：什么是量子力学？',
+    'annotation.response.placeholder': '费曼会怎么解释这个问题？用简单、直观的方式...',
+    'annotation.quality.placeholder': '选择质量等级',
+    'annotation.notes.placeholder': '其他备注信息...',
+    'annotation.validation.title': '请填写必要字段',
+    'annotation.validation.desc': '问题和回答都是必填项',
+    'annotation.saved.title': '标注已保存',
+    'annotation.saved.desc': '数据已成功保存到本地存储',
     
     // Templates
     'template.analogy': '这就像...',
@@ -57,6 +65,10 @@ const translations = {
     'style.simplify': '简化复杂',
     'style.story': '讲故事',
     'style.firstprinciples': '第一性原理',
+    'style.analogy.desc': '用简单例子解释复杂概念',
+    'style.simplify.desc': '化繁为简的表达方式',
+    'style.story.desc': '用故事情节增强理解',
+    'style.firstprinciples.desc': '从基本原理出发思考',
     
     // Shortcuts
     'shortcuts.save': 'Ctrl+Enter: 保存并下一条',
@@ -121,6 +133,26 @@ const translations = {
     'training.configDesc': 'training_config.json 已下载',
     'training.reqGenerated': '依赖文件已生成',
     'training.reqDesc': 'requirements.txt 已下载',
+    
+    // Preview Panel
+    'preview.realTime': '实时预览',
+    'preview.quality': '质量评级',
+    'preview.analysis': '质量分析',
+    'preview.wordCount': '字数统计',
+    'preview.complexity': '复杂度',
+    'preview.complexity.复杂': '复杂',
+    'preview.complexity.中等': '中等',
+    'preview.complexity.简单': '简单',
+    'preview.hasAnalogy': '包含类比',
+    'preview.hasExample': '有具体例子',
+    'preview.isSimple': '长度适中',
+    
+    // Template Selector
+    'template.title': '费曼模板',
+    'template.category.explanation': '解释说明',
+    'template.category.reasoning': '推理思考',
+    'template.category.storytelling': '故事叙述',
+    'template.tip': '提示：在文本框中按 "/" 快速调用模板',
   },
   en: {
     // Navigation
@@ -148,6 +180,14 @@ const translations = {
     'annotation.notes': 'Notes',
     'annotation.save': 'Save Annotation',
     'annotation.saveAndNext': 'Save & Next',
+    'annotation.question.placeholder': 'e.g., What is quantum mechanics?',
+    'annotation.response.placeholder': 'How would Feynman explain this? Use simple, intuitive ways...',
+    'annotation.quality.placeholder': 'Select quality level',
+    'annotation.notes.placeholder': 'Additional notes...',
+    'annotation.validation.title': 'Please fill required fields',
+    'annotation.validation.desc': 'Question and response are required',
+    'annotation.saved.title': 'Annotation Saved',
+    'annotation.saved.desc': 'Data successfully saved to local storage',
     
     // Templates
     'template.analogy': 'This is like...',
@@ -168,6 +208,10 @@ const translations = {
     'style.simplify': 'Simplify Complex',
     'style.story': 'Tell Stories',
     'style.firstprinciples': 'First Principles',
+    'style.analogy.desc': 'Explain complex concepts with simple examples',
+    'style.simplify.desc': 'Simplify complex expressions',
+    'style.story.desc': 'Use storytelling to enhance understanding',
+    'style.firstprinciples.desc': 'Think from basic principles',
     
     // Shortcuts
     'shortcuts.save': 'Ctrl+Enter: Save & Next',
@@ -232,6 +276,26 @@ const translations = {
     'training.configDesc': 'training_config.json downloaded',
     'training.reqGenerated': 'Requirements file generated',
     'training.reqDesc': 'requirements.txt downloaded',
+    
+    // Preview Panel
+    'preview.realTime': 'Real-time Preview',
+    'preview.quality': 'Quality Rating',
+    'preview.analysis': 'Quality Analysis',
+    'preview.wordCount': 'Word Count',
+    'preview.complexity': 'Complexity',
+    'preview.complexity.复杂': 'Complex',
+    'preview.complexity.中等': 'Medium',
+    'preview.complexity.简单': 'Simple',
+    'preview.hasAnalogy': 'Contains Analogy',
+    'preview.hasExample': 'Has Examples',
+    'preview.isSimple': 'Appropriate Length',
+    
+    // Template Selector
+    'template.title': 'Feynman Templates',
+    'template.category.explanation': 'Explanation',
+    'template.category.reasoning': 'Reasoning',
+    'template.category.storytelling': 'Storytelling',
+    'template.tip': 'Tip: Press "/" in text box to quickly invoke templates',
   }
 };
 

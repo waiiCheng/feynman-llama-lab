@@ -52,14 +52,14 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ formData }) => {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2 text-feynman-text font-physics">
             <Eye className="w-5 h-5 text-feynman-blue" />
-            <span>实时预览</span>
+            <span>{t('preview.realTime')}</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Question Preview */}
           {formData.question && (
             <div>
-              <h4 className="text-sm font-semibold text-feynman-text mb-2">问题</h4>
+              <h4 className="text-sm font-semibold text-feynman-text mb-2">{t('manage.question')}</h4>
               <div className="p-3 bg-feynman-warm/10 rounded-lg">
                 <p className="text-feynman-text font-mono">{formData.question}</p>
               </div>
@@ -69,7 +69,7 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ formData }) => {
           {/* Response Preview */}
           {formData.response && (
             <div>
-              <h4 className="text-sm font-semibold text-feynman-text mb-2">费曼式回答</h4>
+              <h4 className="text-sm font-semibold text-feynman-text mb-2">{t('manage.response')}</h4>
               <div className="p-4 bg-gradient-subtle rounded-lg">
                 <p className="text-feynman-text leading-relaxed whitespace-pre-wrap font-mono text-sm">
                   {formData.response}
@@ -81,7 +81,7 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ formData }) => {
           {/* Style Features Preview */}
           {formData.styleFeatures.length > 0 && (
             <div>
-              <h4 className="text-sm font-semibold text-feynman-text mb-2">思维模式</h4>
+              <h4 className="text-sm font-semibold text-feynman-text mb-2">{t('manage.stylePattern')}</h4>
               <div className="flex flex-wrap gap-2">
                 {formData.styleFeatures.map(featureId => {
                   const feature = styleOptions.find(opt => opt.id === featureId);
@@ -100,7 +100,7 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ formData }) => {
           {/* Quality Preview */}
           {formData.quality && (
             <div>
-              <h4 className="text-sm font-semibold text-feynman-text mb-2">质量评级</h4>
+              <h4 className="text-sm font-semibold text-feynman-text mb-2">{t('preview.quality')}</h4>
               <Badge className={getQualityColor(formData.quality)}>
                 {t(`quality.${formData.quality}`)}
               </Badge>
@@ -113,30 +113,30 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ formData }) => {
       {formData.response && (
         <Card className="physics-card">
           <CardHeader>
-            <CardTitle className="text-sm text-feynman-text font-physics">质量分析</CardTitle>
+            <CardTitle className="text-sm text-feynman-text font-physics">{t('preview.analysis')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-sm">
             <div className="flex justify-between">
-              <span className="text-feynman-muted">字数统计</span>
+              <span className="text-feynman-muted">{t('preview.wordCount')}</span>
               <span className="text-feynman-text font-mono">{analysis.wordCount}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-feynman-muted">复杂度</span>
+              <span className="text-feynman-muted">{t('preview.complexity')}</span>
               <Badge variant="outline" className="text-xs">
-                {analysis.complexity}
+                {t(`preview.complexity.${analysis.complexity}`)}
               </Badge>
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-feynman-muted">包含类比</span>
+                <span className="text-feynman-muted">{t('preview.hasAnalogy')}</span>
                 <div className={`w-2 h-2 rounded-full ${analysis.hasAnalogy ? 'bg-green-500' : 'bg-gray-300'}`} />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-feynman-muted">有具体例子</span>
+                <span className="text-feynman-muted">{t('preview.hasExample')}</span>
                 <div className={`w-2 h-2 rounded-full ${analysis.hasExample ? 'bg-green-500' : 'bg-gray-300'}`} />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-feynman-muted">长度适中</span>
+                <span className="text-feynman-muted">{t('preview.isSimple')}</span>
                 <div className={`w-2 h-2 rounded-full ${analysis.isSimple ? 'bg-green-500' : 'bg-gray-300'}`} />
               </div>
             </div>
@@ -148,7 +148,7 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ formData }) => {
       {formData.notes && (
         <Card className="physics-card">
           <CardHeader>
-            <CardTitle className="text-sm text-feynman-text font-physics">备注</CardTitle>
+            <CardTitle className="text-sm text-feynman-text font-physics">{t('manage.notes')}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-feynman-muted whitespace-pre-wrap font-mono">
