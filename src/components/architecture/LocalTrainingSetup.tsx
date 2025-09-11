@@ -20,9 +20,11 @@ import {
   Package
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const LocalTrainingSetup = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [modelConfig, setModelConfig] = useState({
     baseModel: 'mistral-7b',
     epochs: 3,
@@ -260,33 +262,33 @@ seaborn>=0.12.0
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold text-feynman-text">本地训练配置</h2>
-        <p className="text-feynman-muted max-w-2xl mx-auto">
-          在您的本地环境中训练费曼风格的 LLM 模型
+        <h2 className="text-3xl font-bold text-label">{t('training.title')}</h2>
+        <p className="text-muted-foreground max-w-2xl mx-auto text-body">
+          {t('training.subtitle')}
         </p>
       </div>
 
       <Tabs defaultValue="setup" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="setup">训练配置</TabsTrigger>
-          <TabsTrigger value="data">数据准备</TabsTrigger>
-          <TabsTrigger value="scripts">脚本生成</TabsTrigger>
-          <TabsTrigger value="deploy">部署指南</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-4 depth-1 no-border">
+          <TabsTrigger value="setup">{t('training.setup')}</TabsTrigger>
+          <TabsTrigger value="data">{t('training.data')}</TabsTrigger>
+          <TabsTrigger value="scripts">{t('training.scripts')}</TabsTrigger>
+          <TabsTrigger value="deploy">{t('training.deploy')}</TabsTrigger>
         </TabsList>
 
         {/* 训练配置 */}
         <TabsContent value="setup">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="bg-gradient-card shadow-medium">
+            <Card className="depth-1 no-border">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Settings className="w-5 h-5 text-feynman-blue" />
-                  <span>模型参数</span>
+                <CardTitle className="flex items-center space-x-2 text-label">
+                  <Settings className="w-5 h-5 text-primary" />
+                  <span>{t('training.modelParams')}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-feynman-text">基础模型</label>
+                <div className="focus-glow">
+                  <label className="text-sm font-medium text-label">{t('training.baseModel')}</label>
                   <Select 
                     value={modelConfig.baseModel} 
                     onValueChange={(value) => setModelConfig(prev => ({...prev, baseModel: value}))}
@@ -330,17 +332,17 @@ seaborn>=0.12.0
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-card shadow-medium">
+            <Card className="depth-1 no-border">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <HardDrive className="w-5 h-5 text-feynman-orange" />
-                  <span>系统要求</span>
+                <CardTitle className="flex items-center space-x-2 text-label">
+                  <HardDrive className="w-5 h-5 text-accent" />
+                  <span>{t('training.systemReqs')}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 border rounded-lg">
-                    <span className="text-sm font-medium">GPU 内存</span>
+                  <div className="flex justify-between items-center p-3 depth-2 rounded-lg">
+                    <span className="text-sm font-medium text-label">{t('training.gpuMemory')}</span>
                     <Badge variant="outline">≥ 16GB VRAM</Badge>
                   </div>
                   <div className="flex justify-between items-center p-3 border rounded-lg">
@@ -374,11 +376,11 @@ seaborn>=0.12.0
         {/* 数据准备 */}
         <TabsContent value="data">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="bg-gradient-card shadow-medium">
+            <Card className="depth-1 no-border">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <FileText className="w-5 h-5 text-feynman-blue" />
-                  <span>数据统计</span>
+                <CardTitle className="flex items-center space-x-2 text-label">
+                  <FileText className="w-5 h-5 text-primary" />
+                  <span>{t('training.dataStats')}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -451,11 +453,11 @@ seaborn>=0.12.0
         {/* 脚本生成 */}
         <TabsContent value="scripts">
           <div className="space-y-6">
-            <Card className="bg-gradient-card shadow-medium">
+            <Card className="depth-1 no-border">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Code className="w-5 h-5 text-feynman-blue" />
-                  <span>自动生成训练脚本</span>
+                <CardTitle className="flex items-center space-x-2 text-label">
+                  <Code className="w-5 h-5 text-primary" />
+                  <span>{t('training.generateScript')}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -516,11 +518,11 @@ seaborn>=0.12.0
         {/* 部署指南 */}
         <TabsContent value="deploy">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="bg-gradient-card shadow-medium">
+            <Card className="depth-1 no-border">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Monitor className="w-5 h-5 text-feynman-blue" />
-                  <span>本地部署</span>
+                <CardTitle className="flex items-center space-x-2 text-label">
+                  <Monitor className="w-5 h-5 text-primary" />
+                  <span>{t('training.localDeploy')}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">

@@ -8,36 +8,50 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Feynman Design System - Premium Dark Mode */
-    --background: 0 0% 8%;                /* #141414 - Refined dark */
-    --foreground: 0 0% 96%;               /* #F5F5F5 - Enhanced readability */
+    /* Deep Gray Palette for Sophisticated Depth */
+    --background: 0 0% 6.7%;              /* #111111 - deepest base */
+    --foreground: 0 0% 95%;               /* Crisp white text */
 
-    --card: 0 0% 10%;                     /* #1A1A1A - Elevated surface */
-    --card-foreground: 0 0% 94%;          /* #F0F0F0 */
+    --card: 0 0% 11.8%;                   /* #1E1E1E - cards/containers */
+    --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 96%;
+    --popover: 0 0% 11.8%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 230 85% 68%;               /* #4F46E5 - Deep indigo accent */
-    --primary-foreground: 0 0% 100%;
+    --primary: 234 89% 74%;               /* Modern blue accent */
+    --primary-foreground: 0 0% 6.7%;
 
-    --secondary: 0 0% 12%;                /* #1F1F1F - Subtle elevation */
-    --secondary-foreground: 0 0% 88%;     /* #E1E1E1 */
+    --secondary: 0 0% 16.5%;              /* #2A2A2A - inputs */
+    --secondary-foreground: 0 0% 95%;
 
-    --muted: 0 0% 6%;                     /* #0F0F0F - Deepest background */
-    --muted-foreground: 0 0% 60%;         /* #999999 - Balanced gray */
+    --muted: 0 0% 13%;                    /* Subtle background */
+    --muted-foreground: 0 0% 63%;         /* Balanced gray text */
 
-    --accent: 230 85% 68%;                /* Same as primary */
-    --accent-foreground: 0 0% 100%;
+    --accent: 270 95% 75%;                /* Purple accent */
+    --accent-foreground: 0 0% 6.7%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 14%;                   /* #242424 - Minimal borders */
-    --input: 0 0% 11%;                    /* #1C1C1C - Input background */
-    --ring: 230 85% 68%;
+    --border: 0 0% 20%;                   /* Subtle borders */
+    --input: 0 0% 16.5%;                  /* Input backgrounds */
+    --ring: 234 89% 74%;                  /* Focus rings */
 
-    --radius: 8px;                        /* Modern rounded corners */
+    --radius: 0.75rem;                    /* Refined rounded corners */
+
+    /* Custom shadows for depth */
+    --shadow-soft: 0 2px 8px -2px hsl(0 0% 0% / 0.1);
+    --shadow-medium: 0 4px 16px -4px hsl(0 0% 0% / 0.2);
+    --shadow-glow: 0 0 20px hsl(var(--primary) / 0.3);
+    --shadow-glow-accent: 0 0 20px hsl(var(--accent) / 0.3);
+
+    /* Typography system */
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --letter-spacing-tight: -0.025em;
+    --letter-spacing-normal: 0;
+    --letter-spacing-wide: 0.025em;
+    --line-height-relaxed: 1.6;
 
     /* Typography Scale */
     --text-xs: 12px;
@@ -106,23 +120,61 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    line-height: 1.5;
-    letter-spacing: -0.01em;
+    font-family: 'Poppins', 'Noto Sans SC', system-ui, sans-serif;
+    line-height: var(--line-height-relaxed);
+    letter-spacing: var(--letter-spacing-normal);
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
+  
+  /* Typography improvements */
+  .text-label {
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--letter-spacing-wide);
+  }
+  
+  .text-body {
+    line-height: var(--line-height-relaxed);
+  }
+  
+  /* Focus glow effects - replace harsh borders */
+  .focus-glow:focus-within {
+    box-shadow: var(--shadow-glow);
+    border-color: transparent;
+  }
+  
+  .focus-glow-accent:focus-within {
+    box-shadow: var(--shadow-glow-accent);
+    border-color: transparent;
+  }
+  
+  /* Card depth system */
+  .depth-1 {
+    background-color: hsl(var(--card));
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .depth-2 {
+    background-color: hsl(var(--secondary));
+    box-shadow: var(--shadow-medium);
+  }
+  
+  /* Remove default borders on inputs and cards */
+  .no-border {
+    border: none;
+  }
 
-  /* 中文字体系统 */
+  /* Language-specific font adjustments */
   body.lang-zh {
-    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'Source Han Sans CN', sans-serif;
+    font-family: 'Poppins', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   }
 
   body.lang-zh .font-mono {
     font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', monospace;
   }
 
-  /* 英文字体系统 */
   body.lang-en {
-    font-family: 'Inter', 'SF Pro Display', 'Helvetica Neue', '-apple-system', 'BlinkMacSystemFont', sans-serif;
+    font-family: 'Poppins', '-apple-system', 'BlinkMacSystemFont', sans-serif;
+    letter-spacing: var(--letter-spacing-normal);
   }
 
   body.lang-en .font-mono {
