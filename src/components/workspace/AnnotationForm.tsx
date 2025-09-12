@@ -14,6 +14,8 @@ import { useToast } from '@/hooks/use-toast';
 interface AnnotationData {
   question: string;
   response: string;
+  finalAnswer: string;
+  feynmanMethod: string;
   styleFeatures: string[];
   quality: string;
   notes: string;
@@ -26,6 +28,23 @@ interface AnnotationFormProps {
   onInsertTemplate: (template: string) => void;
   responseRef: React.RefObject<HTMLTextAreaElement>;
 }
+
+const FEYNMAN_JSON_TEMPLATE = `{
+  "core_concept": "这里填写核心概念",
+  "analogy": {
+    "domain": "日常生活",
+    "scenario": "这里填写类比的场景，比如'推箱子'",
+    "description": "这里详细描述类比"
+  },
+  "breakdown": [
+    {
+      "step": 1,
+      "explanation": "这里写分解步骤一的解释",
+      "linked_concept": "这里写关联的概念"
+    }
+  ],
+  "summary": "这里填写最终的总结"
+}`;
 
 const styleOptions = [
   { id: 'analogy', key: 'style.analogy', labelKey: 'style.analogy', icon: Lightbulb, descKey: 'style.analogy.desc' },
@@ -54,7 +73,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
   };
 
   const handleSave = () => {
-    if (!formData.question.trim() || !formData.response.trim()) {
+    if (!formData.question.trim() || !formData.finalAnswer.trim()) {
       toast({
         title: t('annotation.validation.title'),
         description: t('annotation.validation.desc'),
@@ -63,11 +82,30 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
       return;
     }
 
-    // Save to localStorage
+    // Validate JSON format
+    let feynmanMethodObject;
+    try {
+      feynmanMethodObject = JSON.parse(formData.feynmanMethod);
+    } catch (error) {
+      toast({
+        title: t('annotation.validation.title'),
+        description: t('annotation.validation.jsonError'),
+        variant: "destructive"
+      });
+      console.error("JSON parsing error:", error);
+      return;
+    }
+
+    // Save in new format
     const timestamp = new Date().toISOString();
     const annotation = {
       id: Date.now().toString(),
-      ...formData,
+      question: formData.question,
+      answer_final: formData.finalAnswer, // New field name
+      feynman_method: feynmanMethodObject, // Parsed JSON object
+      quality_score: formData.quality,
+      styleFeatures: formData.styleFeatures, // Keep as metadata
+      notes: formData.notes, // Keep as metadata
       timestamp,
       annotator: 'user'
     };
@@ -101,7 +139,39 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
         />
       </div>
 
-      {/* Feynman Response */}
+      {/* Final Answer */}
+      <div className="feynman-card spacing-lg">
+        <div className="mb-6">
+          <h2 className="text-heading text-foreground">
+            {t('annotation.finalAnswer')}
+          </h2>
+        </div>
+        <Textarea
+          placeholder={t('annotation.finalAnswer.placeholder')}
+          value={formData.finalAnswer}
+          onChange={(e) => setFormData(prev => ({ ...prev, finalAnswer: e.target.value }))}
+          rows={4}
+          className="feynman-input text-body leading-relaxed resize-none"
+        />
+      </div>
+
+      {/* Feynman Method JSON */}
+      <div className="feynman-card spacing-lg">
+        <div className="mb-6">
+          <h2 className="text-heading text-foreground">
+            {t('annotation.feynmanMethod')}
+          </h2>
+        </div>
+        <Textarea
+          placeholder={t('annotation.feynmanMethod.placeholder')}
+          value={formData.feynmanMethod}
+          onChange={(e) => setFormData(prev => ({ ...prev, feynmanMethod: e.target.value }))}
+          rows={12}
+          className="feynman-input text-body leading-relaxed resize-none font-mono"
+        />
+      </div>
+
+      {/* Feynman Response (Legacy) */}
       <div className="feynman-card spacing-lg">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-heading text-foreground">

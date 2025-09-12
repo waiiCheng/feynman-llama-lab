@@ -15,16 +15,37 @@ import { Keyboard, EyeOff, Eye, Languages } from 'lucide-react';
 interface AnnotationData {
   question: string;
   response: string;
+  finalAnswer: string;
+  feynmanMethod: string;
   styleFeatures: string[];
   quality: string;
   notes: string;
 }
+
+const FEYNMAN_JSON_TEMPLATE = `{
+  "core_concept": "这里填写核心概念",
+  "analogy": {
+    "domain": "日常生活",
+    "scenario": "这里填写类比的场景，比如'推箱子'",
+    "description": "这里详细描述类比"
+  },
+  "breakdown": [
+    {
+      "step": 1,
+      "explanation": "这里写分解步骤一的解释",
+      "linked_concept": "这里写关联的概念"
+    }
+  ],
+  "summary": "这里填写最终的总结"
+}`;
 
 export const AnnotationWorkspace: React.FC = () => {
   const { t, language, setLanguage } = useLanguage();
   const [formData, setFormData] = useState<AnnotationData>({
     question: '',
     response: '',
+    finalAnswer: '',
+    feynmanMethod: FEYNMAN_JSON_TEMPLATE,
     styleFeatures: [],
     quality: '',
     notes: ''
@@ -40,6 +61,8 @@ export const AnnotationWorkspace: React.FC = () => {
     setFormData({
       question: '',
       response: '',
+      finalAnswer: '',
+      feynmanMethod: FEYNMAN_JSON_TEMPLATE,
       styleFeatures: [],
       quality: '',
       notes: ''
@@ -50,6 +73,8 @@ export const AnnotationWorkspace: React.FC = () => {
     setFormData({
       question: '',
       response: '',
+      finalAnswer: '',
+      feynmanMethod: FEYNMAN_JSON_TEMPLATE,
       styleFeatures: [],
       quality: '',
       notes: ''
