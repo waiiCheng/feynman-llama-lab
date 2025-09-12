@@ -12,11 +12,28 @@ import { PreviewPanel } from './PreviewPanel';
 import { TypewriterTitle } from '@/components/effects/TypewriterTitle';
 import { Keyboard, EyeOff, Eye, Languages } from 'lucide-react';
 
+interface BreakdownStep {
+  step: number;
+  explanation: string;
+  linked_concept: string;
+}
+
+interface FeynmanMethod {
+  core_concept: string;
+  analogy: {
+    domain: string;
+    scenario: string;
+    description: string;
+  };
+  breakdown: BreakdownStep[];
+  summary: string;
+}
+
 interface AnnotationData {
   question: string;
   response: string;
-  finalAnswer: string;
-  feynmanMethod: string;
+  answer_final: string;
+  feynman_method: FeynmanMethod;
   styleFeatures: string[];
   quality: string;
   notes: string;
@@ -44,8 +61,19 @@ export const AnnotationWorkspace: React.FC = () => {
   const [formData, setFormData] = useState<AnnotationData>({
     question: '',
     response: '',
-    finalAnswer: '',
-    feynmanMethod: FEYNMAN_JSON_TEMPLATE,
+    answer_final: '',
+    feynman_method: {
+      core_concept: '',
+      analogy: {
+        domain: '日常生活',
+        scenario: '',
+        description: ''
+      },
+      breakdown: [
+        { step: 1, explanation: '', linked_concept: '' }
+      ],
+      summary: ''
+    },
     styleFeatures: [],
     quality: '',
     notes: ''
@@ -61,8 +89,19 @@ export const AnnotationWorkspace: React.FC = () => {
     setFormData({
       question: '',
       response: '',
-      finalAnswer: '',
-      feynmanMethod: FEYNMAN_JSON_TEMPLATE,
+      answer_final: '',
+      feynman_method: {
+        core_concept: '',
+        analogy: {
+          domain: '日常生活',
+          scenario: '',
+          description: ''
+        },
+        breakdown: [
+          { step: 1, explanation: '', linked_concept: '' }
+        ],
+        summary: ''
+      },
       styleFeatures: [],
       quality: '',
       notes: ''
@@ -73,8 +112,19 @@ export const AnnotationWorkspace: React.FC = () => {
     setFormData({
       question: '',
       response: '',
-      finalAnswer: '',
-      feynmanMethod: FEYNMAN_JSON_TEMPLATE,
+      answer_final: '',
+      feynman_method: {
+        core_concept: '',
+        analogy: {
+          domain: '日常生活',
+          scenario: '',
+          description: ''
+        },
+        breakdown: [
+          { step: 1, explanation: '', linked_concept: '' }
+        ],
+        summary: ''
+      },
       styleFeatures: [],
       quality: '',
       notes: ''
