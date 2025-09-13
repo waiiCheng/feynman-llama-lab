@@ -1,0 +1,128 @@
+{
+  "patterns": [
+    {
+      "id": "energy_work_analogy",
+      "name": "能量功率类比",
+      "rule": "(能量|功|做功|力量).*(想象一下|比如说|就像|类似于).*(推|拉|移动|箱子|重物)",
+      "priority": 90,
+      "template": {
+        "core_concept": "功和能量",
+        "analogy": {
+          "domain": "日常生活",
+          "scenario": "推箱子或搬重物",
+          "description": "通过推动重物来理解力对物体做功的概念"
+        },
+        "breakdown": [
+          {
+            "step": 1,
+            "explanation": "确定施加的力的大小和方向",
+            "linked_concept": "力的向量性"
+          },
+          {
+            "step": 2,
+            "explanation": "测量物体在力的方向上移动的距离",
+            "linked_concept": "位移"
+          },
+          {
+            "step": 3,
+            "explanation": "计算功 = 力 × 距离 × cos(角度)",
+            "linked_concept": "功的数学定义"
+          }
+        ],
+        "summary": "功是力使物体在其方向上移动时所做的工作，就像我们推箱子时付出的努力"
+      }
+    },
+    {
+      "id": "step_by_step_breakdown",
+      "name": "逐步分解结构",
+      "rule": "(首先|第一步|然后|接下来|最后|总结).*(步骤|过程|方法)",
+      "priority": 80,
+      "template": {
+        "breakdown": [
+          {
+            "step": 1,
+            "explanation": "第一步的详细解释",
+            "linked_concept": "基础概念"
+          },
+          {
+            "step": 2,
+            "explanation": "第二步的详细解释",
+            "linked_concept": "中级概念"
+          },
+          {
+            "step": 3,
+            "explanation": "第三步的详细解释",
+            "linked_concept": "高级应用"
+          }
+        ]
+      }
+    },
+    {
+      "id": "analogy_pattern",
+      "name": "类比结构",
+      "rule": "(就像|类似于|比如说|想象一下|如同).*(在日常生活中|在现实中|在我们身边)",
+      "priority": 85,
+      "template": {
+        "analogy": {
+          "domain": "日常生活",
+          "scenario": "生活中的常见场景",
+          "description": "通过日常生活中的例子来理解复杂概念"
+        }
+      }
+    },
+    {
+      "id": "first_principles",
+      "name": "第一性原理",
+      "rule": "(本质上|根本上|基本原理|第一性原理|最基础的)",
+      "priority": 75,
+      "template": {
+        "core_concept": "第一性原理分析",
+        "breakdown": [
+          {
+            "step": 1,
+            "explanation": "分解问题到最基本的组成部分",
+            "linked_concept": "基础元素"
+          },
+          {
+            "step": 2,
+            "explanation": "理解每个基础部分的本质",
+            "linked_concept": "基本原理"
+          },
+          {
+            "step": 3,
+            "explanation": "重新组合这些部分来解决原问题",
+            "linked_concept": "系统重构"
+          }
+        ]
+      }
+    },
+    {
+      "id": "quantum_mechanics",
+      "name": "量子力学概念",
+      "rule": "(量子|波函数|叠加态|测量|概率|粒子|波动)",
+      "priority": 70,
+      "template": {
+        "core_concept": "量子力学基础",
+        "analogy": {
+          "domain": "日常生活",
+          "scenario": "硬币旋转或薛定谔的猫",
+          "description": "通过宏观世界的概率现象来理解量子叠加"
+        }
+      }
+    },
+    {
+      "id": "wave_physics",
+      "name": "波动物理",
+      "rule": "(波|振动|频率|波长|干涉|共振)",
+      "priority": 65,
+      "template": {
+        "core_concept": "波的性质",
+        "analogy": {
+          "domain": "音乐和声音",
+          "scenario": "吉他弦的振动或水波",
+          "description": "通过可见的水波或听得见的声波来理解波的概念"
+        }
+      }
+    }
+  ]
+}

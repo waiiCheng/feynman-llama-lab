@@ -1,44 +1,21 @@
 import { useState, useRef, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Toggle } from '@/components/ui/toggle';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useShortcuts } from '@/hooks/useShortcuts';
+import { useAutoAnnotation } from '@/hooks/useAutoAnnotation';
 import { TemplateSelector } from '@/components/templates/TemplateSelector';
 import { AnnotationForm } from './AnnotationForm';
 import { PreviewPanel } from './PreviewPanel';
+import { AutoSuggestionPanel } from '@/components/suggestion/AutoSuggestionPanel';
 import { TypewriterTitle } from '@/components/effects/TypewriterTitle';
-import { Keyboard, EyeOff, Eye, Languages } from 'lucide-react';
+import { Keyboard, EyeOff, Eye, Languages, Code, FileText } from 'lucide-react';
 
-interface BreakdownStep {
-  step: number;
-  explanation: string;
-  linked_concept: string;
-}
-
-interface FeynmanMethod {
-  core_concept: string;
-  analogy: {
-    domain: string;
-    scenario: string;
-    description: string;
-  };
-  breakdown: BreakdownStep[];
-  summary: string;
-}
-
-interface AnnotationData {
-  question: string;
-  response: string;
-  answer_final: string;
-  feynman_method: FeynmanMethod;
-  styleFeatures: string[];
-  quality: string;
-  notes: string;
-  source?: string;
-}
+import { BreakdownStep, FeynmanMethod, AnnotationData } from '@/types/annotation';
 
 const FEYNMAN_JSON_TEMPLATE = `{
   "core_concept": "这里填写核心概念",
@@ -59,6 +36,7 @@ const FEYNMAN_JSON_TEMPLATE = `{
 
 export const AnnotationWorkspace: React.FC = () => {
   const { t, language, setLanguage } = useLanguage();
+  const { applyTemplate } = useAutoAnnotation();
   const [formData, setFormData] = useState<AnnotationData>({
     question: '',
     response: '',
@@ -82,6 +60,8 @@ export const AnnotationWorkspace: React.FC = () => {
   });
   const [showPreview, setShowPreview] = useState(true);
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [jsonMode, setJsonMode] = useState(false);
+  const [jsonError, setJsonError] = useState<string>('');
   const responseRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSaveAndNext = () => {
@@ -177,6 +157,44 @@ export const AnnotationWorkspace: React.FC = () => {
     }));
   };
 
+  // JSON模式相关函数
+  const handleJsonModeToggle = () => {
+    setJsonMode(!jsonMode);
+    setJsonError('');
+  };
+
+  const parseJsonToForm = (jsonString: string) => {
+    try {
+      const parsed = JSON.parse(jsonString);
+      if (parsed && typeof parsed === 'object') {
+        setFormData(prev => ({
+          ...prev,
+          feynman_method: {
+            core_concept: parsed.core_concept || prev.feynman_method.core_concept,
+            analogy: {
+              domain: parsed.analogy?.domain || prev.feynman_method.analogy.domain,
+              scenario: parsed.analogy?.scenario || prev.feynman_method.analogy.scenario,
+              description: parsed.analogy?.description || prev.feynman_method.analogy.description,
+            },
+            breakdown: parsed.breakdown || prev.feynman_method.breakdown,
+            summary: parsed.summary || prev.feynman_method.summary,
+          }
+        }));
+        setJsonError('');
+      }
+    } catch (error) {
+      setJsonError('JSON格式错误，请检查语法');
+    }
+  };
+
+  const handleAutoSuggestion = (template: Partial<FeynmanMethod>) => {
+    applyTemplate(template, formData.feynman_method, setFormData);
+  };
+
+  const getJsonFromForm = () => {
+    return JSON.stringify(formData.feynman_method, null, 2);
+  };
+
   useShortcuts({
     onSave: handleSaveAndNext,
     onSaveAndNext: handleSaveAndNext,
@@ -236,7 +254,7 @@ export const AnnotationWorkspace: React.FC = () => {
       <div className="container mx-auto px-8 py-10">
         {showPreview ? (
           <ResizablePanelGroup direction="horizontal" className="min-h-[calc(100vh-180px)] gap-8">
-            <ResizablePanel defaultSize={60} minSize={40}>
+            <ResizablePanel defaultSize={50} minSize={35}>
               <div className="pr-4">
                 <AnnotationForm
                   formData={formData}
@@ -244,14 +262,23 @@ export const AnnotationWorkspace: React.FC = () => {
                   onSave={handleSaveAndNext}
                   onInsertTemplate={insertTemplateText}
                   responseRef={responseRef}
+                  jsonMode={jsonMode}
+                  onJsonModeToggle={handleJsonModeToggle}
+                  onJsonChange={parseJsonToForm}
+                  jsonError={jsonError}
+                  getJsonFromForm={getJsonFromForm}
                 />
               </div>
             </ResizablePanel>
             
             <ResizableHandle className="w-px bg-border hover:bg-primary/20 transition-colors" />
             
-            <ResizablePanel defaultSize={40} minSize={30}>
-              <div className="pl-4">
+            <ResizablePanel defaultSize={30} minSize={25}>
+              <div className="pl-4 space-y-6">
+                <AutoSuggestionPanel
+                  text={formData.answer_final}
+                  onApplySuggestion={handleAutoSuggestion}
+                />
                 <PreviewPanel formData={formData} />
               </div>
             </ResizablePanel>
@@ -264,6 +291,11 @@ export const AnnotationWorkspace: React.FC = () => {
               onSave={handleSaveAndNext}
               onInsertTemplate={insertTemplateText}
               responseRef={responseRef}
+              jsonMode={jsonMode}
+              onJsonModeToggle={handleJsonModeToggle}
+              onJsonChange={parseJsonToForm}
+              jsonError={jsonError}
+              getJsonFromForm={getJsonFromForm}
             />
           </div>
         )}

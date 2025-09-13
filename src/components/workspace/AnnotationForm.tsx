@@ -3,40 +3,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Toggle } from '@/components/ui/toggle';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { TemplateSelector } from '@/components/templates/TemplateSelector';
-import { Save, Lightbulb, BookOpen, Zap, Target, Plus, Trash2 } from 'lucide-react';
+import { Save, Lightbulb, BookOpen, Zap, Target, Plus, Trash2, Code, FileText, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-interface BreakdownStep {
-  step: number;
-  explanation: string;
-  linked_concept: string;
-}
-
-interface FeynmanMethod {
-  core_concept: string;
-  analogy: {
-    domain: string;
-    scenario: string;
-    description: string;
-  };
-  breakdown: BreakdownStep[];
-  summary: string;
-}
-
-interface AnnotationData {
-  question: string;
-  response: string;
-  answer_final: string;
-  feynman_method: FeynmanMethod;
-  styleFeatures: string[];
-  quality: string;
-  notes: string;
-  source?: string;
-}
+import { BreakdownStep, FeynmanMethod, AnnotationData } from '@/types/annotation';
 
 interface AnnotationFormProps {
   formData: AnnotationData;
@@ -44,6 +19,11 @@ interface AnnotationFormProps {
   onSave: () => void;
   onInsertTemplate: (template: string) => void;
   responseRef: React.RefObject<HTMLTextAreaElement>;
+  jsonMode: boolean;
+  onJsonModeToggle: () => void;
+  onJsonChange: (jsonString: string) => void;
+  jsonError: string;
+  getJsonFromForm: () => string;
 }
 
 const styleOptions = [
@@ -58,7 +38,12 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
   setFormData,
   onSave,
   onInsertTemplate,
-  responseRef
+  responseRef,
+  jsonMode,
+  onJsonModeToggle,
+  onJsonChange,
+  jsonError,
+  getJsonFromForm
 }) => {
   const { t } = useLanguage();
   const { toast } = useToast();
@@ -183,176 +168,229 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
         />
       </div>
 
-      {/* Feynman Method - Structured Input */}
+      {/* Feynman Method - Structured/JSON Toggle */}
       <div className="feynman-card spacing-lg">
-        <div className="mb-6">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-heading text-foreground">
             {t('annotation.feynmanMethod')}
           </h2>
+          <div className="flex items-center gap-3">
+            <Toggle
+              pressed={jsonMode}
+              onPressedChange={onJsonModeToggle}
+              size="sm"
+              className="h-8 px-3 gap-2"
+            >
+              {jsonMode ? (
+                <>
+                  <FileText className="w-4 h-4" />
+                  结构化
+                </>
+              ) : (
+                <>
+                  <Code className="w-4 h-4" />
+                  JSON
+                </>
+              )}
+            </Toggle>
+            <Badge variant="outline" className="text-xs">
+              {jsonMode ? '高级模式' : '简单模式'}
+            </Badge>
+          </div>
         </div>
         
-        <div className="space-y-8">
-          {/* Core Concept */}
-          <div>
-            <Label className="text-label text-foreground mb-3 block">
-              {t('annotation.feynman.coreConcept')}
-            </Label>
-            <Input
-              placeholder={t('annotation.feynman.coreConcept.placeholder')}
-              value={formData.feynman_method.core_concept}
-              onChange={(e) => setFormData(prev => ({
-                ...prev,
-                feynman_method: { ...prev.feynman_method, core_concept: e.target.value }
-              }))}
-              className="feynman-input text-body"
-            />
-          </div>
-
-          {/* Analogy Section */}
-          <div className="feynman-card spacing-md bg-secondary/20">
-            <h3 className="text-subheading text-foreground mb-4">
-              {t('annotation.feynman.analogy')}
-            </h3>
-            <div className="space-y-4">
-              <div>
-                <Label className="text-label text-foreground mb-2 block">
-                  {t('annotation.feynman.analogy.domain')}
-                </Label>
-                <Input
-                  placeholder={t('annotation.feynman.analogy.domain.placeholder')}
-                  value={formData.feynman_method.analogy.domain}
-                  onChange={(e) => setFormData(prev => ({
-                    ...prev,
-                    feynman_method: {
-                      ...prev.feynman_method,
-                      analogy: { ...prev.feynman_method.analogy, domain: e.target.value }
-                    }
-                  }))}
-                  className="feynman-input text-body"
-                />
-              </div>
-              <div>
-                <Label className="text-label text-foreground mb-2 block">
-                  {t('annotation.feynman.analogy.scenario')}
-                </Label>
-                <Input
-                  placeholder={t('annotation.feynman.analogy.scenario.placeholder')}
-                  value={formData.feynman_method.analogy.scenario}
-                  onChange={(e) => setFormData(prev => ({
-                    ...prev,
-                    feynman_method: {
-                      ...prev.feynman_method,
-                      analogy: { ...prev.feynman_method.analogy, scenario: e.target.value }
-                    }
-                  }))}
-                  className="feynman-input text-body"
-                />
-              </div>
-              <div>
-                <Label className="text-label text-foreground mb-2 block">
-                  {t('annotation.feynman.analogy.description')}
-                </Label>
-                <Textarea
-                  placeholder={t('annotation.feynman.analogy.description.placeholder')}
-                  value={formData.feynman_method.analogy.description}
-                  onChange={(e) => setFormData(prev => ({
-                    ...prev,
-                    feynman_method: {
-                      ...prev.feynman_method,
-                      analogy: { ...prev.feynman_method.analogy, description: e.target.value }
-                    }
-                  }))}
-                  rows={3}
-                  className="feynman-input text-body leading-relaxed resize-none"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Breakdown Steps */}
-          <div className="feynman-card spacing-md bg-accent/10">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-subheading text-foreground">
-                {t('annotation.feynman.breakdown')}
-              </h3>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={addBreakdownStep}
-                className="text-caption"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                {t('annotation.feynman.breakdown.add')}
-              </Button>
-            </div>
-            <div className="space-y-6">
-              {formData.feynman_method.breakdown.map((step, index) => (
-                <div key={index} className="feynman-card spacing-sm border-l-4 border-primary/30">
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-label text-foreground">
-                      {t('annotation.feynman.breakdown.step')} {step.step}
-                    </h4>
-                    {formData.feynman_method.breakdown.length > 1 && (
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeBreakdownStep(index)}
-                        className="text-caption text-muted-foreground hover:text-destructive"
-                      >
-                        <Trash2 className="w-4 h-4 mr-2" />
-                        {t('annotation.feynman.breakdown.remove')}
-                      </Button>
-                    )}
-                  </div>
-                  <div className="space-y-3">
-                    <div>
-                      <Label className="text-caption text-muted-foreground mb-2 block">
-                        {t('annotation.feynman.breakdown.explanation')}
-                      </Label>
-                      <Textarea
-                        placeholder={t('annotation.feynman.breakdown.explanation.placeholder')}
-                        value={step.explanation}
-                        onChange={(e) => handleBreakdownChange(index, 'explanation', e.target.value)}
-                        rows={3}
-                        className="feynman-input text-body leading-relaxed resize-none"
-                      />
-                    </div>
-                    <div>
-                      <Label className="text-caption text-muted-foreground mb-2 block">
-                        {t('annotation.feynman.breakdown.linkedConcept')}
-                      </Label>
-                      <Input
-                        placeholder={t('annotation.feynman.breakdown.linkedConcept.placeholder')}
-                        value={step.linked_concept}
-                        onChange={(e) => handleBreakdownChange(index, 'linked_concept', e.target.value)}
-                        className="feynman-input text-body"
-                      />
-                    </div>
-                  </div>
+        {jsonMode ? (
+          /* JSON高级模式 */
+          <div className="space-y-6">
+            <div>
+              <Label className="text-label text-foreground mb-3 block">
+                费曼方法 JSON 编辑器
+              </Label>
+              <Textarea
+                placeholder="在此处编辑 JSON 格式的费曼方法数据..."
+                value={getJsonFromForm()}
+                onChange={(e) => onJsonChange(e.target.value)}
+                rows={20}
+                className={`feynman-input text-body leading-relaxed resize-none font-mono text-sm ${
+                  jsonError ? 'border-destructive focus:ring-destructive/20' : ''
+                }`}
+              />
+              {jsonError && (
+                <div className="flex items-center gap-2 mt-2 text-destructive text-caption">
+                  <AlertCircle className="w-4 h-4" />
+                  {jsonError}
                 </div>
-              ))}
+              )}
+              <div className="mt-3 text-caption text-muted-foreground">
+                提示：修改 JSON 将自动同步到结构化表单
+              </div>
             </div>
           </div>
+        ) : (
+          /* 结构化输入模式 */
+          <div className="space-y-8">
+            {/* Core Concept */}
+            <div>
+              <Label className="text-label text-foreground mb-3 block">
+                {t('annotation.feynman.coreConcept')}
+              </Label>
+              <Input
+                placeholder={t('annotation.feynman.coreConcept.placeholder')}
+                value={formData.feynman_method.core_concept}
+                onChange={(e) => setFormData(prev => ({
+                  ...prev,
+                  feynman_method: { ...prev.feynman_method, core_concept: e.target.value }
+                }))}
+                className="feynman-input text-body"
+              />
+            </div>
 
-          {/* Summary */}
-          <div>
-            <Label className="text-label text-foreground mb-3 block">
-              {t('annotation.feynman.summary')}
-            </Label>
-            <Textarea
-              placeholder={t('annotation.feynman.summary.placeholder')}
-              value={formData.feynman_method.summary}
-              onChange={(e) => setFormData(prev => ({
-                ...prev,
-                feynman_method: { ...prev.feynman_method, summary: e.target.value }
-              }))}
-              rows={4}
-              className="feynman-input text-body leading-relaxed resize-none"
-            />
+            {/* Analogy Section */}
+            <div className="feynman-card spacing-md bg-secondary/20">
+              <h3 className="text-subheading text-foreground mb-4">
+                {t('annotation.feynman.analogy')}
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <Label className="text-label text-foreground mb-2 block">
+                    {t('annotation.feynman.analogy.domain')}
+                  </Label>
+                  <Input
+                    placeholder={t('annotation.feynman.analogy.domain.placeholder')}
+                    value={formData.feynman_method.analogy.domain}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      feynman_method: {
+                        ...prev.feynman_method,
+                        analogy: { ...prev.feynman_method.analogy, domain: e.target.value }
+                      }
+                    }))}
+                    className="feynman-input text-body"
+                  />
+                </div>
+                <div>
+                  <Label className="text-label text-foreground mb-2 block">
+                    {t('annotation.feynman.analogy.scenario')}
+                  </Label>
+                  <Input
+                    placeholder={t('annotation.feynman.analogy.scenario.placeholder')}
+                    value={formData.feynman_method.analogy.scenario}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      feynman_method: {
+                        ...prev.feynman_method,
+                        analogy: { ...prev.feynman_method.analogy, scenario: e.target.value }
+                      }
+                    }))}
+                    className="feynman-input text-body"
+                  />
+                </div>
+                <div>
+                  <Label className="text-label text-foreground mb-2 block">
+                    {t('annotation.feynman.analogy.description')}
+                  </Label>
+                  <Textarea
+                    placeholder={t('annotation.feynman.analogy.description.placeholder')}
+                    value={formData.feynman_method.analogy.description}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      feynman_method: {
+                        ...prev.feynman_method,
+                        analogy: { ...prev.feynman_method.analogy, description: e.target.value }
+                      }
+                    }))}
+                    rows={3}
+                    className="feynman-input text-body leading-relaxed resize-none"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Breakdown Steps */}
+            <div className="feynman-card spacing-md bg-accent/10">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-subheading text-foreground">
+                  {t('annotation.feynman.breakdown')}
+                </h3>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={addBreakdownStep}
+                  className="text-caption"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  {t('annotation.feynman.breakdown.add')}
+                </Button>
+              </div>
+              <div className="space-y-6">
+                {formData.feynman_method.breakdown.map((step, index) => (
+                  <div key={index} className="feynman-card spacing-sm border-l-4 border-primary/30">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-label text-foreground">
+                        {t('annotation.feynman.breakdown.step')} {step.step}
+                      </h4>
+                      {formData.feynman_method.breakdown.length > 1 && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeBreakdownStep(index)}
+                          className="text-caption text-muted-foreground hover:text-destructive"
+                        >
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          {t('annotation.feynman.breakdown.remove')}
+                        </Button>
+                      )}
+                    </div>
+                    <div className="space-y-3">
+                      <div>
+                        <Label className="text-caption text-muted-foreground mb-2 block">
+                          {t('annotation.feynman.breakdown.explanation')}
+                        </Label>
+                        <Textarea
+                          placeholder={t('annotation.feynman.breakdown.explanation.placeholder')}
+                          value={step.explanation}
+                          onChange={(e) => handleBreakdownChange(index, 'explanation', e.target.value)}
+                          rows={3}
+                          className="feynman-input text-body leading-relaxed resize-none"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-caption text-muted-foreground mb-2 block">
+                          {t('annotation.feynman.breakdown.linkedConcept')}
+                        </Label>
+                        <Input
+                          placeholder={t('annotation.feynman.breakdown.linkedConcept.placeholder')}
+                          value={step.linked_concept}
+                          onChange={(e) => handleBreakdownChange(index, 'linked_concept', e.target.value)}
+                          className="feynman-input text-body"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Summary */}
+            <div>
+              <Label className="text-label text-foreground mb-3 block">
+                {t('annotation.feynman.summary')}
+              </Label>
+              <Textarea
+                placeholder={t('annotation.feynman.summary.placeholder')}
+                value={formData.feynman_method.summary}
+                onChange={(e) => setFormData(prev => ({
+                  ...prev,
+                  feynman_method: { ...prev.feynman_method, summary: e.target.value }
+                }))}
+                rows={4}
+                className="feynman-input text-body leading-relaxed resize-none"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Feynman Response (Legacy) */}
