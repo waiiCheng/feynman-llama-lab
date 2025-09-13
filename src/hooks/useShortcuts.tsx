@@ -5,6 +5,7 @@ interface ShortcutHandlers {
   onSaveAndNext?: () => void;
   onClear?: () => void;
   onTemplate?: () => void;
+  onAddStep?: () => void;
 }
 
 export const useShortcuts = (handlers: ShortcutHandlers) => {
@@ -14,6 +15,20 @@ export const useShortcuts = (handlers: ShortcutHandlers) => {
       if (event.ctrlKey && event.key === 'Enter') {
         event.preventDefault();
         handlers.onSaveAndNext?.();
+        return;
+      }
+
+      // Save: Ctrl+S
+      if (event.ctrlKey && event.key === 's') {
+        event.preventDefault();
+        handlers.onSave?.();
+        return;
+      }
+
+      // Add Step: Ctrl+Shift+N (for breakdown steps)
+      if (event.ctrlKey && event.shiftKey && event.key === 'N') {
+        event.preventDefault();
+        handlers.onAddStep?.();
         return;
       }
 

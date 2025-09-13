@@ -35,6 +35,7 @@ interface AnnotationData {
   styleFeatures: string[];
   quality: string;
   notes: string;
+  source?: string;
 }
 
 interface AnnotationFormProps {
@@ -132,6 +133,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
       quality_score: formData.quality,
       styleFeatures: formData.styleFeatures,
       notes: formData.notes,
+      source: formData.source,
       timestamp,
       annotator: 'user'
     };
@@ -427,8 +429,8 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
         )}
       </div>
 
-      {/* Quality & Notes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Quality & Notes & Source */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="feynman-card spacing-lg">
           <div className="mb-6">
             <h2 className="text-heading text-foreground">
@@ -445,6 +447,19 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
               <SelectItem value="needs-work">{t('quality.needsWork')}</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+
+        <div className="feynman-card spacing-lg">
+          <div className="mb-6">
+            <h2 className="text-heading text-foreground">Source Reference</h2>
+          </div>
+          <Textarea
+            placeholder="e.g., Feynman Lectures Vol. 1 Ch. 3, or specific research paper"
+            value={formData.source || ''}
+            onChange={(e) => setFormData(prev => ({ ...prev, source: e.target.value }))}
+            rows={3}
+            className="feynman-input resize-none"
+          />
         </div>
 
         <div className="feynman-card spacing-lg">

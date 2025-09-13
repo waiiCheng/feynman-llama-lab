@@ -3,12 +3,32 @@ import { Badge } from '@/components/ui/badge';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Eye, Lightbulb, BookOpen, Zap, Target, MessageCircle } from 'lucide-react';
 
+interface BreakdownStep {
+  step: number;
+  explanation: string;
+  linked_concept: string;
+}
+
+interface FeynmanMethod {
+  core_concept: string;
+  analogy: {
+    domain: string;
+    scenario: string;
+    description: string;
+  };
+  breakdown: BreakdownStep[];
+  summary: string;
+}
+
 interface AnnotationData {
   question: string;
   response: string;
+  answer_final: string;
+  feynman_method: FeynmanMethod;
   styleFeatures: string[];
   quality: string;
   notes: string;
+  source?: string;
 }
 
 interface PreviewPanelProps {
@@ -24,6 +44,44 @@ const styleOptions = [
 
 export const PreviewPanel: React.FC<PreviewPanelProps> = ({ formData }) => {
   const { t } = useLanguage();
+
+  // Generate dynamic Feynman-style narrative
+  const generateFeynmanNarrative = () => {
+    const { feynman_method } = formData;
+    if (!feynman_method.core_concept) return '';
+
+    let narrative = '';
+    
+    // Core concept introduction
+    if (feynman_method.core_concept) {
+      narrative += `Let's understand ${feynman_method.core_concept}. `;
+    }
+
+    // Analogy section
+    if (feynman_method.analogy.scenario && feynman_method.analogy.description) {
+      narrative += `Think of it like ${feynman_method.analogy.scenario}. ${feynman_method.analogy.description} `;
+    }
+
+    // Breakdown steps
+    if (feynman_method.breakdown.length > 0) {
+      narrative += "\n\nHere's how it works step by step:\n";
+      feynman_method.breakdown.forEach((step, index) => {
+        if (step.explanation) {
+          narrative += `\n${index + 1}. ${step.explanation}`;
+          if (step.linked_concept) {
+            narrative += ` (This relates to: ${step.linked_concept})`;
+          }
+        }
+      });
+    }
+
+    // Summary
+    if (feynman_method.summary) {
+      narrative += `\n\nIn summary: ${feynman_method.summary}`;
+    }
+
+    return narrative;
+  };
 
   const getQualityColor = (quality: string) => {
     switch (quality) {
@@ -45,6 +103,7 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ formData }) => {
   };
 
   const analysis = analyzeResponse(formData.response);
+  const narrative = generateFeynmanNarrative();
 
   return (
     <div className="space-y-4 h-full">
@@ -56,6 +115,18 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ formData }) => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          {/* Generated Feynman Narrative */}
+          {narrative && (
+            <div>
+              <h4 className="text-sm font-semibold text-feynman-text mb-2">Generated Feynman Explanation</h4>
+              <div className="p-4 bg-gradient-subtle rounded-lg border-l-4 border-primary">
+                <p className="text-feynman-text leading-relaxed whitespace-pre-wrap text-sm">
+                  {narrative}
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Question Preview */}
           {formData.question && (
             <div>
@@ -66,14 +137,30 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ formData }) => {
             </div>
           )}
 
-          {/* Response Preview */}
-          {formData.response && (
+          {/* Final Answer Preview */}
+          {formData.answer_final && (
             <div>
-              <h4 className="text-sm font-semibold text-feynman-text mb-2">{t('manage.response')}</h4>
+              <h4 className="text-sm font-semibold text-feynman-text mb-2">Final Answer</h4>
               <div className="p-4 bg-gradient-subtle rounded-lg">
                 <p className="text-feynman-text leading-relaxed whitespace-pre-wrap font-mono text-sm">
-                  {formData.response}
+                  {formData.answer_final}
                 </p>
+              </div>
+            </div>
+          )}
+
+          {/* Knowledge Graph Concepts */}
+          {formData.feynman_method.breakdown.some(step => step.linked_concept) && (
+            <div>
+              <h4 className="text-sm font-semibold text-feynman-text mb-2">Knowledge Graph Concepts</h4>
+              <div className="flex flex-wrap gap-2">
+                {formData.feynman_method.breakdown
+                  .filter(step => step.linked_concept)
+                  .map((step, index) => (
+                    <Badge key={index} variant="outline" className="bg-primary/10 text-primary border-primary/30">
+                      {step.linked_concept}
+                    </Badge>
+                  ))}
               </div>
             </div>
           )}
@@ -140,6 +227,20 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ formData }) => {
                 <div className={`w-2 h-2 rounded-full ${analysis.isSimple ? 'bg-green-500' : 'bg-gray-300'}`} />
               </div>
             </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Source Preview */}
+      {formData.source && (
+        <Card className="physics-card">
+          <CardHeader>
+            <CardTitle className="text-sm text-feynman-text font-physics">Source</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-feynman-muted whitespace-pre-wrap font-mono">
+              {formData.source}
+            </p>
           </CardContent>
         </Card>
       )}

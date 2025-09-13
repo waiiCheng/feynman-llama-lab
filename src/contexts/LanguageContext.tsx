@@ -96,9 +96,9 @@ const translations = {
     'style.firstprinciples.desc': '从基本原理出发思考',
     
     // Shortcuts
-    'shortcuts.save': 'Ctrl+Enter: 保存并下一条',
+    'shortcuts.save': 'Ctrl+S: 保存 | Ctrl+Enter: 保存并下一条',
     'shortcuts.tab': 'Tab: 切换字段',
-    'shortcuts.template': '/: 插入模板',
+    'shortcuts.template': '/: 插入模板 | Ctrl+Shift+N: 添加步骤',
     'shortcuts.clear': 'Escape: 清空',
     'shortcuts.keyboard': '快捷键',
     
@@ -419,9 +419,9 @@ const translations = {
     'style.firstprinciples.desc': 'Think from basic principles',
     
     // Shortcuts
-    'shortcuts.save': 'Ctrl+Enter: Save & Next',
-    'shortcuts.tab': 'Tab: Switch Fields',
-    'shortcuts.template': '/: Insert Template',
+    'shortcuts.save': 'Ctrl+S: Save | Ctrl+Enter: Save & Next',
+    'shortcuts.tab': 'Tab: Switch Fields', 
+    'shortcuts.template': '/: Template | Ctrl+Shift+N: Add Step',
     'shortcuts.clear': 'Escape: Clear',
     'shortcuts.keyboard': 'Shortcuts',
     

@@ -37,6 +37,7 @@ interface AnnotationData {
   styleFeatures: string[];
   quality: string;
   notes: string;
+  source?: string;
 }
 
 const FEYNMAN_JSON_TEMPLATE = `{
@@ -76,7 +77,8 @@ export const AnnotationWorkspace: React.FC = () => {
     },
     styleFeatures: [],
     quality: '',
-    notes: ''
+    notes: '',
+    source: ''
   });
   const [showPreview, setShowPreview] = useState(true);
   const [showShortcuts, setShowShortcuts] = useState(false);
@@ -104,7 +106,8 @@ export const AnnotationWorkspace: React.FC = () => {
       },
       styleFeatures: [],
       quality: '',
-      notes: ''
+      notes: '',
+      source: ''
     });
   };
 
@@ -127,7 +130,8 @@ export const AnnotationWorkspace: React.FC = () => {
       },
       styleFeatures: [],
       quality: '',
-      notes: ''
+      notes: '',
+      source: ''
     });
   };
 
@@ -156,10 +160,29 @@ export const AnnotationWorkspace: React.FC = () => {
     }, 0);
   };
 
+  const handleAddStep = () => {
+    setFormData(prev => ({
+      ...prev,
+      feynman_method: {
+        ...prev.feynman_method,
+        breakdown: [
+          ...prev.feynman_method.breakdown,
+          { 
+            step: prev.feynman_method.breakdown.length + 1, 
+            explanation: '', 
+            linked_concept: '' 
+          }
+        ]
+      }
+    }));
+  };
+
   useShortcuts({
+    onSave: handleSaveAndNext,
     onSaveAndNext: handleSaveAndNext,
     onClear: handleClear,
     onTemplate: handleInsertTemplate,
+    onAddStep: handleAddStep,
   });
 
   return (
